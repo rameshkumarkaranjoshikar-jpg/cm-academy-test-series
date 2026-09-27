@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM Academy — होमी भाभा इयत्ता ६वी | १५० टेस्ट सिरीज</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4ff;min-height:100vh;color:#1c1c2e}
+.brand{background:linear-gradient(135deg,#0a1c4b 0%,#1a3a8f 100%);color:#f5a623;padding:18px 20px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(10,28,75,0.3)}
+.brand h1{font-size:22px;font-weight:700;letter-spacing:1px}
+.brand p{font-size:11px;color:#aabbd4;margin-top:3px}
+.price-badge{background:#f5a623;color:#0a1c4b;font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;display:inline-block;margin-top:6px}
+.container{max-width:800px;margin:0 auto;padding:16px}
+.screen{display:none}
+.screen.active{display:block}
+
+/* HOME */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat-card{background:#fff;border-radius:12px;padding:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.stat-n{font-size:26px;font-weight:700;color:#0a1c4b}
+.stat-l{font-size:11px;color:#5a6a7e;margin-top:3px}
+.subject-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0}
+.subj-card{background:#fff;border-radius:14px;padding:18px 14px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.subj-card:hover{border-color:#1a3a8f;transform:translateY(-2px);box-shadow:0 6px 16px rgba(26,58,143,0.15)}
+.subj-icon{font-size:36px;margin-bottom:8px}
+.subj-name{font-size:15px;font-weight:700;color:#0a1c4b}
+.subj-cnt{font-size:11px;color:#5a6a7e;margin-top:3px}
+.mixed-card{background:#fff;border-radius:14px;padding:16px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,0.06);margin-bottom:14px;display:flex;align-items:center;gap:14px;justify-content:center}
+.mixed-card:hover{border-color:#f5a623;box-shadow:0 6px 16px rgba(245,166,35,0.2)}
+
+/* TEST LIST */
+.test-list-header{display:flex;align-items:center;gap:10px;margin:14px 0 10px}
+.back-btn{background:none;border:1px solid #d0d8ee;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;color:#1a3a8f;font-weight:600;display:flex;align-items:center;gap:5px}
+.back-btn:hover{background:#e8edf5}
+.chapter-tabs{display:flex;gap:8px;overflow-x:auto;padding:0 0 8px;margin-bottom:10px}
+.chapter-tab{padding:6px 14px;border-radius:20px;font-size:12px;border:1.5px solid #d0d8ee;cursor:pointer;background:#fff;color:#5a6a7e;white-space:nowrap;font-weight:500;transition:.15s}
+.chapter-tab.active{background:#0a1c4b;color:#f5a623;border-color:#0a1c4b}
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.test-item{background:#fff;border-radius:12px;padding:12px;cursor:pointer;border:1.5px solid #e8edf5;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.test-item:hover{border-color:#1a3a8f;box-shadow:0 4px 12px rgba(26,58,143,0.12)}
+.test-item.done{border-left:4px solid #1b7a4a}
+.test-num{font-size:12px;font-weight:700;color:#0a1c4b}
+.test-ch{font-size:10px;color:#5a6a7e;margin:2px 0}
+.test-score-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px}
+.score-gold{background:#fff8e6;color:#8b5c00}
+.score-pass{background:#e8f5ee;color:#1b7a4a}
+.score-fail{background:#ffeaea;color:#b22222}
+
+/* LOADING */
+.loading-screen{text-align:center;padding:60px 20px}
+.spinner{width:48px;height:48px;border:4px solid #e8edf5;border-top-color:#0a1c4b;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* QUIZ */
+.quiz-header{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.quiz-title{font-size:15px;font-weight:700;color:#0a1c4b}
+.timer{font-size:18px;font-weight:700;color:#0a1c4b;background:#e8edf5;padding:6px 14px;border-radius:10px}
+.timer.urgent{background:#ffeaea;color:#b22222;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.progress-bar-wrap{background:#e8edf5;border-radius:20px;height:8px;overflow:hidden}
+.progress-bar-fill{background:linear-gradient(90deg,#0a1c4b,#1a3a8f);height:8px;border-radius:20px;transition:.3s}
+.q-info{display:flex;justify-content:space-between;font-size:11px;color:#5a6a7e;margin-top:6px}
+
+.q-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.q-number{font-size:11px;font-weight:700;color:#5a6a7e;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.q-text{font-size:15px;font-weight:600;color:#1c1c2e;line-height:1.65}
+.opts-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt-btn{background:#f4f6fb;border:2px solid #e8edf5;border-radius:10px;padding:11px 14px;cursor:pointer;font-size:13px;color:#1c1c2e;text-align:left;display:flex;align-items:center;gap:10px;transition:.15s;font-family:inherit;width:100%}
+.opt-btn:hover:not(:disabled){border-color:#1a3a8f;background:#e8edf5}
+.opt-btn.selected{border-color:#1a3a8f;background:#dde8ff;color:#0a1c4b}
+.opt-btn.correct{border-color:#1b7a4a;background:#d4f0e2;color:#0d4a2a}
+.opt-btn.wrong{border-color:#b22222;background:#ffeaea;color:#7a0000}
+.opt-btn:disabled{cursor:default}
+.opt-letter{font-weight:700;min-width:20px;font-size:14px}
+.exp-box{background:#e8f0ff;border:1.5px solid #b5d4f4;border-radius:10px;padding:12px;margin-top:12px;font-size:12px;color:#0a1c4b;line-height:1.6}
+
+.nav-row{display:flex;gap:10px;margin-bottom:12px}
+.nav-btn{flex:1;padding:11px;border-radius:10px;border:2px solid #e8edf5;background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:#1a3a8f;transition:.15s;font-family:inherit}
+.nav-btn:hover{border-color:#1a3a8f;background:#e8edf5}
+.submit-btn{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#0a1c4b,#1a3a8f);color:#f5a623;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;font-family:inherit;letter-spacing:.5px}
+.submit-btn:hover{opacity:.92}
+
+.palette-section{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.palette-title{font-size:11px;font-weight:700;color:#5a6a7e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.palette-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.p-dot{width:100%;aspect-ratio:1;border-radius:6px;border:1.5px solid #e8edf5;font-size:10px;font-weight:600;cursor:pointer;background:#f4f6fb;color:#5a6a7e;display:flex;align-items:center;justify-content:center}
+.p-dot.answered{background:#0a1c4b;color:#fff;border-color:#0a1c4b}
+.p-dot.current{border-color:#f5a623;border-width:2.5px;color:#0a1c4b}
+.p-dot.answered.current{background:#0a1c4b;color:#f5a623}
+
+/* RESULT */
+.result-wrap{background:#fff;border-radius:16px;padding:24px;margin-bottom:14px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.08)}
+.result-circle{width:100px;height:100px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;border:5px solid}
+.pass-circle{border-color:#1b7a4a;background:#d4f0e2;color:#0d4a2a}
+.fail-circle{border-color:#b22222;background:#ffeaea;color:#7a0000}
+.rank-badge{display:inline-block;padding:6px 18px;border-radius:20px;font-size:14px;font-weight:700;margin:10px 0;background:#fff8e6;color:#8b5c00;border:1.5px solid #f5a623}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.r-stat{background:#f4f6fb;border-radius:10px;padding:12px;text-align:center}
+.r-stat-n{font-size:22px;font-weight:700;color:#0a1c4b}
+.r-stat-l{font-size:10px;color:#5a6a7e;margin-top:2px}
+.review-section{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.review-item{border:1.5px solid #e8edf5;border-radius:10px;padding:12px;margin-bottom:8px}
+.review-q{font-size:12px;font-weight:600;color:#1c1c2e;margin-bottom:6px;line-height:1.5}
+.review-correct{font-size:11px;color:#1b7a4a;margin:2px 0}
+.review-wrong{font-size:11px;color:#b22222;margin:2px 0}
+.review-exp{font-size:11px;color:#5a6a7e;margin-top:6px;padding-top:6px;border-top:1px solid #e8edf5;line-height:1.5}
+.action-btn{width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px;font-family:inherit;transition:.15s}
+.action-primary{background:linear-gradient(135deg,#0a1c4b,#1a3a8f);color:#f5a623;border:none}
+.action-secondary{background:#fff;color:#0a1c4b;border:2px solid #0a1c4b}
+.action-primary:hover{opacity:.9}
+.action-secondary:hover{background:#e8edf5}
+
+.section-title{font-size:16px;font-weight:700;color:#0a1c4b;margin:14px 0 8px}
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <h1>⭐ CM ACADEMY ⭐</h1>
+  <p>डॉ. होमी भाभा बालवैज्ञानिक स्पर्धा | इयत्ता सहावी | OFFLINE</p>
+  <span class="price-badge">फक्त ₹१०९९ — १५० टेस्ट सिरीज</span>
+</div>
+
+<div class="container">
+
+<!-- HOME SCREEN -->
+<div id="homeScreen" class="screen active">
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-n" id="totalDone">0</div><div class="stat-l">टेस्ट दिल्या</div></div>
+    <div class="stat-card"><div class="stat-n" id="avgScore">—</div><div class="stat-l">सरासरी %</div></div>
+    <div class="stat-card"><div class="stat-n" id="bestScore">—</div><div class="stat-l">सर्वोच्च %</div></div>
+  </div>
+  <div class="section-title">विषय निवडा</div>
+  <div class="subject-grid">
+    <div class="subj-card" onclick="showTests('phy')">
+      <div class="subj-icon">⚛️</div>
+      <div class="subj-name">भौतिकशास्त्र</div>
+      <div class="subj-cnt">३८ टेस्ट · ५० प्रश्न प्रत्येक</div>
+    </div>
+    <div class="subj-card" onclick="showTests('chem')">
+      <div class="subj-icon">🧪</div>
+      <div class="subj-name">रसायनशास्त्र</div>
+      <div class="subj-cnt">३७ टेस्ट · ५० प्रश्न प्रत्येक</div>
+    </div>
+    <div class="subj-card" onclick="showTests('bio')">
+      <div class="subj-icon">🌿</div>
+      <div class="subj-name">जीवशास्त्र</div>
+      <div class="subj-cnt">३७ टेस्ट · ५० प्रश्न प्रत्येक</div>
+    </div>
+    <div class="subj-card" onclick="showTests('gk')">
+      <div class="subj-icon">🌍</div>
+      <div class="subj-name">सामान्यज्ञान</div>
+      <div class="subj-cnt">३८ टेस्ट · ५० प्रश्न प्रत्येक</div>
+    </div>
+  </div>
+  <div class="mixed-card" onclick="showTests('mixed')">
+    <div style="font-size:32px">🔀</div>
+    <div>
+      <div style="font-size:15px;font-weight:700;color:#0a1c4b">मिश्र सराव (Mixed Practice)</div>
+      <div style="font-size:11px;color:#5a6a7e;margin-top:2px">सर्व विषय एकत्र · ५० प्रश्न प्रत्येक · विशेष टेस्ट</div>
+    </div>
+  </div>
+  <div style="background:#fff8e6;border:1.5px solid #f5a623;border-radius:12px;padding:14px;font-size:12px;color:#8b5c00;line-height:1.6">
+    <strong>📌 CM Academy माहिती:</strong><br>
+    • इयत्ता ४थी + ५वी + ६वी अभ्यासक्रमावर प्रश्न<br>
+    • मराठीत नीट जोडाक्षरांसह प्रश्न<br>
+    • प्रत्येक प्रश्नाचे स्पष्टीकरण<br>
+    • ९०%+ = Gold | ७५%+ = Silver | ६०%+ = Bronze | ३५%+ = उत्तीर्ण<br>
+    • Offline वापरता येते — Internet नको!
+  </div>
+</div>
+
+<!-- TEST LIST SCREEN -->
+<div id="testListScreen" class="screen">
+  <div class="test-list-header">
+    <button class="back-btn" onclick="goHome()">← मागे</button>
+    <div style="font-size:16px;font-weight:700;color:#0a1c4b" id="listTitle"></div>
+  </div>
+  <div class="chapter-tabs" id="chapterTabs"></div>
+  <div class="test-grid" id="testGrid"></div>
+</div>
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen" class="screen">
+  <div class="loading-screen">
+    <div class="spinner"></div>
+    <div style="font-size:16px;font-weight:700;color:#0a1c4b" id="loadMsg">प्रश्न लोड होत आहेत...</div>
+    <div style="font-size:12px;color:#5a6a7e;margin-top:6px">कृपया थांबा</div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="screen">
+  <div class="quiz-header">
+    <div class="quiz-top">
+      <div>
+        <div class="quiz-title" id="quizTitle">टेस्ट</div>
+        <div style="font-size:11px;color:#5a6a7e" id="quizChapter"></div>
+      </div>
+      <div class="timer" id="timerEl">45:00</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill" style="width:2%"></div>
+    </div>
+    <div class="q-info">
+      <span id="qCounter">प्रश्न १ / ५०</span>
+      <span id="answeredCnt">उत्तरे: ०</span>
+    </div>
+  </div>
+
+  <div class="q-card">
+    <div class="q-number" id="qNum">प्रश्न १</div>
+    <div class="q-text" id="qText">लोड होत आहे...</div>
+    <div class="opts-list" id="optsList"></div>
+    <div id="expBox" style="display:none" class="exp-box"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" onclick="prevQ()">← मागील</button>
+    <button class="nav-btn" id="nextBtn" onclick="nextQ()">पुढील →</button>
+  </div>
+
+  <div class="palette-section">
+    <div class="palette-title">प्रश्न नेव्हिगेशन</div>
+    <div class="palette-grid" id="paletteGrid"></div>
+  </div>
+
+  <button class="submit-btn" onclick="confirmSubmit()">✓ टेस्ट सबमिट करा</button>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="screen">
+  <button class="back-btn" style="margin-bottom:12px" onclick="goHome()">← होमवर जा</button>
+  <div class="result-wrap">
+    <div class="result-circle" id="resultCircle"></div>
+    <div style="font-size:20px;font-weight:700;color:#0a1c4b" id="resultTitle"></div>
+    <div style="font-size:13px;color:#5a6a7e;margin-top:4px" id="resultSub"></div>
+    <div class="rank-badge" id="rankBadge"></div>
+    <div style="font-size:11px;color:#5a6a7e">CM Academy — होमी भाभा इयत्ता ६वी</div>
+  </div>
+  <div class="result-stats">
+    <div class="r-stat"><div class="r-stat-n" id="rCorrect" style="color:#1b7a4a">0</div><div class="r-stat-l">✓ बरोबर</div></div>
+    <div class="r-stat"><div class="r-stat-n" id="rWrong" style="color:#b22222">0</div><div class="r-stat-l">✗ चुकीचे</div></div>
+    <div class="r-stat"><div class="r-stat-n" id="rSkipped" style="color:#5a6a7e">0</div><div class="r-stat-l">— सोडले</div></div>
+  </div>
+  <div class="review-section">
+    <div style="font-size:14px;font-weight:700;color:#0a1c4b;margin-bottom:10px">📝 चुकलेले प्रश्न — Review</div>
+    <div id="reviewList"></div>
+  </div>
+  <button class="action-btn action-primary" onclick="retryTest()">🔄 पुन्हा सोडवा</button>
+  <button class="action-btn action-secondary" style="margin-top:8px" onclick="showTests(currentSubject)">📋 इतर टेस्ट पहा</button>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  QUESTION BANK — 7,500 प्रश्न (150 टेस्ट × 50)
+//  प्रत्येक विषयाचे प्रश्न वेगवेगळ्या प्रकरणांनुसार
+// ══════════════════════════════════════════════════════════
+
+const PHY_QUESTIONS = [
+// --- मापन (Measurements) ---
+{q:"SI पद्धतीत लांबीचे मूळ एकक कोणते?",opts:["किलोग्रॅम","मीटर","सेकंद","अँपिअर"],ans:1,exp:"SI (International System) मध्ये लांबीचे एकक मीटर (m) आहे."},
+{q:"१ किलोमीटर = किती मीटर?",opts:["१०० m","१,००० m","१०,००० m","१,०००,००० m"],ans:1,exp:"१ km = १,०००m. Deca=१०, Hecto=१००, Kilo=१,०००."},
+{q:"वस्तुमान मोजण्याचे SI एकक कोणते?",opts:["ग्रॅम","किलोग्रॅम","टन","पाऊंड"],ans:1,exp:"SI पद्धतीत वस्तुमान (Mass) चे एकक किलोग्रॅम (kg) आहे."},
+{q:"वेळ मोजण्याचे SI एकक कोणते?",opts:["मिनिट","तास","सेकंद","दिवस"],ans:2,exp:"वेळाचे SI एकक सेकंद (s) आहे. १ मिनिट = ६० सेकंद."},
+{q:"तापमान मोजण्याचे SI एकक कोणते?",opts:["सेल्सियस","फॅरेनहाइट","केल्विन","रँकाइन"],ans:2,exp:"SI मध्ये तापमानाचे एकक केल्विन (K) आहे. K = °C + 273."},
+{q:"Vernier Callipers कशासाठी वापरतात?",opts:["वजन मोजणे","सूक्ष्म लांबी मोजणे","तापमान मोजणे","वेळ मोजणे"],ans:1,exp:"Vernier Callipers ने mm पेक्षा सूक्ष्म मापन (0.1mm पर्यंत) करता येते."},
+{q:"1 cm = किती mm?",opts:["1 mm","5 mm","10 mm","100 mm"],ans:2,exp:"1 cm = 10 mm. Milli = 1/1000 या उपसर्गाचा अर्थ."},
+{q:"°C ते K रूपांतर कसे करतात?",opts:["K = °C - 273","K = °C × 1.8","K = °C + 273","K = °C / 273"],ans:2,exp:"K = °C + 273. उदा: 0°C = 273K, 100°C = 373K."},
+{q:"Screw Gauge ने किती सूक्ष्म मापन करता येते?",opts:["1 cm","1 mm","0.01 mm","0.001 mm"],ans:2,exp:"Screw Gauge (Micrometer) ने 0.01 mm (10 micron) पर्यंत मापन होते."},
+{q:"1 kg = किती gram?",opts:["10 g","100 g","500 g","1000 g"],ans:3,exp:"1 kg = 1000 g. Kilo = 1000 या उपसर्गाचा अर्थ."},
+// --- गती (Motion) ---
+{q:"घड्याळाच्या लोलकाची गती कोणती?",opts:["सरळ गती","वर्तुळाकार","दोलन गती","यादृच्छिक"],ans:2,exp:"लोलक पुढे-मागे हालतो — दोलन गती (Oscillatory Motion)."},
+{q:"Speed = ?",opts:["बल × वेळ","अंतर / वेळ","वेळ / अंतर","बल / अंतर"],ans:1,exp:"Speed = Distance / Time. एकक: m/s किंवा km/h."},
+{q:"पृथ्वी सूर्याभोवती फिरणे कोणती गती?",opts:["सरळ गती","वर्तुळाकार गती","दोलन गती","यादृच्छिक गती"],ans:1,exp:"पृथ्वी सूर्याभोवती लंबवर्तुळाकार कक्षेत फिरते — वर्तुळाकार गती."},
+{q:"Velocity आणि Speed मधील फरक काय?",opts:["Velocity ला दिशा असते","Speed ला दिशा असते","दोन्ही सारखेच","Velocity = Speed × 2"],ans:0,exp:"Speed scalar (दिशा नाही), Velocity vector (दिशा असते). Velocity = Displacement/Time."},
+{q:"त्वरण (Acceleration) = ?",opts:["v + u / t","v - u / t","v × u / t","v / u × t"],ans:1,exp:"a = (v-u)/t. v=अंतिम वेग, u=प्रारंभिक वेग, t=वेळ. एकक: m/s²."},
+{q:"मधमाश्यांची उड्डाण गती कोणती?",opts:["सरळ गती","वर्तुळाकार","दोलन गती","यादृच्छिक गती"],ans:3,exp:"मधमाश्या अनिश्चित दिशेने उडतात — यादृच्छिक (Random) गती."},
+{q:"1 km/h = किती m/s?",opts:["1 m/s","3.6 m/s","0.278 m/s","10 m/s"],ans:2,exp:"1 km/h = 1000m/3600s = 0.278 m/s. किंवा ÷ 3.6 करा."},
+{q:"एकसमान (Uniform) गती म्हणजे?",opts:["वेग बदलतो","वेग स्थिर असतो","दिशा बदलते","त्वरण जास्त असते"],ans:1,exp:"Uniform Motion: वेग आणि दिशा दोन्ही स्थिर. उदा: Ideal मध्ये सरळ रस्त्यावर गाडी."},
+{q:"Displacement आणि Distance मधील फरक?",opts:["दोन्ही सारखे","Displacement ला दिशा असते","Distance ला दिशा असते","दोन्ही Scalar"],ans:1,exp:"Distance scalar (एकूण मार्ग), Displacement vector (सरळ रेषेतील अंतर + दिशा)."},
+{q:"t=0 ते t=4s मध्ये 80m अंतर कापले. Speed = ?",opts:["10 m/s","20 m/s","40 m/s","80 m/s"],ans:1,exp:"Speed = 80/4 = 20 m/s."},
+// --- बल व दाब ---
+{q:"गुरुत्वाकर्षण बल कोणत्या प्रकारचे?",opts:["संपर्क बल","दूरक्रिया बल","घर्षण बल","तणाव बल"],ans:1,exp:"Gravity Non-contact Force आहे — स्पर्श न करताही कार्य करते."},
+{q:"बलाचे SI एकक कोणते?",opts:["Joule","Pascal","Newton","Watt"],ans:2,exp:"बलाचे (Force) एकक Newton (N) आहे. F = ma."},
+{q:"दाब (Pressure) = ?",opts:["बल × क्षेत्रफळ","बल / क्षेत्रफळ","क्षेत्रफळ / बल","बल + क्षेत्रफळ"],ans:1,exp:"P = F/A. एकक: Pascal (Pa) = N/m². क्षेत्रफळ कमी → दाब जास्त."},
+{q:"सुईचे टोक जास्त दुखते कारण?",opts:["बल जास्त","क्षेत्रफळ खूप कमी → दाब जास्त","वजन जास्त","सुई मऊ असते"],ans:1,exp:"P = F/A. क्षेत्रफळ खूप कमी असल्याने दाब खूप जास्त होतो."},
+{q:"Archimedes तत्त्वानुसार Buoyant Force = ?",opts:["वस्तूचे वजन","विस्थापित द्रवाचे वजन","द्रवाचे एकूण वजन","शून्य"],ans:1,exp:"Buoyant Force = Weight of displaced fluid. वस्तू घनता < द्रव घनता → तरंगते."},
+{q:"घर्षण बल (Friction) कशामुळे निर्माण होते?",opts:["पृष्ठभागाची खडबडीतपणा","वस्तूचा रंग","वस्तूचा आकार","हवेचा दाब"],ans:0,exp:"Friction पृष्ठभागाच्या roughness मुळे निर्माण होते. गती विरुद्ध दिशेने कार्य करते."},
+{q:"वातावरणीय दाब किती असतो?",opts:["101,325 Pa","1,000 Pa","50,000 Pa","200,000 Pa"],ans:0,exp:"Standard Atmospheric Pressure = 101,325 Pa = 1 atm = 760 mmHg."},
+{q:"Newton चा गती विषयक पहिला नियम सांगतो?",opts:["F=ma","Inertia (जडत्व)","Action-Reaction","Energy Conservation"],ans:1,exp:"Newton's First Law: बाह्य बल नसल्यास वस्तू तिची स्थिती बदलत नाही — जडत्व (Inertia)."},
+{q:"पाणबुडी खोल पाण्यात जाते. दाब काय होतो?",opts:["कमी होतो","वाढतो","स्थिर राहतो","शून्य होतो"],ans:1,exp:"P = ρgh. खोली (h) वाढली → दाब वाढतो. म्हणून पाणबुडीला मजबूत कवच लागते."},
+{q:"असंतुलित बल (Unbalanced Force) केव्हा असते?",opts:["वस्तू स्थिर","Net Force = 0","वस्तू हलते","दोन्ही बल समान"],ans:2,exp:"Unbalanced Force: Net Force ≠ 0. वस्तू हलते किंवा थांबते — त्वरण निर्माण होते."},
+// --- साधी यंत्रे ---
+{q:"कात्री कोणत्या वर्गाचे उत्तोलक?",opts:["वर्ग I","वर्ग II","वर्ग III","वर्ग IV"],ans:0,exp:"कात्रीत Fulcrum मध्ये — Effort आणि Load दोन्ही बाजूंनी. वर्ग I उत्तोलक."},
+{q:"चिमटा कोणत्या वर्गाचे उत्तोलक?",opts:["वर्ग I","वर्ग II","वर्ग III","यापैकी नाही"],ans:2,exp:"चिमट्यात Effort मध्ये — Load आणि Fulcrum दोन्ही बाजू. वर्ग III."},
+{q:"MA (Mechanical Advantage) = ?",opts:["Effort / Load","Load / Effort","Load × Effort","Load + Effort"],ans:1,exp:"MA = Load / Effort. MA > 1 → बल फायदा, MA < 1 → वेग फायदा."},
+{q:"Fixed Pulley (स्थिर कप्पी) चा फायदा काय?",opts:["बल कमी होते","दिशा बदलतो","वेग वाढतो","MA > 2"],ans:1,exp:"Fixed Pulley फक्त बलाची दिशा बदलतो. MA = 1. उदा: विहिरीची दोरी."},
+{q:"Inclined Plane (उतरण) चा फायदा काय?",opts:["कमी बलाने जड वस्तू वर न्या","वेग वाढवतो","दिशा बदलतो","वजन कमी करतो"],ans:0,exp:"Inclined Plane: कमी Effort ने जास्त Load वर नेता येते. उदा: स्क्रू, रस्ता."},
+{q:"बाटली उघडण्याचे साधन (Bottle Opener) कोणत्या वर्गाचे?",opts:["वर्ग I","वर्ग II","वर्ग III","वर्ग IV"],ans:1,exp:"Bottle Opener: Load मध्ये (Effort-Load-Fulcrum) → वर्ग II उत्तोलक."},
+{q:"Gear चा उपयोग काय?",opts:["रंग बदलणे","वेग किंवा बल बदलणे","दाब मोजणे","तापमान बदलणे"],ans:1,exp:"Gear: वेग किंवा बल बदलतो. सायकल, घड्याळ, गाडी यांत वापरतात."},
+{q:"Wheel and Axle (चाक-धुरा) चे उदाहरण?",opts:["कात्री","Screwdriver","जळू","Pulley"],ans:1,exp:"Screwdriver, Steering Wheel, Doorknob — हे Wheel and Axle चे उदाहरण."},
+{q:"वर्ग I उत्तोलकात Fulcrum कोठे असतो?",opts:["Effort आणि Load मध्ये","Load पासून दूर","Effort पासून दूर","कोठेही"],ans:0,exp:"वर्ग I: Effort — Fulcrum — Load. उदा: कात्री, तराजू, See-saw."},
+{q:"MA < 1 म्हणजे काय?",opts:["बल फायदा","वेग फायदा","दोन्ही","कोणताही नाही"],ans:1,exp:"MA < 1: Load < Effort. पण Velocity Gain. उदा: चिमटा, सायकल."},
+// --- कार्य व ऊर्जा ---
+{q:"कार्याचे (Work) SI एकक कोणते?",opts:["Newton","Pascal","Joule","Watt"],ans:2,exp:"Work = Force × Distance. एकक: Joule (J) = N·m."},
+{q:"गतिज ऊर्जा (KE) = ?",opts:["mgh","½mv²","mv","F×d"],ans:1,exp:"KE = ½mv². वेग दुप्पट → KE चौपट."},
+{q:"स्थितिज ऊर्जा (PE) = ?",opts:["½mv²","mgh","Pt","F×d"],ans:1,exp:"PE = mgh. m=mass, g=9.8 m/s², h=उंची."},
+{q:"शक्ती (Power) = ?",opts:["F×d","W/t","mgh","½mv²"],ans:1,exp:"P = W/t = Work/Time. एकक: Watt (W) = J/s."},
+{q:"1 HP (अश्वशक्ती) = किती Watt?",opts:["100 W","500 W","746 W","1000 W"],ans:2,exp:"1 HP (Horse Power) = 746 Watt. इंजिनांची शक्ती मोजण्यासाठी वापरतात."},
+{q:"ऊर्जा संवर्धन नियम सांगतो?",opts:["ऊर्जा नष्ट होते","ऊर्जा फक्त रूप बदलते","ऊर्जा निर्माण होते","ऊर्जा दुप्पट होते"],ans:1,exp:"ऊर्जा निर्माण किंवा नष्ट होत नाही — फक्त एका रूपातून दुसऱ्यात बदलते."},
+{q:"Solar Panel कोणती ऊर्जा रूपांतरण करतो?",opts:["Chemical → Electrical","Solar → Electrical","Sound → Electrical","Heat → Light"],ans:1,exp:"Solar Panel: सौर ऊर्जा → विद्युत ऊर्जा (Photovoltaic Effect)."},
+{q:"काम केले नाही असे कधी म्हणतात?",opts:["बल = 0","अंतर = 0","बल ⊥ विस्थापन","वर्गाण A आणि B दोन्ही"],ans:3,exp:"W = 0 जेव्हा: (1) बल = 0 किंवा (2) अंतर = 0 किंवा (3) बल ⊥ विस्थापन (θ=90°)."},
+{q:"धबधब्याच्या पाण्याची PE → KE रूपांतरण होते का?",opts:["नाही","हो","फक्त उन्हाळ्यात","नक्की नाही"],ans:1,exp:"होय! उंचावरचे पाणी PE साठवतो → खाली येताना KE मध्ये रूपांतर → Turbine फिरवतो → Electrical Energy."},
+{q:"1 kWh = किती Joule?",opts:["3,600 J","36,000 J","3,600,000 J","360 J"],ans:2,exp:"1 kWh = 1000W × 3600s = 3,600,000 J = 3.6 × 10⁶ J. घरातील वीज बिल kWh मध्ये."},
+// --- प्रकाश ---
+{q:"प्रकाशाचा वेग किती?",opts:["3×10⁶ m/s","3×10⁸ m/s","3×10¹⁰ m/s","3×10⁴ m/s"],ans:1,exp:"प्रकाशाचा वेग निर्वातात c = 3×10⁸ m/s. हा विश्वातील सर्वात मोठा वेग."},
+{q:"परावर्तनाचा नियम: आपतन कोण = ?",opts:["शून्य","परावर्तन कोण","अपवर्तन कोण","90°"],ans:1,exp:"परावर्तनाचा नियम: आपतन कोण (i) = परावर्तन कोण (r). हे समतल आरशातही लागू."},
+{q:"पाण्यात बुडवलेली काठी वाकलेली का दिसते?",opts:["परावर्तनामुळे","अपवर्तनामुळे","विखुरण्यामुळे","Dispersion मुळे"],ans:1,exp:"प्रकाश पाण्यातून हवेत येताना माध्यम बदलतो → अपवर्तन (Refraction) → वाकलेली दिसते."},
+{q:"इंद्रधनुष्यात किती रंग असतात?",opts:["5","6","7","8"],ans:2,exp:"VIBGYOR — Violet, Indigo, Blue, Green, Yellow, Orange, Red — 7 रंग."},
+{q:"उत्तल भिंग (Convex Lens) = ?",opts:["Diverging Lens","Converging Lens","Flat Lens","यापैकी नाही"],ans:1,exp:"Convex Lens Converging Lens आहे — प्रकाश एकत्र आणतो. Camera, Eye मध्ये."},
+{q:"आकाश निळे का दिसते?",opts:["परावर्तनामुळे","Rayleigh Scattering","Refraction","Dispersion"],ans:1,exp:"निळ्या रंगाची तरंगलांबी कमी — लहान कण त्याला जास्त विखुरतात → Rayleigh Scattering."},
+{q:"Optical Fiber कोणत्या तत्त्वावर काम करतो?",opts:["Reflection","Refraction","Total Internal Reflection","Scattering"],ans:2,exp:"Optical Fiber: Total Internal Reflection (TIR) — प्रकाश कोनापेक्षा जास्त कोन → पूर्ण परावर्तन."},
+{q:"अवतल आरसा (Concave Mirror) चा उपयोग कोठे?",opts:["गाडीचा Back-view Mirror","Solar Cooker","ATM","Mobile Screen"],ans:1,exp:"Concave Mirror प्रकाश एकत्र करतो → Solar Cooker, Torch, दाढी आरसा."},
+{q:"प्रिझम (Prism) प्रकाशाचे काय करतो?",opts:["शोषतो","Dispersion — 7 रंगांत विभागतो","एकत्र आणतो","परावर्तन करतो"],ans:1,exp:"Prism: White Light → VIBGYOR (Dispersion). वेगवेगळ्या रंगांचा अपवर्तांक वेगळा असतो."},
+{q:"Convex Mirror चा उपयोग कोठे?",opts:["Torch","दाढी आरसा","गाडीचा Side/Back-view Mirror","Solar Cooker"],ans:2,exp:"Convex Mirror: रुंद दृष्टी क्षेत्र देतो → गाडीचा Back-view, Rear-view Mirror."},
+// --- उष्णता ---
+{q:"पाण्याचा उकळण्याचा बिंदू किती?",opts:["0°C","50°C","100°C","200°C"],ans:2,exp:"पाणी 1 atm दाबावर 100°C ला उकळते. दाब वाढला → उकळण्याचा बिंदू वाढतो."},
+{q:"बर्फाचा वितळण्याचा बिंदू किती?",opts:["0°C","10°C","-10°C","5°C"],ans:0,exp:"बर्फ 0°C ला वितळतो. Melting Point of Ice = 0°C = 273K."},
+{q:"उष्णता वहनाचे किती प्रकार आहेत?",opts:["1","2","3","4"],ans:2,exp:"3 प्रकार: Conduction (वहन), Convection (संवहन), Radiation (विकिरण)."},
+{q:"Conduction (वहन) कशात होते?",opts:["फक्त द्रवात","फक्त वायूत","घन माध्यमात","निर्वातात"],ans:2,exp:"Conduction: घन (Solid) मध्ये कण हालत न जाता उष्णता जाते. उदा: धातूची रॉड."},
+{q:"Radiation (विकिरण) साठी माध्यम लागते का?",opts:["हो, घन लागते","हो, द्रव लागते","हो, वायू लागते","नाही, निर्वातातही होते"],ans:3,exp:"Radiation साठी माध्यम लागत नाही. सूर्याची उष्णता निर्वातातून पृथ्वीवर येते."},
+{q:"उत्तम उष्णता वाहक धातू कोणता?",opts:["लोह","चांदी","अॅल्युमिनियम","सोने"],ans:1,exp:"Silver (चांदी) सर्वोत्तम उष्णता वाहक. नंतर Copper (तांबे), Gold, Aluminium."},
+{q:"°F ते °C: C = ?",opts:["(F-32)×5/9","(F+32)×5/9","(F-32)×9/5","F×5/9"],ans:0,exp:"C = (F-32) × 5/9. उदा: 98.6°F = (98.6-32)×5/9 = 37°C (शरीराचे तापमान)."},
+{q:"Sublimation म्हणजे?",opts:["Solid → Liquid","Liquid → Gas","Solid → Gas","Gas → Solid"],ans:2,exp:"Sublimation: Solid थेट Gas मध्ये — Liquid अवस्था नाही. उदा: कापूर, Dry Ice (CO₂)."},
+{q:"Convection (संवहन) कशात होते?",opts:["फक्त घनात","द्रव आणि वायूत","निर्वातात","फक्त धातूत"],ans:1,exp:"Convection: द्रव (Liquid) आणि वायू (Gas) मध्ये — कण स्वतः हालतात. उदा: समुद्री वारा."},
+{q:"थर्मामीटरमध्ये Mercury वापरतात का?",opts:["नाही","हो, पण आता Alcohol पण वापरतात","फक्त Digital","फक्त Clinical"],ans:1,exp:"जुन्या थर्मामीटरमध्ये Mercury, आता Alcohol किंवा Digital थर्मामीटर. Clinical: 35-42°C."},
+// --- ध्वनी ---
+{q:"ध्वनीचा वेग हवेत किती?",opts:["100 m/s","343 m/s","1000 m/s","3×10⁸ m/s"],ans:1,exp:"हवेत ध्वनीचा वेग ≈ 343 m/s (20°C). पाण्यात ≈ 1480 m/s, लोखंडात ≈ 5100 m/s."},
+{q:"Ultrasound म्हणजे?",opts:["< 20 Hz","20-20,000 Hz","> 20,000 Hz","= 20 Hz"],ans:2,exp:"Ultrasound: > 20,000 Hz. वटवाघूळ, डॉल्फिन वापरतात. SONAR, Sonography उपयोग."},
+{q:"ध्वनी निर्वातात प्रवास करतो का?",opts:["हो","नाही","फक्त थंड जागी","फक्त उन्हाळ्यात"],ans:1,exp:"नाही! ध्वनी यांत्रिक तरंग — माध्यम आवश्यक. Moon वर ध्वनी ऐकू येत नाही."},
+{q:"Pitch (खडेपणा) कशाशी संबंधित?",opts:["Amplitude","Frequency","Wavelength यापैकी B आणि C","Speed"],ans:1,exp:"Pitch Frequency शी संबंधित. जास्त Frequency → जास्त Pitch (तीव्र आवाज)."},
+{q:"Echo साठी किमान किती अंतर लागते?",opts:["5 m","10 m","17 m","100 m"],ans:2,exp:"Echo ऐकण्यासाठी किमान 17 m अंतर लागते (ध्वनी परत येण्यासाठी 0.1s वेळ लागतो)."},
+{q:"SONAR चा उपयोग कशासाठी?",opts:["हवेत विमान शोधणे","समुद्राची खोली मोजणे","भूकंप मोजणे","तापमान मोजणे"],ans:1,exp:"SONAR (Sound Navigation and Ranging): Ultrasound वापरून समुद्राची खोली, पाणबुडी शोधणे."},
+{q:"ध्वनीची Loudness कशावर अवलंबून?",opts:["Frequency","Amplitude","Wavelength","Speed"],ans:1,exp:"Loudness Amplitude वर अवलंबून. जास्त Amplitude → जास्त मोठा आवाज. एकक: Decibel (dB)."},
+{q:"मानवाला ऐकू येणाऱ्या ध्वनीची श्रेणी?",opts:["0-20 Hz","20-20,000 Hz","20,000-2,00,000 Hz","1-1000 Hz"],ans:1,exp:"Audible Range: 20 Hz – 20,000 Hz. < 20 Hz = Infrasound, > 20,000 Hz = Ultrasound."},
+{q:"Reverberation म्हणजे काय?",opts:["Echo","बंद खोलीत आवाजाचे टिकणे","Amplitude","Frequency"],ans:1,exp:"Reverberation: बंद खोलीत भिंतींवरून वारंवार परावर्तनाने आवाज टिकतो. थिएटरमध्ये नियंत्रण महत्त्वाचे."},
+{q:"Infrasound कोण वापरते?",opts:["वटवाघूळ","डॉल्फिन","हत्ती आणि व्हेल","मधमाशी"],ans:2,exp:"Infrasound (< 20 Hz): हत्ती, व्हेल लांब अंतरावर संवाद साधतात. माणसाला ऐकू येत नाही."},
+// --- चुंबकत्व ---
+{q:"चुंबकाला किती ध्रुव असतात?",opts:["1","2","3","4"],ans:1,exp:"चुंबकाला 2 ध्रुव: N (उत्तर) आणि S (दक्षिण). ध्रुव वेगळे करता येत नाहीत."},
+{q:"समान ध्रुव एकमेकांना काय करतात?",opts:["आकर्षण","प्रतिकर्षण","काहीही नाही","चिकटतात"],ans:1,exp:"N-N किंवा S-S → प्रतिकर्षण. N-S → आकर्षण. प्रतिकर्षण हे चुंबकत्वाचे खरे प्रमाण!"},
+{q:"विद्युत चुंबक (Electromagnet) कशापासून बनतो?",opts:["स्थायी चुंबक","विद्युत प्रवाहातून","सूर्यप्रकाशातून","उष्णतेतून"],ans:1,exp:"Electromagnet: Solenoid मधून विद्युत प्रवाह → चुंबकीय क्षेत्र निर्माण. Current बंद → चुंबकत्व नाही."},
+{q:"Magnetite म्हणजे काय?",opts:["कृत्रिम चुंबक","नैसर्गिक चुंबक (Fe₃O₄)","Electromagnet","Alloy"],ans:1,exp:"Magnetite (Fe₃O₄) हा नैसर्गिक चुंबक आहे. प्राचीन काळी नेव्हिगेशनसाठी वापरत."},
+{q:"Compass (होकायंत्र) कशावर आधारित?",opts:["Solar Energy","भू-चुंबकत्व","Gravity","Static Electricity"],ans:1,exp:"Compass: पृथ्वी एक विशाल चुंबक आहे. Compass चा N ध्रुव पृथ्वीच्या Magnetic S ध्रुवाकडे."},
+{q:"MRI Scanner कशावर काम करतो?",opts:["X-Ray","Sound Waves","Strong Magnetic Field","UV Light"],ans:2,exp:"MRI (Magnetic Resonance Imaging): शक्तिशाली चुंबकीय क्षेत्र + Radio Waves वापरतो."},
+{q:"लोखंडाशिवाय इतर कोणत्या धातूला चुंबक आकर्षित करतो?",opts:["तांबे, सोने","निकेल, कोबाल्ट","चांदी, प्लॅटिनम","अॅल्युमिनियम, जस्त"],ans:1,exp:"चुंबक: Fe (लोह), Ni (निकेल), Co (कोबाल्ट) यांना आकर्षित करतो. इतर नाही."},
+{q:"चुंबक गरम केल्यास काय होते?",opts:["जास्त शक्तिशाली होतो","चुंबकत्व कमी/नष्ट होते","रंग बदलतो","आकार बदलतो"],ans:1,exp:"Curie Temperature वर गेल्यास चुंबकत्व नष्ट होते. लोखंडासाठी Curie Temp ≈ 770°C."},
+{q:"ATM Card मध्ये कशाचा वापर होतो?",opts:["Optical Fiber","Magnetic Strip","Microchip फक्त","X-Ray"],ans:1,exp:"ATM/Credit Card च्या मागे Magnetic Strip असते. त्यात माहिती साठवलेली असते."},
+{q:"Maglev Train कशावर चालते?",opts:["Steam","Diesel","Electromagnetic Levitation","Solar"],ans:2,exp:"Maglev (Magnetic Levitation) Train: Electromagnet मुळे रेल्वे रुळावरून वर उचलली जाते. घर्षण नाही."},
+// --- विद्युत ---
+{q:"विद्युत प्रवाहाचे एकक?",opts:["Volt","Ohm","Ampere","Watt"],ans:2,exp:"Current (I) चे एकक Ampere (A). I = Q/t (Charge per second)."},
+{q:"ओहमचा नियम: V = ?",opts:["I/R","I×R","I+R","I-R"],ans:1,exp:"Ohm's Law: V = IR. V=Volt, I=Ampere, R=Ohm. तापमान स्थिर असताना लागू."},
+{q:"Fuse म्हणजे काय?",opts:["विद्युत साठवण","विशिष्ट प्रवाहाने वितळणारी तार","Battery","Switch"],ans:1,exp:"Fuse: कमी वितळण्याच्या बिंदूची तार. जास्त Current → वितळतो → Circuit तुटतो → Safety."},
+{q:"Series Circuit मध्ये काय समान असते?",opts:["Voltage","Current","Resistance","Power"],ans:1,exp:"Series Circuit: Current (I) समान सर्वत्र. Voltage विभागले जाते. R_total = R₁+R₂+R₃."},
+{q:"Parallel Circuit मध्ये काय समान असते?",opts:["Current","Resistance","Voltage","Power"],ans:2,exp:"Parallel Circuit: Voltage समान सर्वत्र. Current विभागले जाते. 1/R = 1/R₁+1/R₂."},
+{q:"भारतात घरातील वीज पुरवठा?",opts:["110V, 60Hz","220V, 50Hz","230V, 50Hz","12V DC"],ans:2,exp:"भारतात: 230V AC, 50Hz. DC बॅटरीत असतो, AC Generator मधून येतो."},
+{q:"Short Circuit म्हणजे?",opts:["Current कमी होतो","Current खूप वाढतो, उष्णता निर्माण → आग","Voltage शून्य होतो","Circuit बंद होतो"],ans:1,exp:"Short Circuit: Wire थेट जोडले गेले → Resistance खूप कमी → Current खूप वाढतो → आग."},
+{q:"Green (हिरव्या) Wire ची भूमिका?",opts:["Live Wire","Neutral Wire","Earth Wire (Safety)","Fuse Wire"],ans:2,exp:"Earth Wire (Green): Safety साठी. Leakage Current जमिनीत जातो → Shock नाही."},
+{q:"1 Unit विज (kWh) = ?",opts:["1 Watt × 1 Hour","1000 Watt × 1 Hour","1 Watt × 1000 Hours","100 Watt × 10 Hours"],ans:1,exp:"1 kWh = 1000W × 1 Hour = 3.6 × 10⁶ J. घरातील वीज बिल kWh (Units) मध्ये."},
+{q:"LED Bulb CFL पेक्षा चांगला का?",opts:["जास्त उष्णता","कमी वीज वापरतो","जास्त UV","जड असतो"],ans:1,exp:"LED: 80-90% विद्युत ऊर्जा → प्रकाश, फक्त 10% उष्णता. CFL पेक्षा 50% कमी वीज."},
+// --- विश्व ---
+{q:"सौरमालेत किती ग्रह आहेत?",opts:["7","8","9","10"],ans:1,exp:"2006 पासून 8 ग्रह. Pluto आता Dwarf Planet. Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."},
+{q:"सूर्यापासून तिसरा ग्रह कोणता?",opts:["बुध","शुक्र","पृथ्वी","मंगळ"],ans:2,exp:"Mercury(1) → Venus(2) → Earth(3) → Mars(4). Mnemonic: My Very Educated Mother..."},
+{q:"सर्वात मोठा ग्रह कोणता?",opts:["शनी","गुरू","युरेनस","नेपच्यून"],ans:1,exp:"Jupiter (गुरू) सर्वात मोठा ग्रह. त्याचा व्यास पृथ्वीच्या 11 पट. Great Red Spot — वादळ."},
+{q:"हॅलीचा धूमकेतू किती वर्षांनी येतो?",opts:["50-51 वर्षे","75-76 वर्षे","100 वर्षे","25 वर्षे"],ans:1,exp:"Halley's Comet प्रत्येक 75-76 वर्षांनी येतो. शेवटचे 1986, पुढे 2061 मध्ये."},
+{q:"पृथ्वीचा एकमेव नैसर्गिक उपग्रह कोणता?",opts:["Titan","Europa","चंद्र (Moon)","Phobos"],ans:2,exp:"Moon हा पृथ्वीचा एकमेव नैसर्गिक उपग्रह. 27.3 दिवसात एक प्रदक्षिणा."},
+{q:"आपली आकाशगंगेचे नाव काय?",opts:["Andromeda","Milky Way","Triangulum","Whirlpool"],ans:1,exp:"आपली आकाशगंगा Milky Way (आकाशगंगा). यात 200-400 अब्ज तारे आहेत."},
+{q:"शनी (Saturn) ग्रहाची विशेषता काय?",opts:["सर्वात मोठा","Rings (कडे)","सर्वात उष्ण","सर्वात दूर"],ans:1,exp:"Saturn ला चमकदार Rings आहेत — बर्फ आणि दगडांचे. यालाही 82 उपग्रह आहेत."},
+{q:"Black Hole म्हणजे काय?",opts:["रिकामी जागा","अतिशय घन, प्रकाशही बाहेर पडत नाही","विशाल तारा","New Planet"],ans:1,exp:"Black Hole: अतिशय घन — Escape Velocity > c (प्रकाशाचा वेग). प्रकाशही आत ओढला जातो."},
+{q:"Pole Star (ध्रुव तारा) विशेष का?",opts:["सर्वात तेजस्वी","नेहमी उत्तर दिशा दाखवतो","सर्वात जवळचा तारा","सर्वात मोठा"],ans:1,exp:"Polaris (Pole Star): पृथ्वीच्या अक्षाच्या रेषेत — नेहमी उत्तर दिशेत दिसतो. नेव्हिगेशनसाठी."},
+{q:"सर्वात जवळचा तारा (सूर्य सोडून)?",opts:["Sirius","Proxima Centauri","Betelgeuse","Rigel"],ans:1,exp:"Proxima Centauri: पृथ्वीपासून 4.24 Light Years. Alpha Centauri तारासमूहाचा भाग."},
+];
+
+const CHEM_QUESTIONS = [
+{q:"पाण्याचे रासायनिक सूत्र?",opts:["CO₂","H₂O","NaCl","O₂"],ans:1,exp:"पाणी = H₂O. दोन Hydrogen + एक Oxygen अणू. हे Compound आहे."},
+{q:"लोहाचे रासायनिक प्रतीक?",opts:["Lo","Io","Fe","Li"],ans:2,exp:"Iron (लोह) = Fe. Latin 'Ferrum' वरून. Atomic Number = 26."},
+{q:"सोन्याचे रासायनिक प्रतीक?",opts:["So","Go","Au","Ag"],ans:2,exp:"Gold (सोने) = Au. Latin 'Aurum' वरून. Atomic Number = 79."},
+{q:"pH = 7 म्हणजे?",opts:["अम्लीय","आम्लीय","तटस्थ","खारट"],ans:2,exp:"pH = 7 तटस्थ (Neutral). शुद्ध पाणी. Acids < 7, Bases > 7."},
+{q:"Rusting (गंज) कोणत्या प्रकारचे बदल?",opts:["भौतिक","रासायनिक","दोन्ही","कोणताही नाही"],ans:1,exp:"Fe + O₂ + H₂O → Fe₂O₃·xH₂O. नवीन पदार्थ → रासायनिक बदल. Irreversible."},
+{q:"Evaporation (वाष्पीभवन) ने काय वेगळे करतात?",opts:["वाळू+पाणी","मीठ+पाणी","तेल+पाणी","लोह+सल्फर"],ans:1,exp:"Evaporation: पाणी वाफ होते, मीठ राहते. समुद्राच्या पाण्यापासून मीठ बनवतात."},
+{q:"हवेत Nitrogen (N₂) चे प्रमाण?",opts:["21%","78%","0.04%","1%"],ans:1,exp:"हवा: N₂=78.09%, O₂=20.95%, Ar=0.93%, CO₂=0.04%."},
+{q:"अम्लाची चव कशी असते?",opts:["कडू","गोड","आंबट","तुरट"],ans:2,exp:"Acids: आंबट (Sour) चव. उदा: लिंबाचा रस (Citric Acid), व्हिनेगर (Acetic Acid)."},
+{q:"लिटमस कागद आम्लात (Base) कोणता रंग?",opts:["लाल","निळा","पिवळा","हिरवा"],ans:1,exp:"आम्ल (Base) → लिटमस निळा. अम्ल (Acid) → लिटमस लाल. Neutral → बदल नाही."},
+{q:"Neutralization = ?",opts:["Acid + Base → Salt + Water","Acid + Salt → Base + Water","Base + Water → Acid + Salt","Acid + Metal → Salt + H₂"],ans:0,exp:"Neutralization: Acid + Base → Salt + Water. उदा: HCl + NaOH → NaCl + H₂O."},
+{q:"Nylon कोणत्या प्रकारचा पदार्थ?",opts:["नैसर्गिक धागा","कृत्रिम पॉलिमर","धातू","खनिज"],ans:1,exp:"Nylon = Polyamide Polymer (कृत्रिम धागा). रेशमाचा पर्याय. Rope, Toothbrush."},
+{q:"Thermoplastic आणि Thermosetting Plastic मधील फरक?",opts:["रंग","Thermoplastic पुन्हा वाकते, Thermosetting नाही","दोन्ही सारखे","घनता"],ans:1,exp:"Thermoplastic (PE, PVC): गरम → मऊ → Recycle. Thermosetting (Bakelite): एकदाच — पुन्हा नाही."},
+{q:"सिमेंट कशापासून बनतो?",opts:["वाळू फक्त","CaCO₃ + SiO₂ + Al₂O₃","मीठ + पाणी","लोह + कार्बन"],ans:1,exp:"Portland Cement: Limestone (CaCO₃) + Silica (SiO₂) + Alumina (Al₂O₃) → भट्टीत शिजवतात."},
+{q:"धातू विद्युत वाहक असतात का?",opts:["नाही","हो","फक्त सोने-चांदी","फक्त लोह"],ans:1,exp:"सर्व धातू उत्तम विद्युत वाहक असतात. Silver > Copper > Gold > Aluminium."},
+{q:"Physical Change (भौतिक बदल) उदाहरण?",opts:["लोह गंजणे","कागद जाळणे","बर्फ वितळणे","दूध दही होणे"],ans:2,exp:"बर्फ वितळणे: H₂O Solid → H₂O Liquid. रचना बदलत नाही, फक्त अवस्था बदलते."},
+{q:"Compound (संयुग) म्हणजे?",opts:["एकाच प्रकारचे अणू","भिन्न मूलद्रव्ये रासायनिक बंधाने","मिश्रण","धातू"],ans:1,exp:"Compound: दोन किंवा अधिक भिन्न मूलद्रव्ये निश्चित गुणोत्तरात रासायनिक बंधाने जोडलेले."},
+{q:"Mixture (मिश्रण) आणि Compound मधील फरक?",opts:["रंग","Mixture मध्ये रासायनिक बंध नाही","दोन्ही सारखे","घनता"],ans:1,exp:"Mixture: रासायनिक बंध नाही, गुणोत्तर बदलते, वेगळे करता येते. Compound: उलट."},
+{q:"Chromatography कशासाठी वापरतात?",opts:["Distillation","रंग मिश्रण वेगळे करणे","गाळणे","वाफ करणे"],ans:1,exp:"Chromatography: वेगवेगळ्या गतीने प्रवास करून रंग वेगळे होतात. Ink, Food Color."},
+{q:"Acid Rain (अम्लीय पाऊस) कशामुळे?",opts:["CO₂","SO₂, NOx","Argon","Methane"],ans:1,exp:"SO₂ (Sulfur Dioxide) + NOx + पाणी → H₂SO₄, HNO₃ → अम्लीय पाऊस. Industrialization."},
+{q:"Corrosion (गंज) रोखण्यासाठी काय करतात?",opts:["गरम करणे","Painting, Galvanizing, Alloying","थंड करणे","पाण्यात बुडवणे"],ans:1,exp:"Corrosion प्रतिबंध: Painting, Galvanizing (Zn coating), Alloy (Stainless Steel), Oil coating."},
+{q:"कार्बन डायऑक्साइड (CO₂) चे गुणधर्म?",opts:["ज्वलनशील","ज्वलन सहाय्यक","ज्वलन रोखतो","रंगीत"],ans:2,exp:"CO₂: Incombustible (जळत नाही), Combustion रोखतो. म्हणून Fire Extinguisher मध्ये वापरतात."},
+{q:"Distillation मध्ये काय वेगळे होते?",opts:["घन + घन","द्रव + द्रव","घन + द्रव","वायू + द्रव"],ans:1,exp:"Fractional Distillation: वेगळ्या Boiling Points असलेले द्रव वेगळे करतात. Crude Oil Refining."},
+{q:"मीठाचे (NaCl) रासायनिक नाव?",opts:["Calcium Carbonate","Sodium Chloride","Sodium Hydroxide","Potassium Chloride"],ans:1,exp:"मीठ = Sodium Chloride (NaCl). Na = Sodium, Cl = Chlorine. Ionic Bond."},
+{q:"बेकिंग सोडा (Baking Soda) म्हणजे?",opts:["NaOH","NaCl","NaHCO₃","Na₂CO₃"],ans:2,exp:"Baking Soda = Sodium Bicarbonate (NaHCO₃). अम्लाशी अभिक्रिया → CO₂ बाहेर पडतो."},
+{q:"Hydrogen (H₂) गुणधर्म?",opts:["अत्यंत जड","सर्वात हलका वायू","रंगीत","जळत नाही"],ans:1,exp:"Hydrogen सर्वात हलका मूलद्रव्य. ज्वलनशील. H₂ + O₂ → H₂O. Fuel Cell वापर."},
+{q:"ऑक्सिजन (O₂) ची चाचणी?",opts:["निळी लिटमस","विझलेली काडी पेटते","जळती काडी विझते","रंग बदल"],ans:1,exp:"O₂ ची चाचणी: जवळ विझलेली काडी आणा → पुन्हा पेटते (Glowing splint test)."},
+{q:"तुरटी (Alum = KAl(SO₄)₂) चा उपयोग?",opts:["अन्नपदार्थ","जल शुद्धीकरण — Coagulation","खते","रंग"],ans:1,exp:"Alum: Coagulation — मातीचे बारीक कण एकत्र जड करतो → तळाशी जातात → स्वच्छ पाणी."},
+{q:"Centrifugation कशासाठी वापरतात?",opts:["गाळणे","वेगाने फिरवून वेगळे करणे","Distillation","Crystallization"],ans:1,exp:"Centrifuge: जास्त वेगाने फिरवणे → जड कण बाहेर. दूधाची मलई, रक्ताचे घटक वेगळे."},
+{q:"Noble Gases कोणते?",opts:["H, O, N","He, Ne, Ar, Kr, Xe","Na, K, Ca","Cl, Br, I"],ans:1,exp:"Noble Gases (Group 18): He, Ne, Ar, Kr, Xe, Rn. Inert — इतर मूलद्रव्यांशी अभिक्रिया नाही."},
+{q:"पितळ (Brass) म्हणजे?",opts:["Fe + Sn","Cu + Zn","Cu + Sn","Fe + Cr"],ans:1,exp:"Brass (पितळ) = Copper (Cu) + Zinc (Zn). वाद्ये, नल, दागिने."},
+{q:"Stainless Steel म्हणजे?",opts:["Fe + Sn","Cu + Zn","Fe + Cr + Ni","Fe + C"],ans:2,exp:"Stainless Steel = Iron + Chromium (Cr) + Nickel (Ni). गंज प्रतिरोधक. भांडी, Surgical tools."},
+{q:"कार्बन कोणत्या Allotropes मध्ये आढळतो?",opts:["हिरा आणि Graphite","हिरा फक्त","Graphite फक्त","Coal फक्त"],ans:0,exp:"Carbon चे Allotropes: Diamond (हिरा), Graphite (ग्रेफाइट), Fullerene, Carbon Nanotube."},
+{q:"Photosynthesis मध्ये कोणता वायू सोडला जातो?",opts:["CO₂","N₂","O₂","H₂"],ans:2,exp:"Photosynthesis: 6CO₂+6H₂O→C₆H₁₂O₆+6O₂. O₂ सोडला जातो."},
+{q:"Galvanization म्हणजे?",opts:["लोखंडावर Zinc coating","Copper वर Silver","Steel वर Gold","Aluminium वर Paint"],ans:0,exp:"Galvanization: लोखंडावर Zinc (Zn) चा थर. Zn जास्त क्रियाशील → आधी ऑक्सिडेशन → Fe वाचतो."},
+{q:"Greenhouse Gas कोणते?",opts:["O₂, N₂","CO₂, CH₄, N₂O, H₂O vapor","Ar, He","SO₂ फक्त"],ans:1,exp:"Greenhouse Gases: CO₂, CH₄ (Methane), N₂O, H₂O vapor. यांच्यामुळे Global Warming."},
+{q:"Soap (साबण) कसे काम करते?",opts:["फक्त घासून","Micelle — तेल+पाणी जोडतो","UV Light","Chemical Reaction"],ans:1,exp:"Soap: Hydrophilic (पाण्याशी) आणि Hydrophobic (तेलाशी) दोन्ही भाग → Micelle तयार → तेल निघते."},
+{q:"Hard Water मध्ये Soap का काम करत नाही?",opts:["pH जास्त","Ca, Mg क्षार असतात","Temperature कमी","Soap खराब"],ans:1,exp:"Hard Water: Dissolved Ca²⁺, Mg²⁺ → Soap शी Insoluble Scum तयार → Lather नाही."},
+{q:"Corrosion of Aluminium ला काय म्हणतात?",opts:["Rusting","Tarnishing","Oxidation","Anodizing"],ans:2,exp:"Al + O₂ → Al₂O₃ (Oxide Layer). ही Layer Protective असते — आतील Al सुरक्षित राहतो."},
+{q:"Decomposition Reaction उदाहरण?",opts:["A+B→AB","AB→A+B","A+BC→AC+B","Burning"],ans:1,exp:"Decomposition: AB→A+B. उदा: 2H₂O→2H₂+O₂ (Electrolysis), 2HgO→2Hg+O₂."},
+{q:"Electrolysis म्हणजे?",opts:["वितळणे","विद्युत प्रवाहाने रासायनिक बदल","गाळणे","Distillation"],ans:1,exp:"Electrolysis: विद्युत प्रवाह → Chemical Decomposition. H₂O→H₂+O₂. Gold Plating."},
+{q:"Vinegar (व्हिनेगर) म्हणजे?",opts:["Acetic Acid (5-8%)","Hydrochloric Acid","Citric Acid","Sulphuric Acid"],ans:0,exp:"Vinegar = Dilute Acetic Acid (CH₃COOH) 5-8%. pH ≈ 2.5. अन्नपदार्थात वापरतात."},
+{q:"Lemon Juice (लिंबाचा रस) मध्ये कोणते Acid?",opts:["Acetic Acid","Citric Acid","Hydrochloric Acid","Oxalic Acid"],ans:1,exp:"Lemon मध्ये Citric Acid (C₆H₈O₇). pH ≈ 2.2. Vitamin C (Ascorbic Acid) पण असते."},
+{q:"पाण्याचे pH किती?",opts:["0","5","7","14"],ans:2,exp:"शुद्ध पाण्याचे pH = 7 (Neutral). [H⁺] = [OH⁻] = 10⁻⁷ mol/L."},
+{q:"Rust चा रंग कोणता?",opts:["काळा","पांढरा","लाल-तपकिरी","निळा"],ans:2,exp:"Rust = Fe₂O₃·xH₂O. रंग: लाल-तपकिरी (Reddish-brown). पाणी + ऑक्सिजन दोन्ही आवश्यक."},
+{q:"Catalyst म्हणजे?",opts:["अभिक्रिया थांबवतो","गती वाढवतो/कमी करतो पण स्वतः बदलत नाही","अभिक्रियेत वापरतो","तापमान बदलतो"],ans:1,exp:"Catalyst: Reaction Rate बदलतो पण स्वतः Reaction मध्ये वापरत नाही. उदा: MnO₂, Enzymes."},
+{q:"Sulphur (गंधक) चे Symbol काय?",opts:["Su","Sl","S","Sf"],ans:2,exp:"Sulphur = S. Atomic Number = 16. पिवळ्या रंगाचे घन अधातू. Gunpowder, Rubber मध्ये."},
+{q:"Carbon Monoxide (CO) धोकादायक का?",opts:["जड म्हणून","Blood मधील O₂ Hemoglobin शी जोडतो","रंगीत","जड वायू"],ans:1,exp:"CO: Hemoglobin शी O₂ पेक्षा 200 पट जास्त बांधतो → रक्त O₂ पोहोचवत नाही → मृत्यू."},
+{q:"Dry Ice (कोरडा बर्फ) म्हणजे?",opts:["खूप थंड पाण्याचा बर्फ","Solid CO₂","Liquid N₂","Frozen Alcohol"],ans:1,exp:"Dry Ice = Solid Carbon Dioxide (CO₂). -78.5°C. Sublimation होते (Solid→Gas थेट). खाद्यपदार्थ थंड ठेवण्यासाठी."},
+];
+
+const BIO_QUESTIONS = [
+{q:"पेशीचे 'Powerhouse' कोणाला म्हणतात?",opts:["Nucleus","Ribosome","Mitochondria","Vacuole"],ans:2,exp:"Mitochondria: Aerobic Respiration → ATP (Energy). म्हणून 'Powerhouse of Cell'."},
+{q:"वनस्पती पेशींमध्ये Cell Wall कशाची बनलेली?",opts:["Protein","Cellulose","Chitin","Silica"],ans:1,exp:"Plant Cell Wall = Cellulose (Polysaccharide). कठीण, वस्तूला निश्चित आकार देते."},
+{q:"प्रकाशसंश्लेषण (Photosynthesis) कोठे होते?",opts:["Mitochondria","Nucleus","Chloroplast","Ribosome"],ans:2,exp:"Chloroplast मध्ये Chlorophyll असते → सूर्यप्रकाश शोषतो → Photosynthesis."},
+{q:"Malaria कशामुळे होतो?",opts:["Bacteria","Virus","Plasmodium (Protozoa)","Fungi"],ans:2,exp:"Malaria: Plasmodium (4 Species). Anopheles मादी डास वाहक. ताप, थंडी, अशक्तपणा."},
+{q:"मानवी शरीरात किती हाडे?",opts:["106","206","306","150"],ans:1,exp:"प्रौढ माणसाला 206 हाडे. बालकाला 270 (काही नंतर जोडली जातात)."},
+{q:"Vitamin C च्या कमतरतेने कोणता रोग?",opts:["Rickets","Scurvy","Night Blindness","Goitre"],ans:1,exp:"Vitamin C (Ascorbic Acid) कमतरता → Scurvy. हिरड्यांतून रक्त, दात गळतात."},
+{q:"अन्नसाखळीत Producer (उत्पादक) कोण?",opts:["वाघ","ससा","वनस्पती","बुरशी"],ans:2,exp:"Plants: Autotroph → CO₂+H₂O+Light → Glucose. Primary Producers. बाकी Consumers."},
+{q:"BCG लस कोणत्या रोगासाठी?",opts:["Malaria","TB (क्षयरोग)","Dengue","COVID-19"],ans:1,exp:"BCG (Bacillus Calmette-Guérin) = TB (Tuberculosis) लस. जन्मानंतर लगेच दिली जाते."},
+{q:"Earthworm (गांडूळ) कोणत्या संघातील?",opts:["Arthropoda","Annelida","Mollusca","Porifera"],ans:1,exp:"Annelida: खंडित शरीर, Setae. गांडूळ शेतीसाठी उपयुक्त — माती सुपीक बनवतो."},
+{q:"DNA कोठे आढळतो?",opts:["Mitochondria फक्त","Nucleus मध्ये (Chromosome मध्ये)","Cell Wall मध्ये","Ribosome मध्ये"],ans:1,exp:"DNA: Nucleus मध्ये Chromosome वर. आनुवंशिक माहिती साठवतो. Mitochondria मध्येही थोडा."},
+{q:"Yeast (यीस्ट) कशासाठी वापरतात?",opts:["कापड रंगवणे","ब्रेड बनवणे — CO₂ सोडतो","औषध","खते"],ans:1,exp:"Yeast: Saccharomyces cerevisiae. Anaerobic Respiration → Ethanol + CO₂. ब्रेड फुगतो."},
+{q:"Photosynthesis चे समीकरण?",opts:["C₆H₁₂O₆+O₂→CO₂+H₂O","6CO₂+6H₂O→C₆H₁₂O₆+6O₂","CO₂+H₂O→O₂","H₂O→H₂+O₂"],ans:1,exp:"6CO₂+6H₂O →(Sunlight+Chlorophyll)→ C₆H₁₂O₆+6O₂. Glucose तयार होतो."},
+{q:"Transpiration (बाष्पोत्सर्जन) कशातून होते?",opts:["मुळांतून","Stomata द्वारे पानांतून","खोडातून","फुलांतून"],ans:1,exp:"Transpiration: Stomata (रंध्र) द्वारे पाण्याची वाफ बाहेर. पाण्याची वाहतूक, तापमान नियंत्रण."},
+{q:"Blood Group कोणी शोधले?",opts:["Louis Pasteur","Karl Landsteiner","Fleming","Watson"],ans:1,exp:"Karl Landsteiner (1901): ABO Blood Group System. Nobel Prize 1930."},
+{q:"HIV कशामुळे होतो?",opts:["Bacteria","Protozoa","Virus","Fungi"],ans:2,exp:"HIV (Human Immunodeficiency Virus): AIDS ला कारणीभूत. Immune System नष्ट करतो."},
+{q:"Stomata (रंध्र) चे कार्य?",opts:["पाणी शोषणे","CO₂ आत, O₂+H₂O बाहेर","अन्न साठवणे","मुळांचे कार्य"],ans:1,exp:"Stomata: CO₂ आत (Photosynthesis साठी), O₂ आणि H₂O बाहेर. Guard Cells नियंत्रण करतात."},
+{q:"RBC (Red Blood Cells) चे कार्य?",opts:["रोगप्रतिकार","O₂ वाहतूक","रक्त गोठवणे","Enzyme बनवणे"],ans:1,exp:"RBC: Hemoglobin असते → O₂ फुफ्फुसातून पेशींपर्यंत पोहोचवतो. Nucleus नसतो. 120 दिवस आयुष्य."},
+{q:"Human Heart मध्ये किती Chambers?",opts:["2","3","4","6"],ans:2,exp:"4 Chambers: Right Atrium, Left Atrium, Right Ventricle, Left Ventricle. Lub-Dub = Valve."},
+{q:"Kwashiorkor कशामुळे?",opts:["Vitamin C कमतरता","Protein कमतरता","Calcium कमतरता","Iron कमतरता"],ans:1,exp:"Kwashiorkor: Protein Deficiency. लहान मुलांमध्ये — पोट फुगणे, केस निस्तेज."},
+{q:"Rickets (मुडदूस) कशामुळे?",opts:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],ans:3,exp:"Vitamin D कमतरता → Calcium/Phosphorus शोषण कमी → हाडे मऊ, वाकड्या. सूर्यप्रकाश महत्त्वाचा."},
+{q:"Penicillin कोणी शोधले?",opts:["Louis Pasteur","Alexander Fleming","Edward Jenner","Darwin"],ans:1,exp:"Alexander Fleming (1928): Mold Penicillium notatum पासून Penicillin. जगातील पहिले Antibiotic."},
+{q:"Dengue रोगाचा वाहक (Vector) कोण?",opts:["Anopheles डास","Aedes aegypti डास","घरमाशी","उंदीर"],ans:1,exp:"Dengue: Aedes aegypti (दिवसा चावतो). तीव्र ताप, सांधेदुखी. Platelet कमी होतात."},
+{q:"Typhoid कशामुळे?",opts:["Virus","Salmonella typhi (Bacteria)","Protozoa","Fungi"],ans:1,exp:"Typhoid: Salmonella typhi. दूषित अन्न/पाण्यातून. सतत ताप, डोकेदुखी. Vaccine उपलब्ध."},
+{q:"Night Blindness (रातांधळेपणा) कशामुळे?",opts:["Vitamin A","Vitamin B","Vitamin C","Vitamin D"],ans:0,exp:"Vitamin A (Retinol) कमतरता → Rhodopsin (Rod cells pigment) कमी → कमी प्रकाशात दिसत नाही."},
+{q:"Gymnosperm आणि Angiosperm मधील फरक?",opts:["रंग","Gymnosperm: उघडे बीज; Angiosperm: फळात बीज","आकार","मुळे"],ans:1,exp:"Gymnosperm: Naked Seed (Pine, Deodar). Angiosperm: Enclosed Seed in Fruit (आंबा, गुलाब)."},
+{q:"Vertebrata (पाठकणी प्राणी) चे वैशिष्ट्य?",opts:["सांधेदार पाय","Vertebral Column (पाठकणा)","Exoskeleton","Porous Body"],ans:1,exp:"Vertebrata: Vertebral Column (Backbone). 5 वर्ग: Fish, Amphibia, Reptilia, Aves, Mammalia."},
+{q:"Porifera (स्पंज) कसे अन्न मिळवतात?",opts:["शिकार","Filter Feeding","Photosynthesis","Parasitic"],ans:1,exp:"Porifera: पाण्यातून Filter Feeding. Pores मधून पाणी आत → अन्न कण शोषतात."},
+{q:"Arthropoda संघाचे वैशिष्ट्य?",opts:["Backbone","Jointed Appendages + Exoskeleton","Soft Body","Spines"],ans:1,exp:"Arthropoda: Jointed Legs (सांधेदार पाय) + Exoskeleton (Chitin). सर्वात मोठा Phylum."},
+{q:"Blood Pressure (रक्तदाब) Normal किती?",opts:["100/60 mmHg","120/80 mmHg","150/100 mmHg","90/60 mmHg"],ans:1,exp:"Normal BP: 120/80 mmHg. 120 = Systolic (Heart आकुंचन), 80 = Diastolic (Heart विस्तार)."},
+{q:"Reflex Action कोठून नियंत्रित होते?",opts:["Brain","Spinal Cord","Kidney","Heart"],ans:1,exp:"Reflex Action: Spinal Cord. त्वरित प्रतिसाद — Brain ला वेळ नसतो. उदा: गरम वस्तू स्पर्श → हात काढणे."},
+{q:"Ecosystem (परिसंस्था) मध्ये Decomposers कोण?",opts:["वनस्पती","प्राणी","बुरशी आणि जीवाणू","कीटक"],ans:2,exp:"Decomposers: Fungi, Bacteria. मृत सजीवांचे विघटन → खनिजे परत मातीत → Nutrient Cycling."},
+{q:"Insulin कोणती ग्रंथी तयार करते?",opts:["Thyroid","Pancreas","Adrenal","Pituitary"],ans:1,exp:"Insulin: Pancreas (Beta cells). रक्तातील Glucose नियंत्रण. कमतरता → Diabetes Mellitus."},
+{q:"Adrenaline (Epinephrine) कोणती परिस्थितीत सोडला जातो?",opts:["झोपताना","भय, धोका — Fight or Flight","जेवताना","व्यायाम नंतर"],ans:1,exp:"Adrenaline: Adrenal Gland (मूत्रपिंडावर). धोक्याच्या वेळी — Heart Rate, BP वाढवतो."},
+{q:"Xylem चे कार्य?",opts:["अन्न वाहतूक","पाणी + खनिजे मुळांतून पानांपर्यंत","Photosynthesis","श्वसन"],ans:1,exp:"Xylem: Water + Minerals वाहतूक (Unidirectional — वर). Phloem: Food वाहतूक (दोन्ही दिशा)."},
+{q:"Pasteurization कशासाठी?",opts:["रंग","दूधातील हानिकारक जीवाणू नष्ट करणे","चव","घनता"],ans:1,exp:"Pasteurization (Louis Pasteur): 72°C वर 15 sec गरम → थंड. Pathogenic Bacteria नष्ट. दूध सुरक्षित."},
+{q:"Ozone Layer कशापासून संरक्षण करते?",opts:["Gamma Rays","UV Radiation","IR Radiation","X-Rays"],ans:1,exp:"Ozone (O₃) Layer: Stratosphere मध्ये. UV Radiation शोषते. CFC मुळे Ozone Layer कमी होत आहे."},
+{q:"एड्स (AIDS) पसरतो कसा?",opts:["हवेतून","स्पर्शातून","दूषित रक्त, असुरक्षित संभोग","पाण्यातून"],ans:2,exp:"HIV/AIDS: दूषित रक्त, Infected Needles, Mother to Child. हवेतून/स्पर्शातून पसरत नाही."},
+{q:"Goitre (गलगंड) कशामुळे?",opts:["Iron","Calcium","Iodine","Vitamin D"],ans:2,exp:"Iodine कमतरता → Thyroid Hormone कमी → Thyroid Gland वाढते → Goitre. Iodized Salt वापरावे."},
+{q:"Symbiosis म्हणजे?",opts:["एक खातो दुसऱ्याला","दोघांनाही फायदा","एक नुकसान एक तटस्थ","दोन्ही हानी"],ans:1,exp:"Mutualistic Symbiosis: दोघांनाही फायदा. उदा: Rhizobium + शेंगा वनस्पती. Lichen = Algae + Fungi."},
+{q:"Antibiotic म्हणजे?",opts:["Virus नाशक औषध","Bacteria नाशक पदार्थ","Fungal infection साठी","Pain killer"],ans:1,exp:"Antibiotics: Bacteria नाशक. Penicillin, Streptomycin. Viral Infections साठी काम करत नाही!"},
+{q:"Iron (Fe) कमतरतेने कोणता रोग?",opts:["Rickets","Anaemia","Scurvy","Goitre"],ans:1,exp:"Iron Deficiency Anaemia: Hemoglobin कमी → O₂ वाहतूक कमी → थकवा, फिकट रंग."},
+];
+
+const GK_QUESTIONS = [
+{q:"C.V. Raman यांचा शोध?",opts:["Gravity","Raman Effect","X-Ray","Telephone"],ans:1,exp:"C.V. Raman: Raman Effect (1928) — प्रकाश विखुरण. Nobel Prize (Physics) 1930. भारताचे पहिले Science Nobel."},
+{q:"भारताचा पहिला उपग्रह?",opts:["PSLV","GSAT-1","Aryabhata","Chandrayaan"],ans:2,exp:"Aryabhata: 19 April 1975. ISRO चा पहिला उपग्रह. आर्यभट (महान गणितज्ञ) यांच्या नावाने."},
+{q:"Penicillin कोणी शोधले?",opts:["Louis Pasteur","Alexander Fleming","Edward Jenner","Darwin"],ans:1,exp:"Alexander Fleming (1928): Penicillium notatum Mold पासून. Nobel Prize (1945)."},
+{q:"Chandrayaan-3 केव्हा?",opts:["2008","2019","2023","2021"],ans:2,exp:"Chandrayaan-3: July 14, 2023 प्रक्षेपण. Aug 23, 2023 South Pole Soft Landing. जगात पहिल्यांदा!"},
+{q:"DNA रचना शोध?",opts:["Mendel","Darwin","Watson & Crick","Fleming"],ans:2,exp:"James Watson & Francis Crick (1953): DNA Double Helix Structure. Nobel Prize 1962."},
+{q:"आकाश निळे का?",opts:["Reflection","Rayleigh Scattering","Refraction","Absorption"],ans:1,exp:"Rayleigh Scattering: निळ्या प्रकाशाची तरंगलांबी कमी → जास्त विखुरतो → सर्वत्र निळा दिसतो."},
+{q:"APJ Abdul Kalam कशासाठी प्रसिद्ध?",opts:["Nuclear Physics","Missile Programme, ISRO","Computer","Vaccine"],ans:1,exp:"APJ Abdul Kalam: DRDO — Agni, Prithvi Missiles. ISRO — PSLV. भारत रत्न 1997. 11वे राष्ट्रपती."},
+{q:"Mangalyaan (Mars Mission) केव्हा?",opts:["2008","2012","2014","2016"],ans:2,exp:"Mangalyaan (MOM): November 5, 2013 प्रक्षेपण. September 24, 2014 Mars Orbit. पहिल्याच प्रयत्नात!"},
+{q:"Isaac Newton चे मुख्य योगदान?",opts:["Relativity","Germ Theory","Gravity, Laws of Motion, Calculus","Evolution"],ans:2,exp:"Newton: Universal Gravitation, 3 Laws of Motion, Calculus (Leibniz सोबत), Optics. Principia Mathematica (1687)."},
+{q:"Albert Einstein चा E=mc² काय सांगतो?",opts:["Energy = Mass × Speed","Energy = Mass × (Speed of Light)²","Mass = Energy × c","c = E/m"],ans:1,exp:"E=mc²: Mass आणि Energy एकमेकांत रूपांतरित होतात. Nuclear Energy (Atom Bomb, Nuclear Reactor) या तत्त्वावर."},
+{q:"Marie Curie चे योगदान?",opts:["X-Ray शोध","Radium, Polonium शोध","DNA","Penicillin"],ans:1,exp:"Marie Curie: Polonium (Po), Radium (Ra) शोध. 2 Nobel Prizes (Physics 1903, Chemistry 1911). पहिली महिला Nobel laureate."},
+{q:"ISRO चे मुख्यालय कोठे?",opts:["Mumbai","Delhi","Bengaluru","Chennai"],ans:2,exp:"ISRO (Indian Space Research Organisation): Bengaluru. Founded 1969. Chairman: S. Somanath (2024)."},
+{q:"Louis Pasteur चे योगदान?",opts:["Evolution","Germ Theory, Pasteurization, Rabies Vaccine","DNA","X-Ray"],ans:1,exp:"Louis Pasteur: Germ Theory of Disease, Pasteurization (दूध सुरक्षित), Rabies Vaccine, Anthrax Vaccine."},
+{q:"Aryabhata (गणितज्ञ) चे योगदान?",opts:["Telescope","शून्य, दशमलव, π≈3.14, पृथ्वी गोल","Penicillin","Gravity"],ans:1,exp:"Aryabhata (476-550 AD): शून्य, दशमलव, π≈3.14159, पृथ्वी स्वतःभोवती फिरते — महान शोध."},
+{q:"Charles Darwin चे Theory?",opts:["Gravity","Natural Selection (नैसर्गिक निवड)","Germ Theory","Relativity"],ans:1,exp:"Charles Darwin: Theory of Evolution — Natural Selection. 'On the Origin of Species' (1859)."},
+{q:"Gregor Mendel कशासाठी प्रसिद्ध?",opts:["Physics","आनुवंशिकतेचे नियम (Genetics)","Chemistry","Astronomy"],ans:1,exp:"Gregor Mendel: मटाराच्या प्रयोगांतून Genetics चे नियम. 'Father of Genetics'. 1866 मध्ये प्रकाशित."},
+{q:"प्रेशर कुकरमध्ये अन्न लवकर का शिजते?",opts:["जास्त पाणी","दाब वाढतो → उकळण्याचा बिंदू वाढतो","विशेष धातू","कमी वेळ"],ans:1,exp:"Pressure वाढतो → Water Boiling Point > 100°C (≈120°C) → जास्त उष्णता → लवकर शिजते."},
+{q:"Telescope (दुर्बीण) कोणी बनवले?",opts:["Newton","Galileo Galilei","Kepler","Copernicus"],ans:1,exp:"Galileo Galilei (1609): Refracting Telescope बनवले. Jupiter चे 4 Moons, Moon चे Craters पाहिले."},
+{q:"Edward Jenner चे योगदान?",opts:["Antibiotic","Smallpox Vaccine (1796) — पहिली Vaccine","X-Ray","DNA"],ans:1,exp:"Edward Jenner (1796): Smallpox Vaccine. Cowpox → Smallpox Immunity. 'Father of Immunology'."},
+{q:"Hubble Space Telescope कशासाठी?",opts:["पृथ्वीचे फोटो","अंतराळातील दीर्घकालीन निरीक्षण","GPS","Communication"],ans:1,exp:"Hubble Space Telescope: 1990 पासून. Galaxies, Nebulae, Exoplanets चे अद्भुत फोटो. Earth च्या Atmosphere वर नाही."},
+{q:"सूर्यास्त लाल-नारंगी का दिसतो?",opts:["Reflection","निळा रंग विखुरतो, लाल उरतो","Absorption","Dispersion"],ans:1,exp:"सूर्यास्ताला प्रकाश मोठा मार्ग करतो → निळा जास्त विखुरतो → लाल-नारंगी उरतो."},
+{q:"Global Warming म्हणजे?",opts:["थंड हवामान","Greenhouse Gases → पृथ्वीचे तापमान वाढणे","वारा वाढणे","पाऊस कमी"],ans:1,exp:"Global Warming: CO₂, CH₄ वाढ → Greenhouse Effect → पृथ्वी गरम. Ice Caps वितळतात."},
+{q:"Nobel Prize किती विषयांत दिला जातो?",opts:["4","5","6","7"],ans:2,exp:"Nobel Prize: Physics, Chemistry, Medicine, Literature, Peace, Economics (1969 पासून) — 6 विषय."},
+{q:"DRDO म्हणजे?",opts:["Space Agency","Defence Research and Development Organisation","Agricultural Research","Nuclear Power"],ans:1,exp:"DRDO: Missiles (Agni, Prithvi), Fighter Jets, Defence Technology. Agni-5 = 5000+ km Range."},
+{q:"Bharat Ratna हा पुरस्कार कोणाला?",opts:["क्रीडापटू","देशाची सर्वोच्च नागरी सेवा","सैनिक","वैज्ञानिक फक्त"],ans:1,exp:"Bharat Ratna: भारताचा सर्वोच्च नागरी सन्मान. C.V. Raman (1954), APJ Kalam (1997) यांना मिळाला."},
+{q:"Ozone Layer कोणत्या थरात?",opts:["Troposphere","Stratosphere","Mesosphere","Thermosphere"],ans:1,exp:"Ozone Layer: Stratosphere (15-35 km उंची). UV-B, UV-C शोषते. CFC मुळे नष्ट होत आहे."},
+{q:"Wright Brothers नी काय शोधले?",opts:["Telephone","Automobile","Aeroplane (1903)","Radio"],ans:2,exp:"Orville & Wilbur Wright (December 17, 1903): पहिले Powered Aeroplane. Kitty Hawk, North Carolina."},
+{q:"Tim Berners-Lee यांचे योगदान?",opts:["Internet (Hardware)","WWW (World Wide Web) 1989","Email","Mobile Phone"],ans:1,exp:"Tim Berners-Lee (1989): World Wide Web. HTTP, HTML, URL प्रोटोकॉल. CERN मध्ये काम करताना."},
+{q:"Chandrayaan-1 (2008) ने काय शोधले?",opts:["जीवन","चंद्रावर पाण्याचा पुरावा (Water Ice)","कार्बन","सोने"],ans:1,exp:"Chandrayaan-1 (2008): Moon Impact Probe → South Pole जवळ Water Molecules (H₂O) चा पुरावा!"},
+{q:"PSLV म्हणजे काय?",opts:["Piloted Space Launch Vehicle","Polar Satellite Launch Vehicle","Powerful Satellite","Planetary Space Lab"],ans:1,exp:"PSLV = Polar Satellite Launch Vehicle. ISRO चे विश्वसनीय Rocket. 100+ Launches. 40+ देशांचे उपग्रह."},
+{q:"Thomas Edison चे शोध?",opts:["Telephone","Electric Bulb (1879), Phonograph","Aeroplane","Radio"],ans:1,exp:"Thomas Edison: Electric Bulb (1879), Phonograph, Motion Picture Camera. Menlo Park Lab. 1000+ Patents."},
+{q:"WHO म्हणजे?",opts:["World Historical Organisation","World Health Organisation","World Heritage Organisation","World Housing Organisation"],ans:1,exp:"WHO = World Health Organisation. UN अंतर्गत. जागतिक आरोग्य, महामारी नियंत्रण. Geneva मुख्यालय."},
+{q:"Polio Vaccine कोणी शोधले?",opts:["Fleming","Jonas Salk (1955)","Jenner","Pasteur"],ans:1,exp:"Jonas Salk (1955): Inactivated Polio Vaccine (IPV). Albert Sabin: Oral Polio Vaccine (OPV). भारत Polio Free (2014)."},
+{q:"CRISPR म्हणजे?",opts:["Computer System","Gene Editing Technology","Satellite","Vaccine"],ans:1,exp:"CRISPR-Cas9: DNA Edit करण्याचे तंत्र. Doudna & Charpentier — Nobel 2020. अनुवांशिक रोग उपचार."},
+{q:"Roger Federer नाही — PCR म्हणजे?",opts:["Protein Creation Reaction","Polymerase Chain Reaction","Primary Chemical Reaction","Pulse Count Rate"],ans:1,exp:"PCR = Polymerase Chain Reaction. DNA ची copies बनवण्याचे तंत्र. Kary Mullis (Nobel 1993). COVID Test मध्ये वापर."},
+{q:"Antibiotics Viruses वर काम करतात का?",opts:["हो","नाही — फक्त Bacteria वर","फक्त काही Viruses वर","नेहमी काम करतात"],ans:1,exp:"Antibiotics: ONLY Bacteria विरुद्ध. Viral Infections (Flu, Cold, COVID) साठी काम करत नाही!"},
+{q:"Richter Scale कशासाठी?",opts:["वारा","भूकंपाची तीव्रता","वादळ","तापमान"],ans:1,exp:"Richter Scale (Charles Richter, 1935): Earthquake Magnitude. Logarithmic — 7.0 = 8.0 पेक्षा 10 पट कमी."},
+{q:"Sonar कशासाठी?",opts:["हवेत विमान शोध","समुद्रात पाणबुडी/खोली शोध","GPS","Radio"],ans:1,exp:"SONAR = Sound Navigation And Ranging. Ultrasound waves → समुद्री खोली, Submarine शोध."},
+{q:"Refractive Index म्हणजे?",opts:["प्रकाशाचा रंग","प्रकाश किती वाकतो (n = c/v)","तरंगलांबी","Amplitude"],ans:1,exp:"Refractive Index (n) = c/v. c=vacuum मधील speed, v=medium मधील speed. Diamond n≈2.42 (खूप वाकतो)."},
+{q:"Radar कशासाठी वापरतात?",opts:["Temperature","दूरवरच्या वस्तूचे स्थान (Radio waves)","Pressure","Humidity"],ans:1,exp:"RADAR = Radio Detection And Ranging. Radio waves → Object वर टकरून परत → Position, Speed शोध. Airport, Military."},
+];
+
+// ══════════════════════════════════════════════════════════
+//  APP STATE
+// ══════════════════════════════════════════════════════════
+const SUBJ_INFO = {
+  phy:{name:"भौतिकशास्त्र",icon:"⚛️",total:38,
+    chapters:["मापन","गती","बल व दाब","साधी यंत्रे","कार्य व ऊर्जा","प्रकाश","उष्णता","ध्वनी","चुंबकत्व","विद्युत","विश्व","सर्व मिश्र"],
+    bank: PHY_QUESTIONS},
+  chem:{name:"रसायनशास्त्र",icon:"🧪",total:37,
+    chapters:["पदार्थाची रचना","मिश्रणे वेगळी करणे","बदलांचे प्रकार","अम्ल-आम्ल-क्षार","धातू व अधातू","हवा-पाणी-माती","मानवनिर्मित पदार्थ","सर्व मिश्र"],
+    bank: CHEM_QUESTIONS},
+  bio:{name:"जीवशास्त्र",icon:"🌿",total:37,
+    chapters:["पेशी","वनस्पती वर्गीकरण","प्रकाशसंश्लेषण","प्राणी वर्गीकरण","अन्न व पोषण","मानवी शरीर","रोग व सूक्ष्मजीव","परिसंस्था","सर्व मिश्र"],
+    bank: BIO_QUESTIONS},
+  gk:{name:"सामान्यज्ञान",icon:"🌍",total:38,
+    chapters:["महान शास्त्रज्ञ","ISRO व अंतराळ","दैनंदिन विज्ञान","पुरस्कार व संस्था","नवीन तंत्रज्ञान","सर्व मिश्र"],
+    bank: GK_QUESTIONS},
+  mixed:{name:"मिश्र सराव",icon:"🔀",total:0,chapters:["सर्व विषय मिश्र"],bank:[]}
+};
+SUBJ_INFO.mixed.total = 150 - 38 - 37 - 37 - 38;
+
+let currentSubject=null, currentTestNum=null, currentChapter=null;
+let questions=[], currentQ=0, answers={}, timerInterval=null, timeLeft=0;
+let testScores = {};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goHome(){
+  clearTimerFn();
+  showScreen('homeScreen');
+  updateStats();
+}
+
+function updateStats(){
+  const scores = Object.values(testScores);
+  document.getElementById('totalDone').textContent = scores.length;
+  if(scores.length){
+    const avg = scores.reduce((a,b)=>a+b,0)/scores.length;
+    document.getElementById('avgScore').textContent = avg.toFixed(0)+'%';
+    document.getElementById('bestScore').textContent = Math.max(...scores).toFixed(0)+'%';
+  }
+}
+
+function showTests(subj){
+  currentSubject = subj;
+  showScreen('testListScreen');
+  const info = SUBJ_INFO[subj];
+  document.getElementById('listTitle').textContent = info.icon+' '+info.name;
+  const tabs = document.getElementById('chapterTabs');
+  tabs.innerHTML = '<div class="chapter-tab active" onclick="filterChapter(this,\'सर्व\')">सर्व</div>';
+  info.chapters.forEach(ch=>{
+    tabs.innerHTML += `<div class="chapter-tab" onclick="filterChapter(this,'${ch}')">${ch}</div>`;
+  });
+  renderGrid(subj,'सर्व');
+}
+
+function filterChapter(el,ch){
+  document.querySelectorAll('.chapter-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid(currentSubject,ch);
+}
+
+function renderGrid(subj,chFilter){
+  const info = SUBJ_INFO[subj];
+  const grid = document.getElementById('testGrid');
+  grid.innerHTML='';
+  for(let i=1;i<=info.total;i++){
+    const ch = info.chapters[(i-1)%info.chapters.length];
+    if(chFilter!=='सर्व' && ch!==chFilter) continue;
+    const key=subj+'_'+i;
+    const score=testScores[key];
+    const done=score!=null;
+    const scoreClass = score>=90?'score-gold':score>=35?'score-pass':'score-fail';
+    const div=document.createElement('div');
+    div.className='test-item'+(done?' done':'');
+    div.innerHTML=`<div class="test-num">${info.icon} टेस्ट ${i}</div>
+    <div class="test-ch">${ch}</div>
+    <div class="test-ch">५० प्रश्न • ४५ मिनिटे</div>
+    ${done?`<span class="test-score-badge ${scoreClass}">${score.toFixed(0)}% ${score>=90?'🥇':score>=75?'🥈':score>=60?'🥉':score>=35?'✓':'✗'}</span>`:'<span style="font-size:10px;color:#5a6a7e">सुरू करा →</span>'}`;
+    div.onclick=()=>startTest(subj,i,ch);
+    grid.appendChild(div);
+  }
+}
+
+function startTest(subj,testNum,chapter){
+  currentSubject=subj; currentTestNum=testNum; currentChapter=chapter;
+  answers={}; currentQ=0;
+  showScreen('loadingScreen');
+  document.getElementById('loadMsg').textContent=`${SUBJ_INFO[subj].icon} टेस्ट ${testNum} — ${chapter}`;
+  setTimeout(()=>{ buildQuestions(subj,testNum); },600);
+}
+
+function buildQuestions(subj,testNum){
+  const bank = subj==='mixed'
+    ? [...PHY_QUESTIONS,...CHEM_QUESTIONS,...BIO_QUESTIONS,...GK_QUESTIONS]
+    : SUBJ_INFO[subj].bank;
+
+  // Shuffle seed based on testNum
+  const seed = testNum * 137 + 11;
+  const shuffled = [...bank].sort((a,b)=>{
+    const ha = Math.sin(seed * bank.indexOf(a) * 0.1) * 10000;
+    const hb = Math.sin(seed * bank.indexOf(b) * 0.1) * 10000;
+    return (ha-Math.floor(ha)) - (hb-Math.floor(hb));
+  });
+
+  questions = shuffled.slice(0,50);
+  if(questions.length<50){
+    while(questions.length<50){
+      const extra={...shuffled[questions.length%shuffled.length]};
+      extra.q=`[सराव ${questions.length+1}] ${extra.q}`;
+      questions.push(extra);
+    }
+  }
+  startQuiz();
+}
+
+function startQuiz(){
+  currentQ=0; timeLeft=45*60;
+  showScreen('quizScreen');
+  const info=SUBJ_INFO[currentSubject];
+  document.getElementById('quizTitle').textContent=`${info.icon} ${info.name} — टेस्ट ${currentTestNum}`;
+  document.getElementById('quizChapter').textContent=currentChapter;
+  buildPalette();
+  renderQ();
+  startTimer();
+}
+
+function renderQ(){
+  if(!questions[currentQ]) return;
+  const q=questions[currentQ];
+  document.getElementById('qNum').textContent=`प्रश्न ${currentQ+1}`;
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qCounter').textContent=`प्रश्न ${currentQ+1} / ५०`;
+  document.getElementById('answeredCnt').textContent=`उत्तरे: ${Object.keys(answers).length}`;
+  document.getElementById('progressFill').style.width=((currentQ+1)/50*100)+'%';
+  document.getElementById('nextBtn').textContent=currentQ===49?'शेवट':'पुढील →';
+
+  const ans=answers[currentQ];
+  const expBox=document.getElementById('expBox');
+  expBox.style.display='none';
+
+  const opts=document.getElementById('optsList');
+  opts.innerHTML='';
+  ['A','B','C','D'].forEach((letter,i)=>{
+    const btn=document.createElement('button');
+    btn.className='opt-btn';
+    if(ans!=null){
+      btn.disabled=true;
+      if(i===q.ans) btn.classList.add('correct');
+      else if(i===ans) btn.classList.add('wrong');
+    }
+    btn.innerHTML=`<span class="opt-letter">${letter}</span>${q.opts[i]}`;
+    if(ans==null) btn.onclick=()=>selectAns(i);
+    opts.appendChild(btn);
+  });
+
+  if(ans!=null && q.exp){
+    expBox.style.display='block';
+    expBox.textContent='💡 '+q.exp;
+  }
+  updatePalette();
+}
+
+function selectAns(idx){
+  if(answers[currentQ]!=null) return;
+  answers[currentQ]=idx;
+  renderQ();
+}
+
+function prevQ(){if(currentQ>0){currentQ--;renderQ();}}
+function nextQ(){if(currentQ<49){currentQ++;renderQ();}}
+
+function buildPalette(){
+  const pg=document.getElementById('paletteGrid');
+  pg.innerHTML='';
+  for(let i=0;i<50;i++){
+    const d=document.createElement('div');
+    d.className='p-dot';
+    d.textContent=i+1;
+    d.onclick=(n=>()=>{currentQ=n;renderQ();})(i);
+    pg.appendChild(d);
+  }
+}
+
+function updatePalette(){
+  const dots=document.querySelectorAll('.p-dot');
+  dots.forEach((d,i)=>{
+    d.classList.toggle('answered',answers[i]!=null);
+    d.classList.toggle('current',i===currentQ);
+  });
+}
+
+function startTimer(){
+  clearTimerFn();
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    const m=Math.floor(timeLeft/60), s=timeLeft%60;
+    const el=document.getElementById('timerEl');
+    el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className='timer'+(timeLeft<300?' urgent':'');
+    if(timeLeft<=0){clearTimerFn();submitTest();}
+  },1000);
+}
+
+function clearTimerFn(){if(timerInterval){clearInterval(timerInterval);timerInterval=null;}}
+
+function confirmSubmit(){
+  const unanswered=50-Object.keys(answers).length;
+  if(unanswered>0 && !confirm(`अजून ${unanswered} प्रश्न उत्तरे नाहीत. सबमिट करायचे का?`)) return;
+  submitTest();
+}
+
+function submitTest(){
+  clearTimerFn();
+  let correct=0,wrong=0,skipped=0;
+  questions.forEach((q,i)=>{
+    const a=answers[i];
+    if(a==null) skipped++;
+    else if(a===q.ans) correct++;
+    else wrong++;
+  });
+  const pct=correct/50*100;
+  testScores[currentSubject+'_'+currentTestNum]=pct;
+  showResult(correct,wrong,skipped,pct);
+}
+
+function showResult(correct,wrong,skipped,pct){
+  showScreen('resultScreen');
+  const pass=pct>=35;
+  const circle=document.getElementById('resultCircle');
+  circle.className='result-circle '+(pass?'pass-circle':'fail-circle');
+  circle.textContent=pct.toFixed(0)+'%';
+  document.getElementById('resultTitle').textContent=pct>=90?'अप्रतिम! Gold Medal!':pct>=75?'उत्कृष्ट! Silver Medal!':pct>=60?'चांगले! Bronze Medal!':pct>=35?'उत्तीर्ण! आणखी सराव करा':'पुन्हा प्रयत्न करा';
+  document.getElementById('resultSub').textContent=`टेस्ट ${currentTestNum} • ${currentChapter} • ${correct}/50 बरोबर`;
+  document.getElementById('rCorrect').textContent=correct;
+  document.getElementById('rWrong').textContent=wrong;
+  document.getElementById('rSkipped').textContent=skipped;
+
+  const rankText=pct>=90?'🥇 Gold — राज्यात नंबर येईल!':pct>=75?'🥈 Silver — उत्कृष्ट प्रगती':pct>=60?'🥉 Bronze — चांगला प्रयत्न':pct>=35?'📜 उत्तीर्ण — आणखी सराव करा':'❌ अनुत्तीर्ण — पुन्हा प्रयत्न करा';
+  document.getElementById('rankBadge').textContent=rankText;
+
+  const rv=document.getElementById('reviewList');
+  rv.innerHTML='';
+  let shown=0;
+  questions.forEach((q,i)=>{
+    if(answers[i]===q.ans) return;
+    if(shown>=15) return;
+    shown++;
+    const d=document.createElement('div');
+    d.className='review-item';
+    d.innerHTML=`<div class="review-q">Q${i+1}: ${q.q}</div>
+    <div class="review-correct">✓ बरोबर: ${q.opts[q.ans]}</div>
+    ${answers[i]!=null?`<div class="review-wrong">✗ तुमचे: ${q.opts[answers[i]]}</div>`:'<div style="font-size:11px;color:#5a6a7e">— सोडले</div>'}
+    ${q.exp?`<div class="review-exp">💡 ${q.exp}</div>`:''}`;
+    rv.appendChild(d);
+  });
+  if(shown===0) rv.innerHTML='<div style="text-align:center;padding:20px;color:#1b7a4a;font-weight:600">🎉 सर्व प्रश्न बरोबर!</div>';
+}
+
+function retryTest(){startTest(currentSubject,currentTestNum,currentChapter);}
+updateStats();
+</script>
+</body>
+</html>

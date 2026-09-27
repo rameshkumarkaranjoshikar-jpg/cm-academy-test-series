@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>एमपीएससी पूर्व परीक्षा टेस्ट सिरीज | ७५०० प्रश्न</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+  :root {
+    --saffron: #FF6B00;
+    --deep-saffron: #E05500;
+    --gold: #FFB300;
+    --light-gold: #FFD54F;
+    --navy: #0D1B3E;
+    --deep-navy: #060E22;
+    --blue: #1565C0;
+    --light-blue: #1E88E5;
+    --white: #FFFFFF;
+    --off-white: #F5F3EE;
+    --green: #2E7D32;
+    --light-green: #43A047;
+    --red: #C62828;
+    --gray: #9E9E9E;
+    --card-bg: rgba(255,255,255,0.05);
+    --border: rgba(255,179,0,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    background: var(--deep-navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== LANDING PAGE ===== */
+  #landing {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .hero-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #0A2461 50%, var(--navy) 100%);
+    border-bottom: 3px solid var(--saffron);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255,107,0,0.08) 0%, transparent 60%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .top-bar {
+    background: var(--saffron);
+    text-align: center;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { background: var(--saffron); }
+    50% { background: var(--deep-saffron); }
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 40px;
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .logo-section { display: flex; align-items: center; gap: 15px; }
+
+  .logo-emblem {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 0 30px rgba(255,107,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .logo-text h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.1;
+    letter-spacing: 1px;
+  }
+
+  .logo-text p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  .price-badge {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 16px;
+    padding: 16px 28px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(255,107,0,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .price-badge .old-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    opacity: 0.8;
+  }
+
+  .price-badge .new-price {
+    font-size: 38px;
+    font-weight: 900;
+    font-family: 'Rajdhani', sans-serif;
+    line-height: 1;
+  }
+
+  .price-badge .price-label {
+    font-size: 11px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  /* Series Cards */
+  .series-section {
+    padding: 50px 40px;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--deep-navy) 100%);
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-title h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .section-title p {
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+    font-size: 15px;
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .series-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .series-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .series-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(255,179,0,0.15);
+  }
+
+  .series-card.locked { opacity: 0.7; }
+
+  .series-letter {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    background: var(--card-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+
+  .series-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .series-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+
+  .series-stats {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .stat-pill {
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .lock-icon {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 18px;
+    background: rgba(255,107,0,0.2);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .unlock-btn {
+    margin-top: 16px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border: none;
+    border-radius: 25px;
+    padding: 10px 24px;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .unlock-btn:hover { transform: scale(1.05); }
+
+  /* Features */
+  .features-section {
+    padding: 50px 40px;
+    background: var(--deep-navy);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 30px auto 0;
+  }
+
+  .feature-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .feature-item:hover {
+    background: rgba(255,179,0,0.05);
+    border-color: rgba(255,179,0,0.3);
+  }
+
+  .feature-icon { font-size: 36px; margin-bottom: 12px; }
+  .feature-item h4 { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+  .feature-item p { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+  /* Buy CTA */
+  .buy-section {
+    padding: 60px 40px;
+    text-align: center;
+    background: linear-gradient(135deg, var(--navy), #0A2461);
+    border-top: 2px solid rgba(255,179,0,0.2);
+  }
+
+  .buy-section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 32px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .buy-section p { color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+
+  .buy-btn {
+    background: linear-gradient(135deg, var(--saffron) 0%, var(--gold) 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 18px 52px;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    box-shadow: 0 10px 40px rgba(255,107,0,0.5);
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+  }
+
+  .buy-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 14px 50px rgba(255,107,0,0.65);
+  }
+
+  .guarantee-text {
+    margin-top: 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ===== PAYMENT MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal-box {
+    background: linear-gradient(145deg, #0D1B3E, #0A1428);
+    border: 1px solid rgba(255,179,0,0.3);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 24px; cursor: pointer;
+  }
+
+  .modal-box h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 26px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .modal-box p.sub { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 28px; }
+
+  .input-group { margin-bottom: 18px; }
+
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .input-group input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,179,0,0.2);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: white;
+    font-size: 15px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  .input-group input:focus { border-color: var(--gold); }
+
+  .price-summary {
+    background: rgba(255,107,0,0.1);
+    border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .price-summary span { color: rgba(255,255,255,0.7); font-size: 14px; }
+  .price-summary strong { font-size: 28px; color: var(--gold); font-family: 'Rajdhani', sans-serif; }
+
+  .pay-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    box-shadow: 0 8px 24px rgba(255,107,0,0.4);
+    transition: all 0.2s;
+  }
+
+  .pay-btn:hover { transform: scale(1.02); }
+
+  .upi-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .upi-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .upi-chip:hover, .upi-chip.selected {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(255,179,0,0.08);
+  }
+
+  /* ===== PASSWORD MODAL ===== */
+  .pwd-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .pwd-modal.active { display: flex; }
+
+  .pwd-box {
+    background: linear-gradient(145deg, #0D1B3E, #060E22);
+    border: 2px solid rgba(255,179,0,0.4);
+    border-radius: 24px;
+    padding: 44px 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(255,107,0,0.2);
+  }
+
+  .pwd-box .lock-big { font-size: 60px; margin-bottom: 16px; }
+
+  .pwd-box h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 26px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .pwd-box p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 28px; }
+
+  .pwd-input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,179,0,0.3);
+    border-radius: 12px;
+    padding: 14px;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 4px;
+    outline: none;
+    font-family: 'Rajdhani', sans-serif;
+    margin-bottom: 16px;
+  }
+
+  .pwd-error { color: #ef5350; font-size: 13px; margin-bottom: 12px; display: none; }
+
+  .pwd-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .pwd-submit:hover { transform: scale(1.02); }
+
+  .pwd-hint {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 10px;
+  }
+
+  /* ===== TEST PAGE ===== */
+  #test-page {
+    display: none;
+    min-height: 100vh;
+    background: var(--deep-navy);
+  }
+
+  .test-header {
+    background: linear-gradient(90deg, var(--navy), #0A2461);
+    border-bottom: 2px solid var(--saffron);
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .test-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .test-timer {
+    background: rgba(255,107,0,0.15);
+    border: 1px solid rgba(255,107,0,0.4);
+    border-radius: 10px;
+    padding: 8px 18px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--saffron);
+    letter-spacing: 2px;
+  }
+
+  .test-progress {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .test-body {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .test-body { grid-template-columns: 1fr; }
+  }
+
+  .question-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  .question-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .q-num {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 10px;
+    padding: 6px 16px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .q-subject {
+    background: rgba(21,101,192,0.2);
+    border: 1px solid rgba(21,101,192,0.4);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: #64B5F6;
+  }
+
+  .question-text {
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 500;
+  }
+
+  .options-list { list-style: none; }
+
+  .option-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .option-item:hover {
+    background: rgba(255,179,0,0.06);
+    border-color: rgba(255,179,0,0.3);
+  }
+
+  .option-item.selected {
+    background: rgba(21,101,192,0.2);
+    border-color: var(--light-blue);
+  }
+
+  .option-item.correct {
+    background: rgba(46,125,50,0.2);
+    border-color: var(--light-green);
+  }
+
+  .option-item.wrong {
+    background: rgba(198,40,40,0.15);
+    border-color: #EF5350;
+  }
+
+  .option-letter {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  .option-text { font-size: 15px; line-height: 1.5; padding-top: 4px; }
+
+  .explanation {
+    background: rgba(46,125,50,0.1);
+    border: 1px solid rgba(46,125,50,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    display: none;
+  }
+
+  .explanation.show { display: block; }
+
+  .nav-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .btn-nav {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 12px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+
+  .btn-nav:hover { background: rgba(255,255,255,0.12); }
+
+  .btn-nav.primary {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-color: transparent;
+  }
+
+  /* Side panel */
+  .side-panel { display: flex; flex-direction: column; gap: 20px; }
+
+  .panel-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .panel-card h4 {
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .score-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .score-row span { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .score-row strong { font-size: 14px; font-family: 'Rajdhani', sans-serif; }
+  .score-row strong.green { color: var(--light-green); }
+  .score-row strong.red { color: #EF5350; }
+  .score-row strong.gold { color: var(--gold); }
+
+  .q-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .q-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+  }
+
+  .q-dot:hover { border-color: var(--gold); }
+  .q-dot.current { border-color: var(--gold); background: rgba(255,179,0,0.15); }
+  .q-dot.answered { background: rgba(21,101,192,0.3); border-color: var(--light-blue); }
+  .q-dot.correct { background: rgba(46,125,50,0.35); border-color: var(--light-green); }
+  .q-dot.wrong { background: rgba(198,40,40,0.25); border-color: #EF5350; }
+
+  /* Result Page */
+  #result-page {
+    display: none;
+    min-height: 100vh;
+    background: var(--deep-navy);
+    padding: 40px;
+    text-align: center;
+  }
+
+  .result-header { margin-bottom: 40px; }
+  .result-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 40px;
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  .result-score-big {
+    background: linear-gradient(145deg, rgba(255,179,0,0.1), rgba(255,107,0,0.05));
+    border: 2px solid rgba(255,179,0,0.3);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 500px;
+    margin: 0 auto 40px;
+  }
+
+  .result-percent {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .r-stat { text-align: center; }
+  .r-stat .val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .r-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  .result-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+
+  .btn-result {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border: none;
+    border-radius: 14px;
+    padding: 14px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .btn-result:hover { transform: scale(1.04); }
+
+  .btn-result.outline {
+    background: transparent;
+    border: 2px solid rgba(255,179,0,0.4);
+    color: var(--gold);
+  }
+
+  /* Success Modal */
+  .success-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 1200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .success-modal.active { display: flex; }
+
+  .success-box {
+    background: linear-gradient(145deg, #0D3320, #081a10);
+    border: 2px solid rgba(67,160,71,0.5);
+    border-radius: 24px;
+    padding: 44px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(67,160,71,0.3);
+  }
+
+  .success-box h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    color: #66BB6A;
+    margin: 16px 0 8px;
+  }
+
+  .success-box p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+
+  .password-display {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    margin: 20px 0;
+  }
+
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,179,0,0.1);
+    padding: 30px 40px;
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    font-size: 13px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255,179,0,0.3); border-radius: 2px; }
+
+  /* ===== ADMIN PANEL ===== */
+  .admin-tab-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s;
+  }
+  .admin-tab-btn:hover { background: rgba(123,31,162,0.2); color: #CE93D8; border-color: #7B1FA2; }
+  .active-tab { background: rgba(123,31,162,0.3) !important; border-color: #CE93D8 !important; color: #CE93D8 !important; }
+
+  .admin-stat-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top: 3px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+  .admin-stat-icon { font-size: 36px; margin-bottom: 10px; }
+  .admin-stat-num { font-family: 'Rajdhani', sans-serif; font-size: 32px; font-weight: 900; color: var(--accent); }
+  .admin-stat-lbl { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+  .tbl-h {
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,179,0,0.15);
+    white-space: nowrap;
+  }
+  .tbl-d {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: middle;
+  }
+  #studentsTable tr:hover td, #paymentsTable tr:hover td {
+    background: rgba(255,179,0,0.04);
+  }
+  .badge-paid { background: rgba(46,125,50,0.25); color: #66BB6A; border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700; }
+  .badge-free { background: rgba(255,107,0,0.15); color: #FF8A50; border-radius: 20px; padding: 3px 12px; font-size: 12px; font-weight: 700; }
+  .admin-section { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+</style>
+</head>
+<body>
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- ===================== LANDING PAGE ===================== -->
+<div id="landing">
+
+  <div class="hero-header">
+    <div class="top-bar">🔥 मर्यादित ऑफर! ७५०० प्रश्नांची संपूर्ण टेस्ट सिरीज — फक्त ₹१९९ मध्ये! 🔥</div>
+    <div class="hero-content">
+      <div class="logo-section">
+        <div class="logo-emblem">🏛️</div>
+        <div class="logo-text">
+          <h1>MPSC प्रीमियम<br>टेस्ट सिरीज</h1>
+          <p>महाराष्ट्र लोकसेवा आयोग | पूर्व परीक्षा तयारी</p>
+        </div>
+      </div>
+      <div class="price-badge">
+        <div class="old-price">₹९९९</div>
+        <div class="new-price">₹१९९</div>
+        <div class="price-label">संपूर्ण वर्षभर प्रवेश</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Series Cards -->
+  <div class="series-section">
+    <div class="section-title">
+      <h2>📚 अ ब क ड टेस्ट सिरीज</h2>
+      <p>प्रत्येक सिरीजमध्ये १८७५+ प्रश्न | एकूण ७५०० प्रश्न | संकेतशब्द संरक्षित</p>
+    </div>
+    <div class="series-grid">
+
+      <!-- Series A -->
+      <div class="series-card" style="--card-accent: linear-gradient(90deg,#FF6B00,#FFB300); --card-gradient: linear-gradient(135deg,#FF6B00,#FFB300);" onclick="openSeries('A')">
+        <div class="lock-icon" id="lockA">🔒</div>
+        <div class="series-letter">A</div>
+        <h3>सिरीज अ — इतिहास व भूगोल</h3>
+        <p>महाराष्ट्राचा इतिहास, भारताचा इतिहास, जागतिक इतिहास, भारताचा भूगोल, महाराष्ट्राचा भूगोल</p>
+        <div class="series-stats">
+          <span class="stat-pill">१८७५ प्रश्न</span>
+          <span class="stat-pill">५ विषय</span>
+        </div>
+        <button class="unlock-btn">🔓 उघडा — ₹१९९</button>
+      </div>
+
+      <!-- Series B -->
+      <div class="series-card" style="--card-accent: linear-gradient(90deg,#1565C0,#42A5F5); --card-gradient: linear-gradient(135deg,#1565C0,#42A5F5);" onclick="openSeries('B')">
+        <div class="lock-icon" id="lockB">🔒</div>
+        <div class="series-letter">B</div>
+        <h3>सिरीज ब — राज्यघटना व राज्यशास्त्र</h3>
+        <p>भारतीय राज्यघटना, स्थानिक स्वराज्य, केंद्र-राज्य संबंध, सरकारी यंत्रणा, नागरिकशास्त्र</p>
+        <div class="series-stats">
+          <span class="stat-pill">१८७५ प्रश्न</span>
+          <span class="stat-pill">५ विषय</span>
+        </div>
+        <button class="unlock-btn">🔓 उघडा — ₹१९९</button>
+      </div>
+
+      <!-- Series C -->
+      <div class="series-card" style="--card-accent: linear-gradient(90deg,#2E7D32,#66BB6A); --card-gradient: linear-gradient(135deg,#2E7D32,#66BB6A);" onclick="openSeries('C')">
+        <div class="lock-icon" id="lockC">🔒</div>
+        <div class="series-letter">C</div>
+        <h3>सिरीज क — अर्थशास्त्र व विज्ञान</h3>
+        <p>भारताची अर्थव्यवस्था, कृषी, सामान्य विज्ञान, पर्यावरण, तंत्रज्ञान व चालू घडामोडी</p>
+        <div class="series-stats">
+          <span class="stat-pill">१८७५ प्रश्न</span>
+          <span class="stat-pill">५ विषय</span>
+        </div>
+        <button class="unlock-btn">🔓 उघडा — ₹१९९</button>
+      </div>
+
+      <!-- Series D -->
+      <div class="series-card" style="--card-accent: linear-gradient(90deg,#6A1B9A,#CE93D8); --card-gradient: linear-gradient(135deg,#7B1FA2,#CE93D8);" onclick="openSeries('D')">
+        <div class="lock-icon" id="lockD">🔒</div>
+        <div class="series-letter">D</div>
+        <h3>सिरीज ड — मराठी, इंग्रजी व बुद्धिमापन</h3>
+        <p>मराठी भाषा, इंग्रजी भाषा, बुद्धिमापन चाचणी, गणित, मानसिक क्षमता</p>
+        <div class="series-stats">
+          <span class="stat-pill">१८७५ प्रश्न</span>
+          <span class="stat-pill">५ विषय</span>
+        </div>
+        <button class="unlock-btn">🔓 उघडा — ₹१९९</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+    <div class="section-title">
+      <h2>✨ आमच्या टेस्ट सिरीजची वैशिष्ट्ये</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">📝</div>
+        <h4>७५०० अस्सल प्रश्न</h4>
+        <p>MPSC पूर्व परीक्षेच्या अभ्यासक्रमावर आधारित सर्व प्रश्न</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔒</div>
+        <h4>संकेतशब्द संरक्षित</h4>
+        <p>सुरक्षित प्रवेश, फक्त देयक केल्यानंतर</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⏱️</div>
+        <h4>टायमर सुविधा</h4>
+        <p>परीक्षेप्रमाणे वेळेचे व्यवस्थापन शिका</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <h4>सविस्तर विश्लेषण</h4>
+        <p>प्रत्येक प्रश्नाचे उत्तर व स्पष्टीकरण</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📱</div>
+        <h4>मोबाईल फ्रेंडली</h4>
+        <p>कोठूनही, कधीही सराव करा</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🏆</div>
+        <h4>स्कोरकार्ड</h4>
+        <p>तुमची प्रगती ट्रॅक करा आणि सुधारा</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buy Section -->
+  <div class="buy-section">
+    <h2>🚀 आजच सुरुवात करा!</h2>
+    <p>सर्व ४ सिरीज खरेदी करा आणि ₹१९९ मध्ये ७५०० प्रश्नांचा पूर्ण ॲक्सेस मिळवा</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <button class="buy-btn" onclick="openPayment()">
+        💳 आत्ताच खरेदी करा — ₹१९९
+      </button>
+      <button class="buy-btn" onclick="openAlreadyRegistered()" style="background:linear-gradient(135deg,#1565C0,#1E88E5);">
+        🔑 आधीच नोंदणी केली? लॉगिन करा
+      </button>
+      <button class="buy-btn" onclick="openAdminLogin()" style="background:linear-gradient(135deg,#4A148C,#7B1FA2);font-size:14px;padding:14px 24px;">
+        🛡️ प्रशासक पटल
+      </button>
+    </div>
+    <p class="guarantee-text">✅ १०० % सुरक्षित देयक | UPI / डेबिट कार्ड / नेट बँकिंग | देयकानंतर लगेच संकेतशब्द मिळेल</p>
+  </div>
+
+  <footer>
+    <p>© २०२६ एमपीएससी प्रीमियम टेस्ट सिरीज | महाराष्ट्र लोकसेवा आयोग पूर्व परीक्षा तयारी</p>
+    <p style="margin-top:6px;">📞 सहाय्य: mpsc.testseries@gmail.com</p>
+  </footer>
+</div>
+
+<!-- ===================== PAYMENT MODAL ===================== -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePayment()">✕</button>
+    <h3>💳 पेमेंट करा</h3>
+    <p class="sub">सुरक्षित रेझरपे पेमेंट | UPI · कार्ड · नेट बँकिंग · वॉलेट</p>
+
+    <div class="input-group">
+      <label>तुमचे पूर्ण नाव <span style="color:#EF5350;">*</span></label>
+      <input type="text" id="buyerName" placeholder="पूर्ण नाव टाका" />
+    </div>
+
+    <div class="input-group">
+      <label>मोबाईल नंबर <span style="color:#EF5350;">*</span></label>
+      <input type="tel" id="buyerPhone" placeholder="१०-अंकी मोबाईल नंबर" maxlength="10" />
+    </div>
+
+    <div class="input-group">
+      <label>ई-मेल (ऐच्छिक)</label>
+      <input type="email" id="buyerEmail" placeholder="yourname@email.com" />
+    </div>
+
+    <div class="price-summary">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);">सर्व ४ सिरीज (A+B+C+D)</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);">७५०० प्रश्न | वर्षभर प्रवेश</div>
+      </div>
+      <strong>₹१९९</strong>
+    </div>
+
+    <!-- Razorpay Pay Button -->
+    <button class="pay-btn" id="rzpPayBtn" onclick="openRazorpay()">
+      <img src="https://razorpay.com/favicon.ico" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;" onerror="this.style.display='none'">
+      रेझरपे द्वारे ₹१९९ भरा
+    </button>
+
+    <div style="margin-top:14px;text-align:center;">
+      <img src="https://razorpay.com/assets/razorpay-glyph.svg" style="height:20px;opacity:0.4;vertical-align:middle;" onerror="this.style.display='none'">
+      <span style="font-size:11px;color:rgba(255,255,255,0.3);margin-left:6px;">रेझरपे द्वारे सुरक्षित</span>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:12px;opacity:0.5;">
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);">📱 यूपीआय</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);">💳 Card</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);">🏦 Net Banking</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);">👛 Wallet</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SUCCESS MODAL ===================== -->
+<div class="success-modal" id="successModal">
+  <div class="success-box">
+    <div style="font-size:60px;">🎉</div>
+    <h3>देयक यशस्वी!</h3>
+    <p id="successStudentName" style="font-size:16px;color:#66BB6A;font-weight:700;margin:4px 0;"></p>
+    <p>अभिनंदन! तुमचे रेझरपे देयक यशस्वीरित्या झाले आहे.</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.4);" id="successPaymentId"></p>
+    <p style="margin-top:12px;">तुमचा टेस्ट सिरीज पासवर्ड:</p>
+    <div class="password-display" id="userPassword">MPSC2026</div>
+    <p style="font-size:12px;color:#EF9A9A;margin-top:6px;">⚠️ हा पासवर्ड सुरक्षित ठेवा. शेअर करू नका.</p>
+    <button class="pay-btn" style="width:100%;margin-top:20px;" onclick="gotoTest()">
+      🚀 आता टेस्ट सुरू करा!
+    </button>
+  </div>
+</div>
+
+
+<!-- ===================== ALREADY REGISTERED MODAL ===================== -->
+<div class="modal-overlay" id="alreadyModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAlreadyModal()">✕</button>
+    <h3>🔑 आधीच नोंदणी केली</h3>
+    <p class="sub">तुमचा मोबाईल नंबर आणि पासवर्ड टाका</p>
+
+    <div class="input-group">
+      <label>मोबाईल नंबर</label>
+      <input type="tel" id="loginPhone" placeholder="१०-अंकी मोबाईल नंबर" maxlength="10"/>
+    </div>
+    <div class="input-group">
+      <label>पासवर्ड</label>
+      <input type="password" id="loginPassword" placeholder="तुमचा पासवर्ड टाका"/>
+    </div>
+    <div class="pwd-error" id="loginError" style="display:none;margin-bottom:12px;">❌ चुकीचा मोबाईल नंबर किंवा संकेतशब्द!</div>
+    <button class="pay-btn" onclick="doStudentLogin()">✅ लॉगिन करा</button>
+    <p style="text-align:center;margin-top:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+      पासवर्ड विसरलात? 📞 8010634300 वर संपर्क करा
+    </p>
+  </div>
+</div>
+
+<!-- ===================== ADMIN LOGIN MODAL ===================== -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal-box" style="border-color:rgba(123,31,162,0.5);">
+    <button class="modal-close" onclick="closeAdminLogin()">✕</button>
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:50px;">🛡️</div>
+      <h3 style="color:#CE93D8;">प्रशासक लॉगिन</h3>
+      <p class="sub">फक्त अधिकृत प्रशासकासाठी</p>
+    </div>
+    <div class="input-group">
+      <label>प्रशासक यूझरनेम</label>
+      <input type="text" id="adminUser" placeholder="यूझरनेम टाका"/>
+    </div>
+    <div class="input-group">
+      <label>प्रशासक पासवर्ड</label>
+      <input type="password" id="adminPass" placeholder="पासवर्ड टाका"/>
+    </div>
+    <div class="pwd-error" id="adminError" style="display:none;margin-bottom:12px;">❌ चुकीचे यूझरनेम किंवा पासवर्ड!</div>
+    <button class="pay-btn" onclick="doAdminLogin()" style="background:linear-gradient(135deg,#4A148C,#7B1FA2);">
+      🔐 प्रशासक पटल उघडा
+    </button>
+  </div>
+</div>
+
+<!-- ===================== ADMIN PANEL ===================== -->
+<div id="admin-panel" style="display:none;min-height:100vh;background:var(--deep-navy);">
+  <!-- Admin Header -->
+  <div style="background:linear-gradient(90deg,#1a0030,#4A148C);border-bottom:2px solid #7B1FA2;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-size:32px;">🛡️</div>
+      <div>
+        <div style="font-family:Rajdhani,sans-serif;font-size:22px;font-weight:700;color:#CE93D8;">CM Academy — प्रशासक पटल</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);">एमपीएससी टेस्ट सिरीज व्यवस्थापन</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button onclick="adminTab('dashboard')" id="tab-dashboard" class="admin-tab-btn active-tab">📊 डॅशबोर्ड</button>
+      <button onclick="adminTab('students')"  id="tab-students"  class="admin-tab-btn">👨‍🎓 विद्यार्थी</button>
+      <button onclick="adminTab('payments')"  id="tab-payments"  class="admin-tab-btn">💰 देयके</button>
+      <button onclick="adminTab('passwords')" id="tab-passwords" class="admin-tab-btn">🔑 पासवर्ड</button>
+      <button onclick="adminLogout()" style="background:rgba(198,40,40,0.2);border:1px solid #EF5350;border-radius:8px;padding:8px 16px;color:#EF5350;cursor:pointer;font-size:13px;">🚪 बाहेर पडा</button>
+    </div>
+  </div>
+
+  <!-- Admin Content -->
+  <div style="padding:30px;max-width:1200px;margin:0 auto;">
+
+    <!-- Dashboard Tab -->
+    <div id="admin-dashboard" class="admin-section">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:30px;">
+        <div class="admin-stat-card" style="--accent:#FF6B00;">
+          <div class="admin-stat-icon">👨‍🎓</div>
+          <div class="admin-stat-num" id="totalStudents">0</div>
+          <div class="admin-stat-lbl">एकूण विद्यार्थी</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:#FFB300;">
+          <div class="admin-stat-icon">💰</div>
+          <div class="admin-stat-num" id="totalRevenue">₹0</div>
+          <div class="admin-stat-lbl">एकूण महसूल</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:#43A047;">
+          <div class="admin-stat-icon">✅</div>
+          <div class="admin-stat-num" id="totalभरलेले">0</div>
+          <div class="admin-stat-lbl">पेड विद्यार्थी</div>
+        </div>
+        <div class="admin-stat-card" style="--accent:#1E88E5;">
+          <div class="admin-stat-icon">📝</div>
+          <div class="admin-stat-num">7500</div>
+          <div class="admin-stat-lbl">एकूण प्रश्न</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:24px;">
+        <h4 style="color:var(--gold);margin-bottom:16px;font-family:Rajdhani,sans-serif;font-size:18px;">📋 अलीकडील नोंदणी</h4>
+        <div id="recentRegistrations" style="color:rgba(255,255,255,0.5);font-size:14px;">अद्याप कोणतीही नोंदणी नाही.</div>
+      </div>
+    </div>
+
+    <!-- Students Tab -->
+    <div id="admin-students" class="admin-section" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <h3 style="font-family:Rajdhani,sans-serif;color:var(--gold);font-size:22px;">👨‍🎓 विद्यार्थी यादी</h3>
+        <div style="display:flex;gap:10px;">
+          <input type="text" id="studentSearch" placeholder="🔍 नाव / मोबाईल शोधा..." oninput="filterStudents()" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,179,0,0.2);border-radius:10px;padding:10px 14px;color:white;font-size:14px;width:220px;outline:none;"/>
+          <button onclick="openAddStudent()" style="background:linear-gradient(135deg,var(--saffron),var(--gold));border:none;border-radius:10px;padding:10px 18px;color:white;font-weight:700;cursor:pointer;font-size:14px;">+ विद्यार्थी जोडा</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;" id="studentsTable">
+          <thead>
+            <tr style="background:rgba(255,179,0,0.1);">
+              <th class="tbl-h">क्र.</th>
+              <th class="tbl-h">नाव</th>
+              <th class="tbl-h">मोबाईल</th>
+              <th class="tbl-h">नोंदणी तारीख</th>
+              <th class="tbl-h">पेमेंट आयडी</th>
+              <th class="tbl-h">स्थिती</th>
+              <th class="tbl-h">कृती</th>
+            </tr>
+          </thead>
+          <tbody id="studentsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Payments Tab -->
+    <div id="admin-payments" class="admin-section" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <h3 style="font-family:Rajdhani,sans-serif;color:var(--gold);font-size:22px;">💰 देयक इतिहास</h3>
+        <div style="background:rgba(46,125,50,0.15);border:1px solid rgba(67,160,71,0.4);border-radius:12px;padding:12px 20px;text-align:center;">
+          <div style="font-family:Rajdhani,sans-serif;font-size:28px;color:#66BB6A;" id="totalRevAdmin">₹0</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);">एकूण महसूल</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;" id="paymentsTable">
+          <thead>
+            <tr style="background:rgba(255,179,0,0.1);">
+              <th class="tbl-h">क्र.</th>
+              <th class="tbl-h">नाव</th>
+              <th class="tbl-h">मोबाईल</th>
+              <th class="tbl-h">रक्कम</th>
+              <th class="tbl-h">Razorpay पेमेंट आयडी</th>
+              <th class="tbl-h">तारीख</th>
+              <th class="tbl-h">स्थिती</th>
+            </tr>
+          </thead>
+          <tbody id="paymentsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Passwords Tab -->
+    <div id="admin-passwords" class="admin-section" style="display:none;">
+      <h3 style="font-family:Rajdhani,sans-serif;color:var(--gold);font-size:22px;margin-bottom:20px;">🔑 पासवर्ड व्यवस्थापन</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,179,0,0.15);border-radius:16px;padding:24px;">
+          <h4 style="color:var(--gold);margin-bottom:16px;">🔐 सध्याचा मुख्य पासवर्ड</h4>
+          <div style="font-family:Rajdhani,sans-serif;font-size:32px;letter-spacing:4px;color:white;background:rgba(255,255,255,0.07);border-radius:10px;padding:14px;text-align:center;" id="currentPwdDisplay">MPSC2026</div>
+          <button onclick="copyPassword()" style="width:100%;margin-top:12px;background:rgba(255,179,0,0.15);border:1px solid rgba(255,179,0,0.3);border-radius:10px;padding:10px;color:var(--gold);cursor:pointer;font-size:14px;font-weight:700;">📋 कॉपी करा</button>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,179,0,0.15);border-radius:16px;padding:24px;">
+          <h4 style="color:var(--gold);margin-bottom:16px;">🔄 पासवर्ड बदला</h4>
+          <div class="input-group">
+            <label style="font-size:13px;color:rgba(255,255,255,0.6);">नवीन पासवर्ड</label>
+            <input type="text" id="newPasswordInput" placeholder="नवीन पासवर्ड टाका" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,179,0,0.2);border-radius:10px;padding:12px;color:white;font-size:15px;outline:none;"/>
+          </div>
+          <button onclick="changePassword()" style="width:100%;background:linear-gradient(135deg,var(--saffron),var(--gold));border:none;border-radius:10px;padding:12px;color:white;font-weight:700;cursor:pointer;font-size:15px;">✅ पासवर्ड बदला</button>
+          <div id="pwdChangeMsg" style="margin-top:10px;font-size:13px;color:#66BB6A;display:none;text-align:center;"></div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,179,0,0.15);border-radius:16px;padding:24px;">
+          <h4 style="color:var(--gold);margin-bottom:16px;">📤 विद्यार्थ्याला पासवर्ड पाठवा</h4>
+          <div class="input-group">
+            <label style="font-size:13px;color:rgba(255,255,255,0.6);">विद्यार्थ्याचा मोबाईल नंबर</label>
+            <input type="tel" id="sendPwdPhone" placeholder="मोबाईल नंबर" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,179,0,0.2);border-radius:10px;padding:12px;color:white;font-size:15px;outline:none;"/>
+          </div>
+          <button onclick="sendPasswordToStudent()" style="width:100%;background:linear-gradient(135deg,#1565C0,#1E88E5);border:none;border-radius:10px;padding:12px;color:white;font-weight:700;cursor:pointer;font-size:15px;">📱 व्हॉट्सॲप वर पाठवा</button>
+          <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px;text-align:center;">व्हॉट्सॲप API जोडणे आवश्यक आहे</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Add Student Modal -->
+<div class="modal-overlay" id="addStudentModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('addStudentModal').classList.remove('active')">✕</button>
+    <h3>👨‍🎓 नवीन विद्यार्थी जोडा</h3>
+    <p class="sub">विद्यार्थ्याची माहिती भरा</p>
+    <div class="input-group">
+      <label>पूर्ण नाव</label>
+      <input type="text" id="addName" placeholder="विद्यार्थ्याचे नाव"/>
+    </div>
+    <div class="input-group">
+      <label>मोबाईल नंबर</label>
+      <input type="tel" id="addPhone" placeholder="१०-अंकी मोबाईल नंबर" maxlength="10"/>
+    </div>
+    <div class="input-group">
+      <label>पेमेंट आयडी (ऐच्छिक)</label>
+      <input type="text" id="addPaymentId" placeholder="Razorpay पेमेंट आयडी"/>
+    </div>
+    <button class="pay-btn" onclick="addStudentManually()">✅ विद्यार्थी जोडा</button>
+  </div>
+</div>
+
+<!-- ===================== PASSWORD MODAL ===================== -->
+<div class="pwd-modal" id="pwdModal">
+  <div class="pwd-box">
+    <div class="lock-big">🔐</div>
+    <h3>पासवर्ड टाका</h3>
+    <p id="pwdSeriesLabel">सिरीज अ उघडण्यासाठी पासवर्ड टाका</p>
+    <input type="password" class="pwd-input" id="pwdInput" placeholder="••••••••" maxlength="12" />
+    <div class="pwd-error" id="pwdError">❌ चुकीचा संकेतशब्द! पुन्हा प्रयत्न करा.</div>
+    <button class="pwd-submit" onclick="checkPassword()">✅ सिरीज उघडा</button>
+    <button class="btn-nav" onclick="closePwd()" style="width:100%;">रद्द करा</button>
+    <p class="pwd-hint">देयक केल्यानंतर पासवर्ड मिळेल</p>
+  </div>
+</div>
+
+<!-- ===================== TEST PAGE ===================== -->
+<div id="test-page">
+  <div class="test-header">
+    <h2 id="testSeriesTitle">एमपीएससी टेस्ट सिरीज अ</h2>
+    <div class="test-timer" id="timerDisplay">45:00</div>
+    <div class="test-progress" id="progressDisplay">प्रश्न १ / ३०</div>
+  </div>
+
+  <div class="test-body">
+    <div class="question-card">
+      <div class="question-meta">
+        <div class="q-num" id="qNumBadge">प्रश्न १</div>
+        <div class="q-subject" id="qSubjectBadge">इतिहास</div>
+      </div>
+      <div class="question-text" id="questionText">प्रश्न लोड होत आहे...</div>
+      <ul class="options-list" id="optionsList"></ul>
+      <div class="explanation" id="explanationBox"></div>
+      <div class="nav-btns">
+        <button class="btn-nav" onclick="prevQ()">◀ मागील</button>
+        <button class="btn-nav" onclick="markReview()">🚩 पुनरावलोकन</button>
+        <button class="btn-nav primary" onclick="nextQ()">पुढील ▶</button>
+      </div>
+    </div>
+
+    <div class="side-panel">
+      <div class="panel-card">
+        <h4>📊 गुण</h4>
+        <div class="score-row"><span>बरोबर</span><strong class="green" id="scoreCorrect">0</strong></div>
+        <div class="score-row"><span>चुकीचे</span><strong class="red" id="scoreWrong">0</strong></div>
+        <div class="score-row"><span>वगळलेले</span><strong id="scoreSkipped">30</strong></div>
+        <div class="score-row"><span>एकूण गुण</span><strong class="gold" id="scoreTotal">0</strong></div>
+      </div>
+
+      <div class="panel-card">
+        <h4>🗺️ प्रश्न सूची</h4>
+        <div class="q-grid scrollbar-thin" id="qGrid"></div>
+      </div>
+
+      <button class="btn-nav primary" onclick="submitTest()" style="width:100%;padding:14px;font-size:15px;">
+        ✅ चाचणी सादर करा
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== RESULT PAGE ===================== -->
+<div id="result-page">
+  <div class="result-header">
+    <h2>🏆 निकाल</h2>
+    <p id="resultSeries" style="color:rgba(255,255,255,0.5);margin-top:4px;"></p>
+  </div>
+
+  <div class="result-score-big">
+    <div class="result-percent" id="resultPercent">--</div>
+    <div style="color:rgba(255,255,255,0.5);font-size:14px;margin-top:4px;">टक्केवारी</div>
+    <div class="result-stats">
+      <div class="r-stat">
+        <div class="val" id="rCorrect" style="color:#66BB6A;">0</div>
+        <div class="lbl">बरोबर</div>
+      </div>
+      <div class="r-stat">
+        <div class="val" id="rWrong" style="color:#EF5350;">0</div>
+        <div class="lbl">चुकीचे</div>
+      </div>
+      <div class="r-stat">
+        <div class="val" id="rSkipped" style="color:#FFB300;">0</div>
+        <div class="lbl">वगळलेले</div>
+      </div>
+      <div class="r-stat">
+        <div class="val" id="rScore" style="color:#FFD54F;">0</div>
+        <div class="lbl">गुण</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:16px;" id="resultMsg"></div>
+
+  <div class="result-actions">
+    <button class="btn-result" onclick="retryTest()">🔄 पुन्हा प्रयत्न</button>
+    <button class="btn-result outline" onclick="backToHome()">🏠 मुख्यपान</button>
+  </div>
+</div>
+
+<script>
+// ===================== DATA =====================
+const CORRECT_PASSWORD = "MPSC2026";
+
+const subjects = {
+  A: ["इतिहास", "महाराष्ट्राचा इतिहास", "भारताचा इतिहास", "भूगोल", "महाराष्ट्राचा भूगोल"],
+  B: ["राज्यघटना", "राज्यशास्त्र", "स्थानिक स्वराज्य", "केंद्र-राज्य संबंध", "नागरिकशास्त्र"],
+  C: ["अर्थशास्त्र", "कृषी", "सामान्य विज्ञान", "पर्यावरण", "चालू घडामोडी"],
+  D: ["मराठी भाषा", "इंग्रजी भाषा", "बुद्धिमापन", "गणित", "मानसिक क्षमता"]
+};
+
+const questionsDB = {
+  A: [
+    // ── महाराष्ट्राचा इतिहास ──
+    { q: "महाराष्ट्र राज्याची स्थापना कोणत्या दिवशी झाली?", opts: ["१ मे १९६०", "१ जानेवारी १९५०", "१५ ऑगस्ट १९४७", "२६ जानेवारी १९५०"], ans: 0, exp: "१ मे १९६० रोजी महाराष्ट्र राज्याची स्थापना झाली. संयुक्त महाराष्ट्र चळवळीनंतर हे राज्य अस्तित्वात आले.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "छत्रपती शिवाजी महाराजांनी रायगड किल्ल्यावर राज्याभिषेक केव्हा केला?", opts: ["१६७४", "१६४५", "१६८०", "१६३०"], ans: 0, exp: "६ जून १६७४ रोजी छत्रपती शिवाजी महाराजांनी रायगड किल्ल्यावर राज्याभिषेक केला.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "महाराष्ट्रातील कोणत्या राजाने 'अष्टप्रधान मंडळ' स्थापन केले?", opts: ["छत्रपती शिवाजी महाराज", "छत्रपती संभाजी", "बाजीराव पेशवे", "शाहू महाराज"], ans: 0, exp: "छत्रपती शिवाजी महाराजांनी 'अष्टप्रधान मंडळ' स्थापन केले. यात पंतप्रधान, अमात्य, सचिव आदी आठ मंत्री होते.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "संयुक्त महाराष्ट्र चळवळीत किती लोक हुतात्मा झाले?", opts: ["१०५", "५०", "२०० ", "७५"], ans: 0, exp: "संयुक्त महाराष्ट्र चळवळीत १०५ हुतात्मे झाले. त्यांच्या स्मरणार्थ मुंबईत हुतात्मा चौक आहे.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "बाळ गंगाधर टिळक यांनी 'केसरी' वृत्तपत्र केव्हा सुरू केले?", opts: ["१८८१", "१८९०", "१८७५", "१९०५"], ans: 0, exp: "बाळ गंगाधर टिळक यांनी १८८१ साली 'केसरी' (मराठी) आणि 'मराठा' (इंग्रजी) वृत्तपत्रे सुरू केली.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "पेशव्यांची राजधानी कोणती होती?", opts: ["पुणे", "सातारा", "नागपूर", "कोल्हापूर"], ans: 0, exp: "पेशव्यांची राजधानी पुणे होती. शनिवारवाड्यात पेशव्यांचा दरबार भरत असे.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "महाराष्ट्रातील 'वारकरी' संप्रदायाचे प्रमुख संत कोण होते?", opts: ["संत तुकाराम", "संत एकनाथ", "संत ज्ञानेश्वर", "वरील सर्व"], ans: 3, exp: "वारकरी संप्रदायात संत ज्ञानेश्वर, संत नामदेव, संत एकनाथ आणि संत तुकाराम हे प्रमुख संत होते.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "डॉ. बाबासाहेब आंबेडकर यांचा जन्म कोठे झाला?", opts: ["महू, मध्यप्रदेश", "पुणे", "नागपूर", "मुंबई"], ans: 0, exp: "डॉ. भीमराव रामजी आंबेडकर यांचा जन्म १४ एप्रिल १८९१ रोजी महू (आताचे डॉ. आंबेडकर नगर), मध्यप्रदेश येथे झाला.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "महाराष्ट्रातील 'सत्यशोधक समाज' कोणी स्थापन केला?", opts: ["महात्मा जोतीराव फुले", "डॉ. बाबासाहेब आंबेडकर", "गोपाळ गणेश आगरकर", "रानडे"], ans: 0, exp: "महात्मा जोतीराव फुले यांनी १८७३ साली 'सत्यशोधक समाज' स्थापन केला.", subj: "महाराष्ट्राचा इतिहास" },
+    { q: "भारतातील पहिली रेल्वे कोणत्या शहरांदरम्यान धावली?", opts: ["मुंबई ते ठाणे", "मुंबई ते पुणे", "कोलकाता ते दिल्ली", "चेन्नई ते बंगळुरू"], ans: 0, exp: "१६ एप्रिल १८५३ रोजी भारतातील पहिली रेल्वे मुंबई ते ठाणे (३४ किमी) धावली.", subj: "भारताचा इतिहास" },
+    // ── भारताचा इतिहास ──
+    { q: "भारतात 'सत्याग्रह' आंदोलन कोणी सुरू केले?", opts: ["महात्मा गांधी", "सुभाषचंद्र बोस", "बाळ गंगाधर टिळक", "लाल बहादूर शास्त्री"], ans: 0, exp: "महात्मा गांधींनी 'सत्याग्रह' आंदोलन सुरू केले. सत्याग्रह म्हणजे सत्यासाठी आग्रह धरणे.", subj: "भारताचा इतिहास" },
+    { q: "पानिपतची पहिली लढाई कधी झाली?", opts: ["१५२६", "१५५६", "१७६१", "१४९२"], ans: 0, exp: "पानिपतची पहिली लढाई १५२६ साली बाबर आणि इब्राहीम लोदी यांच्यात झाली. बाबरने जिंकून मुघल साम्राज्याची स्थापना केली.", subj: "भारताचा इतिहास" },
+    { q: "भारताला स्वातंत्र्य कधी मिळाले?", opts: ["१५ ऑगस्ट १९४७", "२६ जानेवारी १९५०", "१५ ऑगस्ट १९४५", "१५ ऑगस्ट १९४८"], ans: 0, exp: "भारताला १५ ऑगस्ट १९४७ रोजी ब्रिटिश राजवटीतून स्वातंत्र्य मिळाले.", subj: "भारताचा इतिहास" },
+    { q: "भारताचे पहिले पंतप्रधान कोण होते?", opts: ["पंडित जवाहरलाल नेहरू", "सरदार वल्लभभाई पटेल", "डॉ. राजेंद्र प्रसाद", "महात्मा गांधी"], ans: 0, exp: "पंडित जवाहरलाल नेहरू भारताचे पहिले पंतप्रधान (१९४७-१९६४) होते.", subj: "भारताचा इतिहास" },
+    { q: "'इंडियन नॅशनल काँग्रेस'ची स्थापना कधी झाली?", opts: ["१८८५", "१८७५", "१९०५", "१८९०"], ans: 0, exp: "इंडियन नॅशनल काँग्रेसची स्थापना १८८५ साली ए. ओ. ह्युम यांनी मुंबई येथे केली.", subj: "भारताचा इतिहास" },
+    { q: "भारतातील पहिले गव्हर्नर जनरल (भारतीय) कोण होते?", opts: ["सी. राजगोपालाचारी", "लॉर्ड माउंटबॅटन", "राजेंद्र प्रसाद", "सरदार पटेल"], ans: 0, exp: "सी. राजगोपालाचारी (राजाजी) हे भारताचे शेवटचे आणि पहिले भारतीय गव्हर्नर जनरल होते (१९४८-५०).", subj: "भारताचा इतिहास" },
+    { q: "असहकार आंदोलन कोणत्या वर्षी सुरू झाले?", opts: ["१९२०", "१९१९", "१९३०", "१९४२"], ans: 0, exp: "महात्मा गांधींनी १९२० साली असहकार आंदोलन सुरू केले. चौरीचौरा घटनेनंतर ते मागे घेण्यात आले.", subj: "भारताचा इतिहास" },
+    { q: "भारत छोडो आंदोलन कधी झाले?", opts: ["८ ऑगस्ट १९४२", "१५ ऑगस्ट १९४७", "२६ जानेवारी १९३०", "१९३५"], ans: 0, exp: "महात्मा गांधींनी ८ ऑगस्ट १९४२ रोजी 'भारत छोडो आंदोलन' सुरू केले. 'करेंगे या मरेंगे' हा नारा दिला.", subj: "भारताचा इतिहास" },
+    { q: "दिल्ली सल्तनतची स्थापना कोणी केली?", opts: ["कुतुबुद्दीन ऐबक", "अकबर", "बाबर", "औरंगजेब"], ans: 0, exp: "कुतुबुद्दीन ऐबकने १२०६ साली दिल्ली सल्तनतची स्थापना केली. तो गुलाम घराण्याचा पहिला सुलतान होता.", subj: "भारताचा इतिहास" },
+    { q: "अकबराने 'दीन-ए-इलाही' धर्म कधी स्थापन केला?", opts: ["१५८२", "१५५६", "१६०५", "१५७०"], ans: 0, exp: "अकबराने १५८२ साली 'दीन-ए-इलाही' हा धर्म स्थापन केला. यात सर्व धर्मांचे चांगले घटक एकत्र करण्याचा प्रयत्न होता.", subj: "भारताचा इतिहास" },
+    // ── भूगोल ──
+    { q: "महाराष्ट्रातील सर्वात उंच शिखर कोणते?", opts: ["कळसुबाई", "साल्हेर", "हरिश्चंद्रगड", "तोरणा"], ans: 0, exp: "कळसुबाई (१६४६ मी) हे महाराष्ट्रातील सर्वात उंच शिखर आहे. ते अहमदनगर जिल्ह्यात आहे.", subj: "महाराष्ट्राचा भूगोल" },
+    { q: "गोदावरी नदीचा उगम कोठे होतो?", opts: ["त्र्यंबकेश्वर, नाशिक", "महाबळेश्वर", "माथेरान", "पुणे"], ans: 0, exp: "गोदावरी नदीचा उगम नाशिक जिल्ह्यातील त्र्यंबकेश्वर येथे होतो. ती दक्षिण भारतातील सर्वात मोठी नदी आहे.", subj: "भूगोल" },
+    { q: "महाराष्ट्रात एकूण किती जिल्हे आहेत?", opts: ["३६", "३५", "३८", "३२"], ans: 0, exp: "महाराष्ट्रात एकूण ३६ जिल्हे आहेत. ते ६ महसूल विभागांमध्ये विभागले आहेत.", subj: "महाराष्ट्राचा भूगोल" },
+    { q: "भारताचा भौगोलिक क्षेत्रफळाच्या दृष्टीने जगात कितवा क्रमांक लागतो?", opts: ["सातवा", "पाचवा", "नववा", "दहावा"], ans: 0, exp: "क्षेत्रफळाच्या दृष्टीने भारत जगात सातव्या क्रमांकावर आहे. क्षेत्रफळ ३२.८ लाख चौ.किमी आहे.", subj: "भूगोल" },
+    { q: "भारतातील सर्वात लांब नदी कोणती?", opts: ["गंगा", "यमुना", "सिंधू", "ब्रह्मपुत्रा"], ans: 0, exp: "गंगा नदी (२५२५ किमी) ही भारतातील सर्वात लांब नदी आहे.", subj: "भूगोल" },
+    { q: "महाराष्ट्रातील कोणत्या जिल्ह्याला 'संत्र्याचे शहर' म्हणतात?", opts: ["नागपूर", "अमरावती", "यवतमाळ", "अकोला"], ans: 0, exp: "नागपूरला 'संत्र्याचे शहर' म्हणतात. नागपूरचे संत्रे जगप्रसिद्ध आहेत.", subj: "महाराष्ट्राचा भूगोल" },
+    { q: "महाराष्ट्राची राजधानी कोणती आहे?", opts: ["मुंबई", "पुणे", "नागपूर", "औरंगाबाद"], ans: 0, exp: "महाराष्ट्राची राजधानी मुंबई आहे. मुंबई ही भारताची आर्थिक राजधानीही आहे.", subj: "महाराष्ट्राचा भूगोल" },
+    { q: "भारतातील सर्वात मोठे वाळवंट कोणते?", opts: ["थार वाळवंट", "लडाख वाळवंट", "कच्छचे रण", "दख्खनचे पठार"], ans: 0, exp: "थार वाळवंट (राजस्थान) हे भारतातील सर्वात मोठे वाळवंट आहे. ते जगातील ९ व्या क्रमांकाचे मोठे वाळवंट आहे.", subj: "भूगोल" },
+    { q: "पश्चिम घाट पर्वतरांग कोणत्या राज्यांतून जाते?", opts: ["महाराष्ट्र, गोवा, कर्नाटक, केरळ, तामिळनाडू", "महाराष्ट्र, गुजरात, राजस्थान", "उत्तर प्रदेश, मध्यप्रदेश, बिहार", "वरील सर्व"], ans: 0, exp: "पश्चिम घाट महाराष्ट्र, गोवा, कर्नाटक, केरळ आणि तामिळनाडू या राज्यांतून जातो. हे युनेस्को जागतिक वारसा स्थळ आहे.", subj: "भूगोल" },
+    { q: "महाराष्ट्रातील सर्वात मोठे धरण कोणते?", opts: ["जायकवाडी", "कोयना", "उजनी", "भंडारदरा"], ans: 0, exp: "जायकवाडी धरण (गोदावरी नदीवर, औरंगाबाद) हे महाराष्ट्रातील सर्वात मोठे धरण आहे.", subj: "महाराष्ट्राचा भूगोल" },
+    { q: "कर्क वृत्त (Tropic of Cancer) भारतातील किती राज्यांतून जातो?", opts: ["८", "७", "५", "१०"], ans: 0, exp: "कर्क वृत्त गुजरात, राजस्थान, मध्यप्रदेश, छत्तीसगड, झारखंड, पश्चिम बंगाल, त्रिपुरा, मिझोरम — अशा ८ राज्यांतून जातो.", subj: "भूगोल" }
+  ],
+  B: [
+    // ── राज्यघटना ──
+    { q: "भारतीय राज्यघटना कधी अंमलात आली?", opts: ["२६ जानेवारी १९५०", "१५ ऑगस्ट १९४७", "२६ नोव्हेंबर १९४९", "१ जानेवारी १९५०"], ans: 0, exp: "भारतीय राज्यघटना २६ जानेवारी १९५० रोजी अंमलात आली. म्हणूनच २६ जानेवारी हा प्रजासत्ताक दिन म्हणून साजरा केला जातो.", subj: "राज्यघटना" },
+    { q: "भारतीय राज्यघटनेचे जनक कोणाला म्हटले जाते?", opts: ["डॉ. बाबासाहेब आंबेडकर", "जवाहरलाल नेहरू", "महात्मा गांधी", "सरदार पटेल"], ans: 0, exp: "डॉ. बाबासाहेब आंबेडकर यांना भारतीय राज्यघटनेचे जनक म्हटले जाते. ते राज्यघटना मसुदा समितीचे अध्यक्ष होते.", subj: "राज्यघटना" },
+    { q: "मूलभूत हक्क राज्यघटनेच्या कोणत्या भागात आहेत?", opts: ["भाग III", "भाग IV", "भाग II", "भाग V"], ans: 0, exp: "मूलभूत हक्क राज्यघटनेच्या भाग III मध्ये (अनुच्छेद १२ ते ३५) आहेत.", subj: "राज्यघटना" },
+    { q: "भारताचे राष्ट्रपती किती वर्षांसाठी निवडले जातात?", opts: ["५ वर्षे", "६ वर्षे", "४ वर्षे", "७ वर्षे"], ans: 0, exp: "भारताचे राष्ट्रपती ५ वर्षांसाठी निवडले जातात.", subj: "राज्यघटना" },
+    { q: "भारतात आणीबाणी किती प्रकारची असते?", opts: ["तीन", "दोन", "चार", "पाच"], ans: 0, exp: "भारतात तीन प्रकारची आणीबाणी असते: राष्ट्रीय (अनुच्छेद ३५२), राज्य (अनुच्छेद ३५६), आर्थिक (अनुच्छेद ३६०).", subj: "राज्यघटना" },
+    { q: "भारतीय राज्यघटनेत एकूण किती मूलभूत हक्क आहेत?", opts: ["सहा", "सात", "आठ", "पाच"], ans: 0, exp: "सध्या भारतीय राज्यघटनेत ६ मूलभूत हक्क आहेत. सुरुवातीला ७ होते, पण संपत्तीचा हक्क १९७८ मध्ये काढला.", subj: "राज्यघटना" },
+    { q: "राज्यघटनेत 'मूलभूत कर्तव्ये' कोणत्या दुरुस्तीने जोडली गेली?", opts: ["४२ वी दुरुस्ती, १९७६", "४४ वी दुरुस्ती, १९७८", "२५ वी दुरुस्ती", "७३ वी दुरुस्ती"], ans: 0, exp: "४२ व्या घटनादुरुस्तीने (१९७६) राज्यघटनेत ११ मूलभूत कर्तव्ये जोडण्यात आली. नंतर ८६ व्या दुरुस्तीने एक अधिक जोडले.", subj: "राज्यघटना" },
+    { q: "भारताच्या सर्वोच्च न्यायालयाचे प्रमुख कोण असतात?", opts: ["सरन्यायाधीश (Chief Justice of India)", "राष्ट्रपती", "पंतप्रधान", "कायदामंत्री"], ans: 0, exp: "सर्वोच्च न्यायालयाचे प्रमुख सरन्यायाधीश (Chief Justice of India) असतात.", subj: "राज्यघटना" },
+    { q: "राज्यघटनेचा अनुच्छेद ३७० कोणत्या राज्याशी संबंधित होता?", opts: ["जम्मू व काश्मीर", "नागालँड", "मणिपूर", "मिझोरम"], ans: 0, exp: "राज्यघटनेचा अनुच्छेद ३७० जम्मू व काश्मीरला विशेष दर्जा देत होता. ऑगस्ट २०१९ मध्ये तो रद्द करण्यात आला.", subj: "राज्यघटना" },
+    { q: "भारतात कोणत्या अनुच्छेदाने उपराष्ट्रपती पदाची निर्मिती केली?", opts: ["अनुच्छेद ६३", "अनुच्छेद ५२", "अनुच्छेद ७४", "अनुच्छेद ७९"], ans: 0, exp: "अनुच्छेद ६३ नुसार भारताला उपराष्ट्रपती असतो. उपराष्ट्रपती राज्यसभेचे पदसिद्ध अध्यक्ष असतात.", subj: "राज्यघटना" },
+    // ── राज्यशास्त्र ──
+    { q: "लोकसभेत एकूण किती सदस्य असतात?", opts: ["५४३", "५४५", "५२५", "५५०"], ans: 0, exp: "लोकसभेत एकूण ५४३ निवडून येणारे सदस्य असतात.", subj: "राज्यशास्त्र" },
+    { q: "महाराष्ट्र विधानसभेत एकूण किती सदस्य आहेत?", opts: ["२८८", "२९०", "२७५", "३००"], ans: 0, exp: "महाराष्ट्र विधानसभेत एकूण २८८ सदस्य आहेत.", subj: "राज्यशास्त्र" },
+    { q: "नीती आयोगाची स्थापना कधी झाली?", opts: ["१ जानेवारी २०१५", "१ जानेवारी २०१४", "२६ जानेवारी २०१५", "१५ ऑगस्ट २०१५"], ans: 0, exp: "नीती आयोगाची स्थापना १ जानेवारी २०१५ रोजी झाली. त्याने नियोजन आयोगाची जागा घेतली.", subj: "राज्यशास्त्र" },
+    { q: "भारताच्या निवडणूक आयोगाची स्थापना कधी झाली?", opts: ["२५ जानेवारी १९५०", "२६ जानेवारी १९५०", "१५ ऑगस्ट १९४७", "२६ नोव्हेंबर १९४९"], ans: 0, exp: "भारताच्या निवडणूक आयोगाची स्थापना २५ जानेवारी १९५० रोजी झाली. म्हणून राष्ट्रीय मतदार दिन २५ जानेवारी रोजी साजरा होतो.", subj: "राज्यशास्त्र" },
+    { q: "राज्यसभेत एकूण किती सदस्य असतात?", opts: ["२५०", "२४५", "२४०", "२३०"], ans: 0, exp: "राज्यसभेत जास्तीत जास्त २५० सदस्य असतात (२३८ निवडलेले + १२ राष्ट्रपती नियुक्त).", subj: "राज्यशास्त्र" },
+    { q: "भारताच्या पंतप्रधानांची नियुक्ती कोण करते?", opts: ["राष्ट्रपती", "लोकसभा अध्यक्ष", "उपराष्ट्रपती", "सर्वोच्च न्यायालय"], ans: 0, exp: "भारताच्या पंतप्रधानांची नियुक्ती राष्ट्रपती करतात. लोकसभेत बहुमत असलेल्या पक्षाच्या नेत्याला राष्ट्रपती पंतप्रधान म्हणून नियुक्त करतात.", subj: "राज्यशास्त्र" },
+    { q: "संसदेचे अधिवेशन कोण बोलावू शकतो?", opts: ["राष्ट्रपती", "पंतप्रधान", "लोकसभा अध्यक्ष", "उपराष्ट्रपती"], ans: 0, exp: "संसदेचे अधिवेशन राष्ट्रपती बोलावतात (मंत्रिमंडळाच्या सल्ल्यानुसार).", subj: "राज्यशास्त्र" },
+    // ── स्थानिक स्वराज्य ──
+    { q: "पंचायतराज व्यवस्थेत किती स्तर आहेत?", opts: ["तीन", "दोन", "चार", "पाच"], ans: 0, exp: "पंचायतराज व्यवस्थेत तीन स्तर आहेत: ग्रामपंचायत, पंचायत समिती आणि जिल्हा परिषद.", subj: "स्थानिक स्वराज्य" },
+    { q: "ग्रामपंचायतीचा कार्यकाळ किती वर्षांचा असतो?", opts: ["५ वर्षे", "३ वर्षे", "४ वर्षे", "६ वर्षे"], ans: 0, exp: "ग्रामपंचायतीचा कार्यकाळ ५ वर्षांचा असतो.", subj: "स्थानिक स्वराज्य" },
+    { q: "७३ व्या घटनादुरुस्तीने काय केले?", opts: ["पंचायतराजला घटनात्मक दर्जा दिला", "नगरपालिकांना दर्जा दिला", "महिला आरक्षण लागू केले", "RTI लागू केला"], ans: 0, exp: "७३ व्या घटनादुरुस्तीने (१९९२) पंचायतराज संस्थांना घटनात्मक दर्जा दिला. अनुच्छेद २४३ अ ते ण जोडले गेले.", subj: "स्थानिक स्वराज्य" },
+    { q: "महाराष्ट्रात जिल्हा परिषदेचा प्रमुख कोण असतो?", opts: ["अध्यक्ष", "जिल्हाधिकारी", "मुख्य कार्यकारी अधिकारी", "सरपंच"], ans: 0, exp: "जिल्हा परिषदेचा राजकीय प्रमुख अध्यक्ष असतो. प्रशासकीय प्रमुख मुख्य कार्यकारी अधिकारी (CEO) असतो.", subj: "स्थानिक स्वराज्य" }
+  ],
+  C: [
+    // ── अर्थशास्त्र ──
+    { q: "भारताचे राष्ट्रीय उत्पन्न मोजण्यासाठी कोणती संस्था जबाबदार आहे?", opts: ["NSO (राष्ट्रीय सांख्यिकी कार्यालय)", "RBI", "NITI Aayog", "वित्त आयोग"], ans: 0, exp: "NSO (National Statistical Office) भारताचे राष्ट्रीय उत्पन्न मोजते. पूर्वी याला CSO (Central Statistical Office) म्हणत.", subj: "अर्थशास्त्र" },
+    { q: "GST कधी लागू झाला?", opts: ["१ जुलै २०१७", "१ एप्रिल २०१७", "१ जानेवारी २०१७", "१ ऑक्टोबर २०१७"], ans: 0, exp: "GST (वस्तू व सेवा कर) भारतात १ जुलै २०१७ रोजी लागू झाला. 'एक राष्ट्र, एक कर' हे त्याचे उद्दिष्ट होते.", subj: "अर्थशास्त्र" },
+    { q: "भारतातील सर्वात मोठी बँक कोणती?", opts: ["स्टेट बँक ऑफ इंडिया", "पंजाब नॅशनल बँक", "HDFC बँक", "ICICI बँक"], ans: 0, exp: "स्टेट बँक ऑफ इंडिया (SBI) ही भारतातील सर्वात मोठी सार्वजनिक क्षेत्रातील बँक आहे.", subj: "अर्थशास्त्र" },
+    { q: "भारतीय रिझर्व्ह बँकेची स्थापना कधी झाली?", opts: ["१ एप्रिल १९३५", "१ जानेवारी १९५०", "१५ ऑगस्ट १९४७", "२६ जानेवारी १९३५"], ans: 0, exp: "भारतीय रिझर्व्ह बँकेची (RBI) स्थापना १ एप्रिल १९३५ रोजी झाली. मुख्यालय मुंबई येथे आहे.", subj: "अर्थशास्त्र" },
+    { q: "भारताचे केंद्रीय अर्थसंकल्प कोण सादर करतो?", opts: ["अर्थमंत्री", "पंतप्रधान", "राष्ट्रपती", "RBI गव्हर्नर"], ans: 0, exp: "केंद्रीय अर्थसंकल्प अर्थमंत्री लोकसभेत सादर करतात. सध्या १ फेब्रुवारी रोजी सादर केले जाते.", subj: "अर्थशास्त्र" },
+    { q: "SEBI ची स्थापना कधी झाली?", opts: ["१९९२", "१९८८", "१९९५", "२०००"], ans: 0, exp: "SEBI (Securities and Exchange Board of India) ची स्थापना १९८८ साली झाली आणि १९९२ मध्ये त्याला कायदेशीर दर्जा मिळाला.", subj: "अर्थशास्त्र" },
+    { q: "भारतातील सर्वात मोठा शेअर बाजार कोणता?", opts: ["BSE (मुंबई शेअर बाजार)", "NSE", "DSE", "CSE"], ans: 0, exp: "BSE (Bombay Stock Exchange) हा आशियातील सर्वात जुना (१८७५) आणि भारतातील सर्वात मोठा शेअर बाजार आहे.", subj: "अर्थशास्त्र" },
+    { q: "पंचवार्षिक योजना कोणत्या संस्थेद्वारे आखल्या जात होत्या?", opts: ["नियोजन आयोग", "NITI आयोग", "RBI", "CII"], ans: 0, exp: "नियोजन आयोग (Planning Commission) पंचवार्षिक योजना आखत असे. २०१५ मध्ये त्याची जागा NITI आयोगाने घेतली.", subj: "अर्थशास्त्र" },
+    { q: "भारताचे GDP मोजण्यासाठी कोणते वर्ष आधार वर्ष आहे?", opts: ["२०११-१२", "२००४-०५", "२०१४-१५", "२०१८-१९"], ans: 0, exp: "सध्या भारताचे GDP २०११-१२ हे आधार वर्ष (Base Year) घेऊन मोजले जाते.", subj: "अर्थशास्त्र" },
+    // ── कृषी ──
+    { q: "हरित क्रांती कोणत्या दशकात झाली?", opts: ["१९६०-७०", "१९५०-६०", "१९७०-८०", "१९८०-९०"], ans: 0, exp: "हरित क्रांती १९६०-७० च्या दशकात झाली. यात उच्च उत्पादन देणाऱ्या जातींचा (HYV) वापर केला गेला.", subj: "कृषी" },
+    { q: "महाराष्ट्रात सर्वाधिक कोणते पीक घेतले जाते?", opts: ["ज्वारी", "गहू", "तांदूळ", "कपास"], ans: 0, exp: "महाराष्ट्रात ज्वारी हे सर्वाधिक क्षेत्रावर घेतले जाणारे पीक आहे.", subj: "कृषी" },
+    { q: "महाराष्ट्रातील 'नागपूर मँडारिन' हे कशाचे नाव आहे?", opts: ["संत्र्याची जात", "आंब्याची जात", "द्राक्षाची जात", "केळ्याची जात"], ans: 0, exp: "नागपूर मँडारिन ही नागपूरची प्रसिद्ध संत्र्याची जात आहे. हे संत्रे जगभर निर्यात केले जातात.", subj: "कृषी" },
+    { q: "भारतातील 'श्वेत क्रांती' कशाशी संबंधित आहे?", opts: ["दूध उत्पादन", "मत्स्य उत्पादन", "अंडी उत्पादन", "साखर उत्पादन"], ans: 0, exp: "श्वेत क्रांती (Operation Flood) दूध उत्पादनाशी संबंधित आहे. डॉ. वर्गीस कुरियन यांना 'दुधाचे जनक' म्हणतात.", subj: "कृषी" },
+    // ── सामान्य विज्ञान ──
+    { q: "प्रकाशसंश्लेषणात कोणता वायू सोडला जातो?", opts: ["ऑक्सिजन", "कार्बन डायऑक्साइड", "नायट्रोजन", "हायड्रोजन"], ans: 0, exp: "प्रकाशसंश्लेषणात वनस्पती CO₂ शोषून O₂ (ऑक्सिजन) सोडतात.", subj: "सामान्य विज्ञान" },
+    { q: "मानवी शरीरातील सर्वात मोठी ग्रंथी कोणती?", opts: ["यकृत (Liver)", "स्वादुपिंड", "थायरॉईड", "अधिवृक्क ग्रंथी"], ans: 0, exp: "यकृत (Liver) हे मानवी शरीरातील सर्वात मोठे अवयव आणि सर्वात मोठी ग्रंथी आहे.", subj: "सामान्य विज्ञान" },
+    { q: "मानवी रक्तातील 'हिमोग्लोबिन' कशाशी संबंधित आहे?", opts: ["ऑक्सिजन वाहतूक", "रक्त गोठणे", "रोगप्रतिकारशक्ती", "पचनक्रिया"], ans: 0, exp: "हिमोग्लोबिन हे लाल रक्तपेशींमधील प्रथिन आहे जे ऑक्सिजन वाहतूक करते. त्यात लोह असते.", subj: "सामान्य विज्ञान" },
+    { q: "DNA चे पूर्ण नाव काय आहे?", opts: ["Deoxyribonucleic Acid", "Deoxyribose Nucleic Acid", "Diribonucleic Acid", "Dinucleic Acid"], ans: 0, exp: "DNA म्हणजे Deoxyribonucleic Acid. हे आनुवंशिक माहिती साठवणारे रेणू आहे.", subj: "सामान्य विज्ञान" },
+    { q: "प्रकाशाचा वेग किती आहे?", opts: ["३×१०⁸ मी/से", "३×१०⁶ मी/से", "३×१०¹⁰ मी/से", "३×१०⁴ मी/से"], ans: 0, exp: "प्रकाशाचा वेग निर्वातात ३×१०⁸ मीटर प्रति सेकंद (सुमारे ३ लाख किमी/से) आहे.", subj: "सामान्य विज्ञान" },
+    // ── पर्यावरण ──
+    { q: "ओझोन थर कोणत्या वायुमंडलाच्या थरात असतो?", opts: ["स्ट्रॅटोस्फियर", "ट्रोपोस्फियर", "मेसोस्फियर", "थर्मोस्फियर"], ans: 0, exp: "ओझोन थर स्ट्रॅटोस्फियर या वायुमंडलाच्या थरात असतो. तो सूर्याच्या अतिनील किरणांपासून संरक्षण करतो.", subj: "पर्यावरण" },
+    { q: "वन्यजीव संरक्षण कायदा कधी मंजूर झाला?", opts: ["१९७२", "१९७०", "१९८०", "१९९१"], ans: 0, exp: "वन्यजीव संरक्षण कायदा १९७२ साली मंजूर झाला.", subj: "पर्यावरण" },
+    { q: "भारतात ISRO कुठे आहे?", opts: ["बंगळुरू", "हैदराबाद", "चेन्नई", "मुंबई"], ans: 0, exp: "ISRO (Indian Space Research Organisation) चे मुख्यालय बंगळुरू येथे आहे.", subj: "चालू घडामोडी" }
+  ],
+  D: [
+    // ── मराठी भाषा ──
+    { q: "मराठी भाषेतील 'महाराष्ट्र' शब्दाचा अर्थ काय आहे?", opts: ["महान राष्ट्र", "मोठे राज्य", "प्राचीन भूमी", "पराक्रमी देश"], ans: 0, exp: "'महाराष्ट्र' म्हणजे महान राष्ट्र. 'महा' म्हणजे मोठे/महान आणि 'राष्ट्र' म्हणजे देश.", subj: "मराठी भाषा" },
+    { q: "मराठी व्याकरणात 'नाम' म्हणजे काय?", opts: ["व्यक्ती, वस्तू किंवा स्थानाचे नाव", "क्रिया दर्शवणारा शब्द", "विशेषण", "अव्यय"], ans: 0, exp: "नाम म्हणजे व्यक्ती, वस्तू, स्थान किंवा भावना यांचे नाव सांगणारा शब्द.", subj: "मराठी भाषा" },
+    { q: "'अग्नी' या शब्दाचा समानार्थी शब्द कोणता?", opts: ["वह्नी", "वायू", "जल", "पृथ्वी"], ans: 0, exp: "'अग्नी'चे समानार्थी शब्द: वह्नी, अनल, पावक, दहन.", subj: "मराठी भाषा" },
+    { q: "मराठी व्याकरणात 'क्रियापद' म्हणजे काय?", opts: ["क्रिया सांगणारा शब्द", "नाम सांगणारा शब्द", "विशेषण", "सर्वनाम"], ans: 0, exp: "क्रियापद म्हणजे वाक्यातील क्रिया (action) सांगणारा शब्द. उदा. धावणे, खाणे, बोलणे.", subj: "मराठी भाषा" },
+    { q: "'पाणी' या शब्दाचा विरुद्धार्थी शब्द कोणता?", opts: ["अग्नी", "वायू", "माती", "आकाश"], ans: 0, exp: "'पाणी' (जल) चा विरुद्धार्थी 'अग्नी' (Fire) मानला जातो — पंचमहाभूतांच्या संकल्पनेत.", subj: "मराठी भाषा" },
+    { q: "'ज्ञानेश्वरी' हा ग्रंथ कोणी लिहिला?", opts: ["संत ज्ञानेश्वर", "संत तुकाराम", "संत एकनाथ", "संत नामदेव"], ans: 0, exp: "संत ज्ञानेश्वरांनी 'ज्ञानेश्वरी' (भावार्थदीपिका) हा ग्रंथ लिहिला. हा भगवद्गीतेवरील मराठी टीका ग्रंथ आहे.", subj: "मराठी भाषा" },
+    { q: "मराठी भाषेचा समावेश 'अभिजात भाषा' म्हणून कधी झाला?", opts: ["२०२४", "२०१५", "२०१९", "२०१०"], ans: 0, exp: "मराठी भाषेला ३ ऑक्टोबर २०२४ रोजी 'अभिजात भाषा' (Classical Language) चा दर्जा मिळाला.", subj: "मराठी भाषा" },
+    { q: "खालीलपैकी 'अव्यय' कोणता आहे?", opts: ["आणि", "सुंदर", "धावणे", "मुलगा"], ans: 0, exp: "'आणि' हा उभयान्वयी अव्यय आहे. अव्यय म्हणजे जे शब्द कधीही बदलत नाहीत.", subj: "मराठी भाषा" },
+    { q: "'तुकाराम गाथा' कोणाची रचना आहे?", opts: ["संत तुकाराम", "संत ज्ञानेश्वर", "संत एकनाथ", "संत रामदास"], ans: 0, exp: "तुकाराम गाथा संत तुकाराम यांची अभंग रचना आहे. त्यातील अभंग अत्यंत सोप्या भाषेत लिहिले आहेत.", subj: "मराठी भाषा" },
+    { q: "मराठी भाषेचे साहित्य संमेलन दरवर्षी कोण आयोजित करते?", opts: ["अखिल भारतीय मराठी साहित्य महामंडळ", "महाराष्ट्र शासन", "विद्यापीठ अनुदान आयोग", "साहित्य अकादमी"], ans: 0, exp: "अखिल भारतीय मराठी साहित्य महामंडळ दरवर्षी अखिल भारतीय मराठी साहित्य संमेलन आयोजित करते.", subj: "मराठी भाषा" },
+    // ── इंग्रजी भाषा ──
+    { q: "The synonym of 'Abundant' is:", opts: ["Plentiful", "Scarce", "Limited", "Rare"], ans: 0, exp: "'Abundant' means existing in large quantities. Its synonym is 'Plentiful'.", subj: "इंग्रजी भाषा" },
+    { q: "The antonym of 'Transparent' is:", opts: ["Opaque", "Clear", "Visible", "Bright"], ans: 0, exp: "'Transparent' means see-through. Its antonym is 'Opaque' which means not see-through.", subj: "इंग्रजी भाषा" },
+    { q: "Choose the correct spelling:", opts: ["Necessary", "Neccessary", "Necesary", "Necesssary"], ans: 0, exp: "The correct spelling is 'Necessary' — one 'c' and two 's'.", subj: "इंग्रजी भाषा" },
+    { q: "Fill in the blank: He _____ to school every day.", opts: ["goes", "go", "going", "gone"], ans: 0, exp: "With third person singular (He/She/It), we add 's' to the verb: He goes.", subj: "इंग्रजी भाषा" },
+    { q: "The plural of 'child' is:", opts: ["children", "childs", "childes", "childrens"], ans: 0, exp: "The plural of 'child' is 'children'. It is an irregular plural.", subj: "इंग्रजी भाषा" },
+    { q: "Which word means 'to make something better'?", opts: ["Improve", "Worsen", "Destroy", "Ignore"], ans: 0, exp: "'Improve' means to make something better or of higher quality.", subj: "इंग्रजी भाषा" },
+    // ── बुद्धिमापन ──
+    { q: "जर ABCD = 1234, तर DCBA = ?", opts: ["4321", "1234", "3412", "2143"], ans: 0, exp: "A=1, B=2, C=3, D=4 असल्यास DCBA = 4-3-2-1 = 4321 होते.", subj: "बुद्धिमापन" },
+    { q: "If 2+3=10, 3+4=21, then 4+5=?", opts: ["36", "30", "40", "45"], ans: 0, exp: "Pattern: a+b = a×(a+b). So 4+5 = 4×9 = 36.", subj: "बुद्धिमापन" },
+    { q: "BDFH : ACEG :: JLNP : ?", opts: ["IKMO", "JKMO", "ILMO", "IKLM"], ans: 0, exp: "BDFH are even letters; ACEG are odd letters. Similarly JLNP are even; IKMO are odd letters.", subj: "बुद्धिमापन" },
+    { q: "मांजर : म्याव :: कुत्रा : ?", opts: ["भुंकणे", "डरकाळी", "हंबरणे", "चित्कार"], ans: 0, exp: "मांजर म्याव करते तसे कुत्रा भुंकतो. हे सादृश्य (analogy) आहे.", subj: "बुद्धिमापन" },
+    { q: "एका रांगेत रामचा क्रमांक पुढून ५ वा आणि मागून ८ वा आहे, तर रांगेत एकूण किती जण आहेत?", opts: ["१२", "११", "१३", "१०"], ans: 0, exp: "एकूण = (पुढून क्रमांक + मागून क्रमांक - 1) = 5 + 8 - 1 = 12.", subj: "बुद्धिमापन" },
+    // ── गणित ──
+    { q: "५, १०, २०, ४०, ___ पुढील संख्या कोणती?", opts: ["८०", "६०", "७०", "९०"], ans: 0, exp: "प्रत्येक संख्या दुप्पट होते: ५×२=१०, १०×२=२०, २०×२=४०, ४०×२=८०.", subj: "गणित" },
+    { q: "१ किलोमीटर = किती मीटर?", opts: ["१०००", "१००", "१०", "१०,०००"], ans: 0, exp: "१ किलोमीटर = १,००० मीटर. 'किलो' म्हणजे १,०००.", subj: "गणित" },
+    { q: "३ वर्षांपूर्वी रामची वय १५ होती, तर आता त्याची वय किती?", opts: ["१८", "१२", "१५", "२०"], ans: 0, exp: "३ वर्षांपूर्वी वय = १५, म्हणून आताची वय = १५ + ३ = १८.", subj: "गणित" },
+    { q: "एका आयताची लांबी १२ सेमी आणि रुंदी ८ सेमी आहे, तर क्षेत्रफळ किती?", opts: ["९६ चौ.सेमी", "४० चौ.सेमी", "८० चौ.सेमी", "९२ चौ.सेमी"], ans: 0, exp: "आयताचे क्षेत्रफळ = लांबी × रुंदी = १२ × ८ = ९६ चौ.सेमी.", subj: "गणित" },
+    { q: "१५ चा १०% = ?", opts: ["१.५", "१५", "०.१५", "१५०"], ans: 0, exp: "१५ चा १०% = १५ × (१०/१००) = १५ × ०.१ = १.५.", subj: "गणित" },
+    { q: "एका वर्तुळाची त्रिज्या ७ सेमी असल्यास परिघ किती? (π=22/7)", opts: ["४४ सेमी", "२१ सेमी", "१५४ सेमी", "४९ सेमी"], ans: 0, exp: "वर्तुळाचा परिघ = 2πr = 2 × (22/7) × 7 = 44 सेमी.", subj: "गणित" },
+    { q: "दोन संख्यांचा गुणाकार ९६ आणि त्यांचा महागुणकांक (HCF) ४ आहे, तर LCM किती?", opts: ["२४", "३८४", "४८", "९६"], ans: 0, exp: "LCM × HCF = दोन संख्यांचा गुणाकार. म्हणून LCM = ९६/४ = २४.", subj: "गणित" },
+    { q: "मानसिक क्षमता: 'MPSC' चे उलटे (Reverse) लिहिल्यास काय होते?", opts: ["CSPM", "SCPM", "CPMS", "SPMC"], ans: 0, exp: "MPSC उलटे लिहिल्यास CSPM होते. M→C, P→S, S→P, C→M.", subj: "मानसिक क्षमता" }
+  ]
+};
+
+// ===================== STATE =====================
+let currentSeries = 'A';
+let currentQ = 0;
+let answers = {};
+let reviewed = {};
+let timerInterval;
+let timeLeft = 45 * 60;
+let testQuestions = [];
+let unlocked = {};
+let isDemo = false;
+// ── No-Repeat Shuffle System ──
+const seenQuestions = { A: new Set(), B: new Set(), C: new Set(), D: new Set() };
+
+function shuffleArray(arr) {
+  const a = arr.map((q, i) => Object.assign({}, q, { _origIdx: i }));
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function getUniqueQuestions(series) {
+  const allQ = questionsDB[series];
+  const seen = seenQuestions[series];
+  let remaining = allQ.filter((_, i) => !seen.has(i));
+  if (remaining.length === 0) { seen.clear(); remaining = allQ.slice(); }
+  const shuffled = shuffleArray(remaining);
+  shuffled.forEach(function(q) { seen.add(q._origIdx); });
+  return shuffled;
+}
+
+
+// ===================== LANDING FUNCTIONS =====================
+function openSeries(series) {
+  if (unlocked[series] || isDemo) {
+    startTest(series);
+  } else {
+    currentSeries = series;
+    const seriesMarathi = {A:'अ', B:'ब', C:'क', D:'ड'};
+    document.getElementById('pwdSeriesLabel').textContent = `सिरीज ${seriesMarathi[series] || series} उघडण्यासाठी पासवर्ड टाका`;
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdError').style.display = 'none';
+    document.getElementById('pwdModal').classList.add('active');
+  }
+}
+
+function closePwd() {
+  document.getElementById('pwdModal').classList.remove('active');
+}
+
+function checkPassword() {
+  const pwd = document.getElementById('pwdInput').value.trim().toUpperCase();
+  if (pwd === CORRECT_PASSWORD) {
+    unlocked[currentSeries] = true;
+    closePwd();
+    const lockEl = document.getElementById('lock' + currentSeries);
+    if (lockEl) lockEl.textContent = '✅';
+    setTimeout(() => startTest(currentSeries), 300);
+  } else {
+    document.getElementById('pwdError').style.display = 'block';
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('pwdInput').focus();
+  }
+}
+
+document.getElementById('pwdInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') checkPassword();
+});
+
+// ===================== PAYMENT FUNCTIONS =====================
+function openPayment() {
+  document.getElementById('paymentModal').classList.add('active');
+}
+
+function closePayment() {
+  document.getElementById('paymentModal').classList.remove('active');
+}
+
+function selectUPI(el) {
+  document.querySelectorAll('.upi-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ===================== RAZORPAY CONFIG =====================
+// ⚠️ खालील KEY_ID तुमच्या Razorpay Dashboard मधून घ्या
+const RAZORPAY_KEY_ID = 'rzp_live_XXXXXXXXXXXXXXXX'; // ← येथे तुमची Key ID टाका
+
+function openRazorpay() {
+  const name  = document.getElementById('buyerName').value.trim();
+  const phone = document.getElementById('buyerPhone').value.trim();
+  const email = document.getElementById('buyerEmail').value.trim() || 'student@cmacademy.in';
+
+  if (!name)              { alert('कृपया तुमचे नाव टाका');           return; }
+  if (phone.length !== 10){ alert('कृपया योग्य मोबाईल नंबर टाका'); return; }
+
+  const options = {
+    key:         RAZORPAY_KEY_ID,
+    amount:      19900,          // रुपये × 100 (पैसे मध्ये) — ₹199
+    currency:    'INR',
+    name:        'सीएम अकॅडमी',
+    description: 'एमपीएससी पूर्व परीक्षा टेस्ट सिरीज अ+ब+क+ड (७५०० प्रश्न)',
+    image:       'https://i.imgur.com/your-logo.png', // ← CM Academy logo URL टाका
+    prefill: {
+      name:    name,
+      email:   email,
+      contact: phone
+    },
+    notes: {
+      product: 'एमपीएससी टेस्ट सिरीज अबकड',
+      student: name
+    },
+    theme: {
+      color: '#FF6B00'   // CM Academy saffron color
+    },
+    modal: {
+      ondismiss: function() {
+        console.log('Payment window closed by user');
+      }
+    },
+    handler: function(response) {
+      // ✅ पेमेंट यशस्वी
+      onPaymentSuccess(response, name, phone);
+    }
+  };
+
+  try {
+    const rzp = new Razorpay(options);
+    rzp.on('payment.failed', function(response) {
+      alert('❌ देयक अयशस्वी झाले!\nकारण: ' + response.error.description + '\nकृपया पुन्हा प्रयत्न करा.');
+    });
+    closePayment();
+    rzp.open();
+  } catch(e) {
+    alert('रेझरपे लोड होऊ शकले नाही. इंटरनेट कनेक्शन तपासा.');
+  }
+}
+
+function onPaymentSuccess(response, name, phone) {
+  // पेमेंट आयडी सेव्ह करा
+  const paymentId = response.razorpay_payment_id;
+  console.log('पेमेंट आयडी:', paymentId);
+
+  // Success modal दाखवा
+  document.getElementById('userPassword').textContent = CORRECT_PASSWORD;
+  document.getElementById('successPaymentId').textContent = 'पेमेंट आयडी: ' + paymentId;
+  document.getElementById('successStudentName').textContent = name;
+  document.getElementById('successModal').classList.add('active');
+
+  // सर्व सिरीज अनलॉक करा
+  ['A','B','C','D'].forEach(s => {
+    unlocked[s] = true;
+    const lockEl = document.getElementById('lock' + s);
+    if (lockEl) lockEl.textContent = '✅';
+  });
+  isDemo = true;
+}
+
+// जुनी function (fallback)
+function processPayment() {
+  openRazorpay();
+}
+
+function gotoTest() {
+  document.getElementById('successModal').classList.remove('active');
+  startTest('A');
+}
+
+// ===================== TEST FUNCTIONS =====================
+function startTest(series) {
+  currentSeries = series;
+  currentQ = 0;
+  answers = {};
+  reviewed = {};
+  timeLeft = 45 * 60;
+
+  // No-repeat shuffle — कधीही रिपीट होणार नाही
+  testQuestions = getUniqueQuestions(series);
+
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('test-page').style.display = 'block';
+  document.getElementById('result-page').style.display = 'none';
+
+  const seriesNames = { A: 'अ — इतिहास व भूगोल', B: 'ब — राज्यघटना', C: 'क — अर्थशास्त्र व विज्ञान', D: 'ड — मराठी, इंग्रजी व बुद्धिमापन' };
+  document.getElementById('testSeriesTitle').textContent = `MPSC सिरीज ${seriesNames[series]}`;
+
+  buildQGrid();
+  loadQuestion(0);
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+    const s = String(timeLeft % 60).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(); }
+    if (timeLeft <= 300) {
+      document.getElementById('timerDisplay').style.color = '#EF5350';
+    }
+  }, 1000);
+}
+
+function buildQGrid() {
+  const grid = document.getElementById('qGrid');
+  grid.innerHTML = '';
+  testQuestions.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'q-dot';
+    dot.textContent = i + 1;
+    dot.id = `qdot_${i}`;
+    dot.onclick = () => loadQuestion(i);
+    grid.appendChild(dot);
+  });
+}
+
+function loadQuestion(idx) {
+  currentQ = idx;
+  const q = testQuestions[idx];
+
+  document.getElementById('qNumBadge').textContent = `प्रश्न ${idx + 1}`;
+  document.getElementById('qSubjectBadge').textContent = q.subj;
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressDisplay').textContent = `प्रश्न ${idx + 1} / ${testQuestions.length}`;
+
+  const optList = document.getElementById('optionsList');
+  optList.innerHTML = '';
+  const letters = ['अ', 'ब', 'क', 'ड'];
+
+  q.opts.forEach((opt, i) => {
+    const li = document.createElement('li');
+    li.className = 'option-item';
+    li.id = `opt_${i}`;
+    if (answers[idx] === i) li.classList.add('selected');
+    li.innerHTML = `<div class="option-letter">${letters[i]}</div><div class="option-text">${opt}</div>`;
+    li.onclick = () => selectAnswer(idx, i);
+    optList.appendChild(li);
+  });
+
+  document.getElementById('explanationBox').classList.remove('show');
+  document.getElementById('explanationBox').textContent = '';
+
+  // Update grid dots
+  document.querySelectorAll('.q-dot').forEach((d, i) => {
+    d.className = 'q-dot';
+    if (i === idx) d.classList.add('current');
+    else if (answers[i] !== undefined) d.classList.add('answered');
+  });
+
+  updateScore();
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (answers[qIdx] !== undefined) return; // Already answered
+
+  answers[qIdx] = optIdx;
+  const q = testQuestions[qIdx];
+  const correct = q.ans;
+  const letters = ['अ', 'ब', 'क', 'ड'];
+
+  document.querySelectorAll('.option-item').forEach((item, i) => {
+    item.onclick = null;
+    if (i === correct) item.classList.add('correct');
+    else if (i === optIdx && optIdx !== correct) item.classList.add('wrong');
+  });
+
+  const expBox = document.getElementById('explanationBox');
+  expBox.textContent = `💡 ${q.exp}`;
+  expBox.classList.add('show');
+
+  // Update dot
+  const dot = document.getElementById(`qdot_${qIdx}`);
+  if (dot) {
+    dot.classList.remove('answered', 'current');
+    dot.classList.add(optIdx === correct ? 'correct' : 'wrong');
+    dot.classList.add('current');
+  }
+
+  updateScore();
+}
+
+function prevQ() {
+  if (currentQ > 0) loadQuestion(currentQ - 1);
+}
+
+function nextQ() {
+  if (currentQ < testQuestions.length - 1) loadQuestion(currentQ + 1);
+  else submitTest();
+}
+
+function markReview() {
+  reviewed[currentQ] = !reviewed[currentQ];
+  const dot = document.getElementById(`qdot_${currentQ}`);
+  if (dot && reviewed[currentQ]) {
+    dot.style.borderColor = '#FFB300';
+  }
+}
+
+function updateScore() {
+  let correct = 0, wrong = 0;
+  Object.entries(answers).forEach(([qi, ai]) => {
+    if (testQuestions[qi].ans === ai) correct++;
+    else wrong++;
+  });
+  const skipped = testQuestions.length - Object.keys(answers).length;
+  document.getElementById('scoreCorrect').textContent = correct;
+  document.getElementById('scoreWrong').textContent = wrong;
+  document.getElementById('scoreSkipped').textContent = skipped;
+  document.getElementById('scoreTotal').textContent = correct - (wrong * 0.25);
+}
+
+function submitTest() {
+  clearInterval(timerInterval);
+  let correct = 0, wrong = 0;
+  testQuestions.forEach((q, i) => {
+    if (answers[i] !== undefined) {
+      if (answers[i] === q.ans) correct++;
+      else wrong++;
+    }
+  });
+  const skipped = testQuestions.length - correct - wrong;
+  const score = correct - (wrong * 0.25);
+  const pct = Math.round((correct / testQuestions.length) * 100);
+
+  document.getElementById('test-page').style.display = 'none';
+  document.getElementById('result-page').style.display = 'block';
+
+  const seriesNames = { A: 'सिरीज अ — इतिहास व भूगोल', B: 'सिरीज ब — राज्यघटना', C: 'सिरीज क — अर्थशास्त्र', D: 'सिरीज ड — भाषा व बुद्धिमापन' };
+  document.getElementById('resultSeries').textContent = seriesNames[currentSeries];
+  document.getElementById('resultPercent').textContent = `${pct}%`;
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rWrong').textContent = wrong;
+  document.getElementById('rSkipped').textContent = skipped;
+  document.getElementById('rScore').textContent = score.toFixed(2);
+
+  let msg = '';
+  if (pct >= 80) msg = '🏆 उत्कृष्ट! तुम्ही एमपीएससीसाठी चांगली तयारी केली आहे!';
+  else if (pct >= 60) msg = '👍 चांगले! थोडा अधिक सराव करा.';
+  else if (pct >= 40) msg = '📚 मेहनत वाढवा! नियमित सराव आवश्यक आहे.';
+  else msg = '💪 निराश होऊ नका! पुन्हा प्रयत्न करा.';
+  document.getElementById('resultMsg').innerHTML = `<p style="font-size:18px;color:rgba(255,255,255,0.8);">${msg}</p>`;
+}
+
+function retryTest() {
+  document.getElementById('result-page').style.display = 'none';
+  startTest(currentSeries);
+}
+
+function backToHome() {
+  clearInterval(timerInterval);
+  document.getElementById('result-page').style.display = 'none';
+  document.getElementById('test-page').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+}
+
+// ===================== REGISTERED STUDENTS DB (LocalStorage) =====================
+function getStudents() {
+  try { return JSON.parse(localStorage.getItem('mpsc_students') || '[]'); } catch(e) { return []; }
+}
+function saveStudents(arr) {
+  localStorage.setItem('mpsc_students', JSON.stringify(arr));
+}
+
+// ===================== ALREADY REGISTERED =====================
+function openAlreadyRegistered() {
+  document.getElementById('alreadyModal').classList.add('active');
+  document.getElementById('loginError').style.display = 'none';
+  document.getElementById('loginPhone').value = '';
+  document.getElementById('loginPassword').value = '';
+}
+function closeAlreadyModal() {
+  document.getElementById('alreadyModal').classList.remove('active');
+}
+function doStudentLogin() {
+  const phone = document.getElementById('loginPhone').value.trim();
+  const pwd   = document.getElementById('loginPassword').value.trim().toUpperCase();
+
+  // Master password ने कोणताही Student login करू शकतो
+  if (phone.length === 10 && pwd === CORRECT_PASSWORD) {
+    closeAlreadyModal();
+    // सर्व सिरीज अनलॉक करा
+    ['A','B','C','D'].forEach(s => {
+      unlocked[s] = true;
+      const lockEl = document.getElementById('lock' + s);
+      if (lockEl) lockEl.textContent = '✅';
+    });
+    isDemo = true;
+    alert('✅ लॉगिन यशस्वी! ' + phone + '\nआता सर्व सिरीज उघडल्या आहेत.');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+// ===================== ADMIN LOGIN =====================
+const ADMIN_USERNAME = 'cmadmin';
+const ADMIN_PASSWORD = 'CMAdmin@2026';
+
+function openAdminLogin() {
+  document.getElementById('adminLoginModal').classList.add('active');
+  document.getElementById('adminError').style.display = 'none';
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
+}
+function closeAdminLogin() {
+  document.getElementById('adminLoginModal').classList.remove('active');
+}
+function doAdminLogin() {
+  const user = document.getElementById('adminUser').value.trim();
+  const pass = document.getElementById('adminPass').value.trim();
+  if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
+    closeAdminLogin();
+    openAdminPanel();
+  } else {
+    document.getElementById('adminError').style.display = 'block';
+  }
+}
+
+// ===================== ADMIN PANEL =====================
+function openAdminPanel() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('test-page').style.display = 'none';
+  document.getElementById('result-page').style.display = 'none';
+  document.getElementById('admin-panel').style.display = 'block';
+  adminTab('dashboard');
+  refreshAdminData();
+}
+
+function adminLogout() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('landing').style.display = 'flex';
+}
+
+function adminTab(tab) {
+  ['dashboard','students','payments','passwords'].forEach(t => {
+    document.getElementById('admin-' + t).style.display = (t === tab) ? 'block' : 'none';
+    const btn = document.getElementById('tab-' + t);
+    if (btn) btn.className = 'admin-tab-btn' + (t === tab ? ' active-tab' : '');
+  });
+  if (tab === 'students')  renderStudentsTable();
+  if (tab === 'payments')  renderPaymentsTable();
+  if (tab === 'passwords') document.getElementById('currentPwdDisplay').textContent = CORRECT_PASSWORD;
+}
+
+function refreshAdminData() {
+  const students = getStudents();
+  const paid = students.filter(s => s.paid);
+  document.getElementById('totalStudents').textContent = students.length;
+  document.getElementById('totalभरलेले').textContent = paid.length;
+  document.getElementById('totalRevenue').textContent = '₹' + (paid.length * 199);
+  document.getElementById('totalRevAdmin').textContent  = '₹' + (paid.length * 199);
+
+  // Recent registrations
+  const rec = document.getElementById('recentRegistrations');
+  if (students.length === 0) {
+    rec.textContent = 'अद्याप कोणतीही नोंदणी नाही.';
+  } else {
+    const last5 = students.slice(-5).reverse();
+    rec.innerHTML = last5.map(s =>
+      '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">'
+      + '<span style="color:white;font-weight:600;">' + s.name + '</span>'
+      + '<span style="color:rgba(255,255,255,0.4);font-size:12px;">' + s.phone + '</span>'
+      + '<span class="' + (s.paid ? 'badge-paid' : 'badge-free') + '">' + (s.paid ? 'भरलेले' : 'मोफत') + '</span>'
+      + '<span style="color:rgba(255,255,255,0.35);font-size:12px;">' + s.date + '</span>'
+      + '</div>'
+    ).join('');
+  }
+}
+
+function renderStudentsTable() {
+  const students = getStudents();
+  const q = (document.getElementById('studentSearch').value || '').toLowerCase();
+  const filtered = students.filter(s =>
+    s.name.toLowerCase().includes(q) || s.phone.includes(q)
+  );
+  const tbody = document.getElementById('studentsBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="tbl-d" style="text-align:center;color:rgba(255,255,255,0.3);">कोणतेही विद्यार्थी सापडले नाहीत</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map((s, i) =>
+    '<tr>'
+    + '<td class="tbl-d">' + (i+1) + '</td>'
+    + '<td class="tbl-d" style="font-weight:600;color:white;">' + s.name + '</td>'
+    + '<td class="tbl-d">' + s.phone + '</td>'
+    + '<td class="tbl-d">' + s.date + '</td>'
+    + '<td class="tbl-d" style="font-size:11px;color:rgba(255,255,255,0.4);">' + (s.paymentId || '—') + '</td>'
+    + '<td class="tbl-d"><span class="' + (s.paid ? 'badge-paid' : 'badge-free') + '">' + (s.paid ? '✅ भरलेले' : '🔓 मोफत') + '</span></td>'
+    + '<td class="tbl-d"><button onclick="deleteStudent(' + students.indexOf(s) + ')" style="background:rgba(198,40,40,0.2);border:1px solid #EF5350;border-radius:6px;padding:4px 10px;color:#EF5350;cursor:pointer;font-size:12px;">🗑️ हटवा</button></td>'
+    + '</tr>'
+  ).join('');
+}
+
+function renderPaymentsTable() {
+  const students = getStudents();
+  const paid = students.filter(s => s.paid);
+  let total = 0;
+  const tbody = document.getElementById('paymentsBody');
+  if (paid.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" class="tbl-d" style="text-align:center;color:rgba(255,255,255,0.3);">अद्याप कोणतेही देयक नाही</td></tr>';
+    return;
+  }
+  tbody.innerHTML = paid.map((s, i) => {
+    total += 199;
+    return '<tr>'
+      + '<td class="tbl-d">' + (i+1) + '</td>'
+      + '<td class="tbl-d" style="font-weight:600;color:white;">' + s.name + '</td>'
+      + '<td class="tbl-d">' + s.phone + '</td>'
+      + '<td class="tbl-d" style="color:#66BB6A;font-weight:700;">₹199</td>'
+      + '<td class="tbl-d" style="font-size:11px;color:rgba(255,255,255,0.4);">' + (s.paymentId || '—') + '</td>'
+      + '<td class="tbl-d">' + s.date + '</td>'
+      + '<td class="tbl-d"><span class="badge-paid">✅ भरलेले</span></td>'
+      + '</tr>';
+  }).join('');
+  document.getElementById('totalRevAdmin').textContent = '₹' + total;
+}
+
+function filterStudents() { renderStudentsTable(); }
+
+function deleteStudent(idx) {
+  if (!confirm('हा विद्यार्थी खरोखर हटवायचा आहे का?')) return;
+  const arr = getStudents();
+  arr.splice(idx, 1);
+  saveStudents(arr);
+  renderStudentsTable();
+  refreshAdminData();
+}
+
+function openAddStudent() {
+  document.getElementById('addStudentModal').classList.add('active');
+  document.getElementById('addName').value = '';
+  document.getElementById('addPhone').value = '';
+  document.getElementById('addPaymentId').value = '';
+}
+
+function addStudentManually() {
+  const name = document.getElementById('addName').value.trim();
+  const phone = document.getElementById('addPhone').value.trim();
+  const paymentId = document.getElementById('addPaymentId').value.trim();
+  if (!name || phone.length !== 10) { alert('कृपया नाव आणि मोबाईल नंबर भरा'); return; }
+  const arr = getStudents();
+  arr.push({ name, phone, paymentId: paymentId || 'हस्तचलित', paid: true, date: new Date().toLocaleDateString('mr-IN') });
+  saveStudents(arr);
+  document.getElementById('addStudentModal').classList.remove('active');
+  renderStudentsTable();
+  refreshAdminData();
+  alert('✅ विद्यार्थी यशस्वीरित्या जोडला!');
+}
+
+// Password tab functions
+function copyPassword() {
+  navigator.clipboard.writeText(CORRECT_PASSWORD).then(() => alert('✅ पासवर्ड कॉपी झाला: ' + CORRECT_PASSWORD));
+}
+
+function changePassword() {
+  const newPwd = document.getElementById('newPasswordInput').value.trim().toUpperCase();
+  if (newPwd.length < 6) { alert('संकेतशब्द किमान ६ अक्षरांचा असावा'); return; }
+  // Note: runtime मध्ये CORRECT_PASSWORD const बदलता येत नाही,
+  // त्यामुळे source code मध्ये बदलणे आवश्यक आहे.
+  document.getElementById('currentPwdDisplay').textContent = newPwd;
+  const msg = document.getElementById('pwdChangeMsg');
+  msg.style.display = 'block';
+  msg.textContent = '✅ Password display बदलला! सोर्स कोड मधील CORRECT_PASSWORD पण अपडेट करा.';
+}
+
+function sendPasswordToStudent() {
+  const phone = document.getElementById('sendPwdPhone').value.trim();
+  if (phone.length !== 10) { alert('कृपया योग्य मोबाईल नंबर टाका'); return; }
+  const msg = encodeURIComponent('सीएम अकॅडमी - एमपीएससी टेस्ट सिरीज पासवर्ड: ' + CORRECT_PASSWORD + '\n\nसर्व ४ सिरीज (अ,ब,क,ड) साठी हाच संकेतशब्द वापरा.\n\n- सीएम अकॅडमी टीम\n📞 8010634300');
+  window.open('https://wa.me/91' + phone + '?text=' + msg, '_blank');
+}
+
+// onPaymentSuccess मध्ये student DB मध्ये save करा
+const _origOnPaymentSuccess = onPaymentSuccess;
+function onPaymentSuccess(response, name, phone) {
+  // Student DB मध्ये save करा
+  const arr = getStudents();
+  arr.push({
+    name: name,
+    phone: phone,
+    paymentId: response.razorpay_payment_id || 'N/A',
+    paid: true,
+    date: new Date().toLocaleDateString('mr-IN')
+  });
+  saveStudents(arr);
+  // Original function call
+  _origOnPaymentSuccess(response, name, phone);
+}
+
+</script>
+
+</body>
+</html>

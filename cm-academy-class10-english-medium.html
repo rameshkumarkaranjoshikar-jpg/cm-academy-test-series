@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM Academy | Class 10 Test Series — English Medium</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --navy: #080f20;
+  --navy2: #0c1830;
+  --navy3: #111f38;
+  --gold: #e8a020;
+  --gold2: #ffc84a;
+  --gold3: rgba(232,160,32,0.12);
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --white: #f1f5f9;
+  --gray: #64748b;
+  --gray2: #94a3b8;
+  --card: #0e1a2e;
+  --border: rgba(232,160,32,0.18);
+  --border2: rgba(255,255,255,0.07);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Grain overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* SCREENS */
+.screen{display:none;min-height:100vh;position:relative;z-index:1;}
+.screen.active{display:block;}
+
+/* ===== HEADER ===== */
+.hdr{
+  background:rgba(8,15,32,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:16px;color:var(--navy);
+}
+.brand-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);}
+.brand-sub{font-size:10px;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;}
+.hdr-right{font-size:12px;color:var(--gray);cursor:pointer;font-family:'DM Sans',sans-serif;}
+.hdr-right:hover{color:var(--gold);}
+
+/* ===== HERO ===== */
+.hero{
+  padding:48px 20px 36px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,160,32,0.1) 0%, transparent 70%),
+    linear-gradient(180deg, var(--navy2) 0%, var(--navy) 100%);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold3);border:1px solid var(--border);
+  color:var(--gold2);font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:32px;line-height:1.2;font-weight:900;
+  margin-bottom:10px;
+  background:linear-gradient(135deg,#fff 30%,var(--gold2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{color:var(--gray2);font-size:14px;line-height:1.6;margin-bottom:24px;font-weight:300;}
+
+.price-block{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:12px 24px;margin-bottom:28px;
+}
+.price-old{font-size:13px;color:var(--gray);text-decoration:line-through;}
+.price-new{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--gold);}
+.price-label{font-size:11px;color:var(--gray2);text-transform:uppercase;letter-spacing:1px;}
+
+/* ===== FEATURES ===== */
+.feats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;padding:20px;
+}
+.feat{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;padding:14px;
+  display:flex;align-items:flex-start;gap:10px;
+  transition:border-color 0.2s;
+}
+.feat:hover{border-color:var(--border);}
+.feat-ico{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--gold3);display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.feat-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px;}
+.feat-desc{font-size:11px;color:var(--gray2);}
+
+/* ===== BOARD BADGES ===== */
+.boards{
+  display:flex;gap:8px;justify-content:center;
+  padding:0 20px 20px;flex-wrap:wrap;
+}
+.board-badge{
+  background:var(--card);border:1px solid var(--border2);
+  color:var(--gray2);font-size:11px;font-weight:600;
+  padding:5px 14px;border-radius:20px;letter-spacing:0.5px;
+}
+.board-badge.active-b{border-color:var(--border);color:var(--gold2);background:var(--gold3);}
+
+/* ===== SUBJECT GRID ===== */
+.sec-hdr{
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  padding:20px 20px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border2);
+}
+.sec-hdr span{font-size:11px;color:var(--gray);font-family:'DM Sans',sans-serif;font-weight:400;}
+.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 20px;}
+.subj-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:14px;padding:18px 14px;text-align:center;
+  cursor:pointer;transition:all 0.25s ease;
+  position:relative;overflow:hidden;
+}
+.subj-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--gold3),transparent);
+  opacity:0;transition:opacity 0.25s;
+}
+.subj-card:hover{border-color:var(--border);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.subj-card:hover::before{opacity:1;}
+.subj-ico{font-size:30px;margin-bottom:8px;}
+.subj-name{font-weight:700;font-size:14px;color:var(--white);margin-bottom:4px;}
+.subj-meta{font-size:11px;color:var(--gray);}
+.subj-lvl{
+  position:absolute;top:8px;right:8px;
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  color:var(--gold);background:var(--gold3);
+  border:1px solid var(--border);
+  padding:2px 6px;border-radius:6px;
+}
+
+/* ===== CTA ===== */
+.cta{padding:20px;}
+.btn-main{
+  width:100%;padding:16px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--navy);font-family:'DM Sans',sans-serif;
+  font-weight:700;font-size:17px;cursor:pointer;
+  box-shadow:0 4px 20px rgba(232,160,32,0.25);
+  transition:all 0.2s;letter-spacing:0.3px;
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(232,160,32,0.35);}
+.btn-ghost{
+  width:100%;padding:12px;border:1px solid var(--border2);border-radius:10px;
+  background:transparent;color:var(--gray2);
+  font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;
+  margin-top:10px;transition:all 0.2s;
+}
+.btn-ghost:hover{border-color:var(--border);color:var(--white);}
+
+/* ===== FORMS ===== */
+.form-wrap{padding:24px 20px;background:var(--navy);}
+.form-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px;}
+.form-sub{font-size:13px;color:var(--gray2);margin-bottom:24px;font-weight:300;}
+.fgrp{margin-bottom:16px;}
+.fgrp label{display:block;font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:7px;letter-spacing:0.5px;text-transform:uppercase;}
+.fgrp input,.fgrp select{
+  width:100%;padding:13px 15px;
+  background:var(--card);color:var(--white);
+  border:1px solid var(--border2);border-radius:10px;
+  font-size:14px;font-family:'DM Sans',sans-serif;
+  outline:none;transition:border-color 0.2s;
+}
+.fgrp input:focus,.fgrp select:focus{border-color:var(--gold);}
+.fgrp select option{background:var(--navy2);}
+
+/* ===== PAYMENT BOX ===== */
+.pay-wrap{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:20px;margin:20px 0;
+}
+.pay-wrap h3{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold);margin-bottom:14px;}
+.pay-amt{
+  text-align:center;font-family:'Playfair Display',serif;
+  font-size:36px;font-weight:900;color:var(--white);margin:8px 0;
+}
+.upi-box{
+  background:rgba(232,160,32,0.08);border:1px dashed var(--gold);
+  border-radius:10px;padding:13px;text-align:center;
+  font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--gold2);
+  letter-spacing:1px;margin:12px 0;cursor:pointer;
+}
+.upi-box:hover{background:rgba(232,160,32,0.12);}
+.steps{list-style:none;margin-top:12px;}
+.steps li{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 0;border-bottom:1px solid var(--border2);
+  font-size:13px;color:var(--gray2);
+}
+.steps li:last-child{border:none;}
+.sn{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--gold);color:var(--navy);
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ===== ACCESS ===== */
+.access-wrap{
+  padding:40px 20px;
+  display:flex;flex-direction:column;
+  align-items:center;
+  background:var(--navy);min-height:100vh;
+}
+.access-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px 22px;
+  width:100%;max-width:380px;
+}
+.hint-box{
+  background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);
+  border-radius:10px;padding:12px;margin-bottom:16px;
+  font-size:12px;color:#93c5fd;line-height:1.6;
+}
+.hint-box strong{color:#60a5fa;}
+
+/* ===== PENDING ===== */
+.pending-wrap{
+  padding:60px 20px;text-align:center;
+  background:var(--navy);min-height:100vh;
+}
+.pending-ico{font-size:56px;margin-bottom:16px;}
+.pending-pill{
+  display:inline-block;background:rgba(234,179,8,0.12);
+  border:1px solid rgba(234,179,8,0.3);color:#fbbf24;
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 14px;border-radius:20px;margin-bottom:14px;
+}
+.pass-display{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px;margin:16px 0;
+}
+.pass-val{
+  font-family:'JetBrains Mono',monospace;font-size:22px;
+  font-weight:700;color:var(--gold);letter-spacing:4px;
+  margin-bottom:6px;
+}
+.pass-hint{font-size:11px;color:var(--gray);}
+
+/* ===== DASHBOARD ===== */
+.dash-hero{
+  background:linear-gradient(135deg,var(--navy2),var(--navy3));
+  padding:22px 20px 18px;
+  border-bottom:1px solid var(--border2);
+}
+.dash-hero h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);}
+.dash-hero p{font-size:12px;color:var(--gray2);margin-top:3px;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px;}
+.stat-c{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:10px;padding:12px 8px;text-align:center;
+}
+.stat-v{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold);}
+.stat-l{font-size:10px;color:var(--gray);margin-top:2px;font-weight:500;}
+.subj-dash{padding:0 16px 24px;}
+.subj-row{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;padding:14px 16px;margin-bottom:8px;
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  transition:all 0.2s;
+}
+.subj-row:hover{border-color:var(--border);}
+.subj-row-ico{font-size:22px;flex-shrink:0;}
+.subj-row-info{flex:1;}
+.subj-row-name{font-weight:700;font-size:15px;margin-bottom:3px;}
+.subj-row-prog{height:3px;background:var(--border2);border-radius:2px;}
+.subj-row-bar{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:2px;}
+.subj-row-meta{font-size:11px;color:var(--gray);margin-top:4px;}
+.subj-row-arr{color:var(--gray);font-size:18px;}
+
+/* ===== PAPERS ===== */
+.diff-group{margin-bottom:16px;}
+.diff-hdr{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 16px;margin-bottom:8px;
+}
+.diff-badge{
+  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:6px;
+}
+.dA{background:rgba(34,197,94,0.12);color:#22c55e;border:1px solid rgba(34,197,94,0.25);}
+.dB{background:rgba(232,160,32,0.12);color:var(--gold);border:1px solid rgba(232,160,32,0.25);}
+.dC{background:rgba(249,115,22,0.12);color:#f97316;border:1px solid rgba(249,115,22,0.25);}
+.dD{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
+.diff-name{font-size:12px;color:var(--gray2);font-weight:500;}
+
+.paper-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:10px;padding:13px 16px;margin:0 16px 8px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all 0.2s;
+}
+.paper-card:hover{border-color:var(--border);}
+.paper-card.locked{opacity:0.45;cursor:not-allowed;}
+.paper-card.done{border-color:rgba(34,197,94,0.2);}
+.pc-title{font-weight:600;font-size:14px;margin-bottom:3px;}
+.pc-meta{font-size:11px;color:var(--gray);}
+.pc-score{
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);
+  color:var(--green);padding:3px 9px;border-radius:6px;
+}
+
+/* ===== TEST ===== */
+.test-hdr{
+  background:var(--navy2);border-bottom:2px solid var(--gold);
+  padding:13px 16px;position:sticky;top:0;z-index:100;
+}
+.test-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.test-meta-t{font-size:11px;color:var(--gray2);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+.test-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold);}
+.timer{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--gold2);}
+.timer.warn{color:var(--red);}
+.prog-bar-wrap{height:3px;background:var(--border2);}
+.prog-bar-fill{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width 0.3s;}
+.q-ctr{font-size:11px;color:var(--gray);text-align:center;padding:10px;font-weight:500;}
+.q-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;margin:10px 16px;padding:18px;
+}
+.q-tag{font-size:10px;font-weight:600;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.q-txt{font-size:15px;line-height:1.65;margin-bottom:18px;font-weight:400;}
+.opts{list-style:none;}
+.opt-btn{
+  width:100%;text-align:left;padding:12px 15px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border2);
+  border-radius:9px;color:var(--white);font-size:14px;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  margin-bottom:8px;transition:all 0.15s;
+  display:flex;align-items:center;gap:10px;
+}
+.opt-btn:hover{background:var(--gold3);border-color:var(--border);}
+.opt-btn.sel{background:var(--gold3);border-color:var(--gold);color:var(--gold2);}
+.opt-btn.right{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.4);color:#86efac;}
+.opt-btn.wrong{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.4);color:#fca5a5;}
+.opt-key{
+  width:24px;height:24px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+}
+.nav-strip{
+  display:flex;gap:8px;padding:14px 16px;
+  position:sticky;bottom:0;background:var(--navy);
+  border-top:1px solid var(--border2);
+}
+.nbtn{
+  flex:1;padding:13px;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);
+  background:var(--card);color:var(--white);transition:all 0.2s;
+}
+.nbtn:hover{border-color:var(--border);}
+.nbtn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border:none;}
+
+/* ===== RESULT ===== */
+.res-wrap{padding:24px 16px 40px;}
+.res-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:24px;text-align:center;margin-bottom:16px;
+}
+.res-pct{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;color:var(--gold);}
+.res-grade{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:6px;}
+.res-sub{font-size:13px;color:var(--gray2);margin-bottom:16px;}
+.res-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.rs{background:rgba(255,255,255,0.03);border-radius:10px;padding:12px;text-align:center;}
+.rs-v{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;}
+.rs-l{font-size:10px;color:var(--gray);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.rc{color:var(--green);}
+.rw{color:var(--red);}
+.rk{color:var(--gray2);}
+
+/* Explanations */
+.exp-sec-title{
+  font-family:'Playfair Display',serif;font-size:16px;font-weight:700;
+  padding:0 0 12px;margin-bottom:0;color:var(--gold);
+}
+.exp-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;padding:15px;margin-bottom:10px;
+}
+.exp-badge{
+  display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;padding:2px 8px;border-radius:5px;margin-bottom:8px;
+}
+.eb-right{background:rgba(34,197,94,0.1);color:var(--green);}
+.eb-wrong{background:rgba(239,68,68,0.1);color:var(--red);}
+.eb-skip{background:rgba(100,116,139,0.1);color:var(--gray2);}
+.exp-q{font-size:13px;color:var(--gray2);margin-bottom:8px;line-height:1.6;}
+.exp-ans{
+  background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);
+  border-radius:8px;padding:9px 12px;margin-bottom:8px;
+  font-size:13px;color:#86efac;
+}
+.exp-txt{font-size:12px;color:var(--gray2);line-height:1.65;padding-top:8px;border-top:1px solid var(--border2);}
+
+/* ===== SHORT ANSWER ===== */
+.sa-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;margin:10px 16px;padding:18px;
+}
+.sa-tag{
+  display:inline-block;background:rgba(59,130,246,0.1);
+  border:1px solid rgba(59,130,246,0.25);color:#93c5fd;
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 10px;border-radius:6px;margin-bottom:10px;
+}
+.sa-txt{font-size:15px;line-height:1.65;margin-bottom:12px;}
+.sa-area{
+  width:100%;padding:12px;min-height:90px;resize:vertical;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border2);
+  border-radius:8px;color:var(--white);font-family:'DM Sans',sans-serif;
+  font-size:13px;outline:none;transition:border 0.2s;
+}
+.sa-area:focus{border-color:var(--gold);}
+.sa-marks{font-size:11px;color:var(--gray);margin-top:6px;}
+
+/* ===== BLOCKED ===== */
+.blocked-full{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:40px 24px;
+  background:radial-gradient(ellipse at center, rgba(239,68,68,0.05) 0%, var(--navy) 70%);
+}
+.blocked-ico{font-size:64px;margin-bottom:20px;}
+.blocked-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--red);margin-bottom:10px;}
+.blocked-msg{font-size:14px;color:var(--gray2);line-height:1.7;max-width:320px;}
+
+/* ===== ADMIN ===== */
+.admin-hdr{
+  background:linear-gradient(135deg,#150a0a,#1f0f0f);
+  border-bottom:2px solid var(--red);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.admin-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--red);}
+.admin-sub{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;}
+.a-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px;}
+.a-stat{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:12px 8px;text-align:center;}
+.a-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);}
+.a-lbl{font-size:10px;color:var(--gray);margin-top:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.filter-row{display:flex;gap:6px;padding:0 16px 12px;overflow-x:auto;}
+.flt-btn{
+  flex-shrink:0;padding:5px 14px;
+  background:var(--card);border:1px solid var(--border2);
+  color:var(--gray2);border-radius:20px;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;
+  transition:all 0.2s;white-space:nowrap;
+}
+.flt-btn.on{background:var(--gold3);border-color:var(--border);color:var(--gold2);}
+.stu-card{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:12px;padding:15px;margin:0 16px 10px;
+}
+.stu-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.stu-name{font-weight:700;font-size:15px;}
+.stu-phone{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gray2);margin-bottom:4px;}
+.stu-txn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);margin-bottom:8px;}
+.stu-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.stag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;}
+.stag-paid{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2);}
+.stag-active{background:rgba(232,160,32,0.1);color:var(--gold);border:1px solid var(--border);}
+.stag-pend{background:rgba(100,116,139,0.1);color:var(--gray2);border:1px solid var(--border2);}
+.stag-block{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);}
+.stu-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.stu-btn{
+  padding:6px 12px;border-radius:7px;
+  font-size:12px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;border:1px solid;transition:all 0.2s;
+}
+.sb-verify{background:rgba(34,197,94,0.08);color:var(--green);border-color:rgba(34,197,94,0.25);}
+.sb-block{background:rgba(239,68,68,0.08);color:var(--red);border-color:rgba(239,68,68,0.25);}
+.sb-unblock{background:rgba(232,160,32,0.08);color:var(--gold);border-color:rgba(232,160,32,0.2);}
+.sb-view{background:rgba(59,130,246,0.08);color:#93c5fd;border-color:rgba(59,130,246,0.2);}
+
+/* ===== ALERT ===== */
+.alert{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:var(--navy3);border-radius:12px;padding:13px 20px;
+  font-size:14px;font-weight:600;z-index:9999;
+  min-width:240px;text-align:center;
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  display:none;border:1px solid;
+  font-family:'DM Sans',sans-serif;
+}
+.alert.on{display:block;animation:popIn 0.3s ease;}
+.alert.ok{color:var(--green);border-color:rgba(34,197,94,0.3);}
+.alert.err{color:var(--red);border-color:rgba(239,68,68,0.3);}
+.alert.inf{color:var(--gold);border-color:var(--border);}
+@keyframes popIn{from{top:5px;opacity:0;}to{top:20px;opacity:1;}}
+
+/* Back btn */
+.back{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--gray2);font-size:13px;font-weight:500;
+  cursor:pointer;padding:14px 20px;background:none;border:none;
+}
+.back:hover{color:var(--gold);}
+
+/* Login box */
+.login-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px 22px;
+  width:100%;max-width:360px;
+}
+.login-screen-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:var(--navy);
+}
+</style>
+</head>
+<body>
+
+<div class="alert" id="alertBox"></div>
+
+<!-- ══════════ SCREEN 1: HOME ══════════ -->
+<div class="screen active" id="homeScreen">
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-mark">CM</div>
+      <div>
+        <div class="brand-name">CM Academy</div>
+        <div class="brand-sub">Class 10 · English Medium</div>
+      </div>
+    </div>
+    <div class="hdr-right" onclick="goAdminLogin()">⚙ Admin</div>
+  </div>
+
+  <div class="hero">
+    <div class="pill">🎯 All Boards · Class 10 · 2025-26</div>
+    <h1>Complete Test Series<br>Class 10 English Medium</h1>
+    <p>7 Subjects · 10 Papers Each · A–D Difficulty Levels<br>Detailed Explanations · MCQ + Short Answer</p>
+    <div class="price-block">
+      <div>
+        <div class="price-old">₹499</div>
+        <div class="price-new">₹99</div>
+      </div>
+      <div>
+        <div class="price-label">All Boards</div>
+        <div style="font-size:11px;color:var(--gray2)">SSC · CBSE · ICSE</div>
+      </div>
+    </div>
+
+    <div class="boards">
+      <span class="board-badge active-b">✓ Maharashtra SSC</span>
+      <span class="board-badge active-b">✓ CBSE</span>
+      <span class="board-badge active-b">✓ ICSE</span>
+    </div>
+  </div>
+
+  <div class="feats">
+    <div class="feat"><div class="feat-ico">📚</div><div><div class="feat-title">280 Papers</div><div class="feat-desc">7 subjects × 10 papers × 4 levels</div></div></div>
+    <div class="feat"><div class="feat-ico">🎯</div><div><div class="feat-title">ABCD Levels</div><div class="feat-desc">Easy → Hardest</div></div></div>
+    <div class="feat"><div class="feat-ico">💡</div><div><div class="feat-title">Explanations</div><div class="feat-desc">Every question explained</div></div></div>
+    <div class="feat"><div class="feat-ico">🔐</div><div><div class="feat-title">Secure Access</div><div class="feat-desc">Device-locked, anti-share</div></div></div>
+    <div class="feat"><div class="feat-ico">✏️</div><div><div class="feat-title">MCQ + SA</div><div class="feat-desc">MCQ & Short Answer both</div></div></div>
+    <div class="feat"><div class="feat-ico">⏱</div><div><div class="feat-title">Timed Tests</div><div class="feat-desc">Real exam simulation</div></div></div>
+  </div>
+
+  <div class="sec-hdr">Choose a Subject <span>7 subjects available</span></div>
+  <div class="subj-grid">
+    <div class="subj-card" onclick="selectSubjectHome('math')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">📐</div><div class="subj-name">Mathematics</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('science')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">🔬</div><div class="subj-name">Science</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('social')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">🌍</div><div class="subj-name">Social Science</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('english')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">📖</div><div class="subj-name">English</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('hindi')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">📝</div><div class="subj-name">Hindi</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('marathi')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">✍️</div><div class="subj-name">Marathi</div><div class="subj-meta">10 papers · 50Q each</div></div>
+    <div class="subj-card" onclick="selectSubjectHome('sanskrit')"><div class="subj-lvl">A·B·C·D</div><div class="subj-ico">🪔</div><div class="subj-name">Sanskrit</div><div class="subj-meta">10 papers · 50Q each</div></div>
+  </div>
+
+  <div class="cta">
+    <button class="btn-main" onclick="goRegister()">🚀 Enroll Now — Only ₹99</button>
+    <button class="btn-ghost" onclick="goAccess()">Already enrolled? → Login here</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 2: REGISTER ══════════ -->
+<div class="screen" id="registerScreen">
+  <div class="hdr">
+    <button class="back" onclick="goHome()" style="padding:0">← Back</button>
+    <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;">Registration</div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="form-wrap">
+    <div class="form-title">Create Your Account</div>
+    <div class="form-sub">Fill details carefully — your password is generated from your name & phone number</div>
+
+    <div class="fgrp"><label>Full Name *</label><input type="text" id="rName" placeholder="e.g. Rahul Sharma" maxlength="50"></div>
+    <div class="fgrp"><label>Mobile Number * (10 digits)</label><input type="tel" id="rPhone" placeholder="10-digit mobile number" maxlength="10"></div>
+    <div class="fgrp"><label>School Name</label><input type="text" id="rSchool" placeholder="Your school name"></div>
+    <div class="fgrp"><label>Board</label>
+      <select id="rBoard">
+        <option value="">Select Board</option>
+        <option>Maharashtra SSC</option><option>CBSE</option><option>ICSE</option><option>Other</option>
+      </select>
+    </div>
+    <div class="fgrp"><label>District</label>
+      <select id="rDist">
+        <option value="">Select District</option>
+        <option>Nashik</option><option>Pune</option><option>Mumbai</option><option>Kolhapur</option>
+        <option>Sangli</option><option>Solapur</option><option>Aurangabad</option><option>Nagpur</option>
+        <option>Amravati</option><option>Other</option>
+      </select>
+    </div>
+
+    <div class="pay-wrap">
+      <h3>💳 Payment — ₹99 Only</h3>
+      <div class="pay-amt">₹ 99 /-</div>
+
+      <!-- Razorpay Payment Link -->
+      <a href="https://razorpay.me/@rameshbapuraokamble" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;margin-bottom:14px;">
+        <div style="
+          background:linear-gradient(135deg,#528FF0,#3B5CE0);
+          border-radius:10px;padding:14px;text-align:center;
+          font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;
+          color:#fff;cursor:pointer;
+          box-shadow:0 4px 16px rgba(83,143,240,0.35);
+          transition:all 0.2s;
+          display:flex;align-items:center;justify-content:center;gap:8px;">
+          <span style="font-size:20px;">💳</span>
+          Pay ₹99 via Razorpay
+          <span style="font-size:12px;opacity:0.85;">(Secure & Fast)</span>
+        </div>
+      </a>
+
+      <div style="text-align:center;font-size:12px;color:var(--gray2);margin-bottom:12px;">— or pay via UPI ID —</div>
+
+      <div class="upi-box" onclick="copyUPI()">📋 Tap to copy: 8010634300@paytm</div>
+      <ul class="steps">
+        <li><span class="sn">1</span>Razorpay वर क्लिक करा किंवा PhonePe / GPay / Paytm वापरा</li>
+        <li><span class="sn">2</span>₹99 पेमेंट करा</li>
+        <li><span class="sn">3</span>Transaction ID / UTR कॉपी करा</li>
+        <li><span class="sn">4</span>खाली पेस्ट करून Submit करा</li>
+      </ul>
+      <div class="fgrp" style="margin:12px 0 0">
+        <label>Transaction ID / UTR Number *</label>
+        <input type="text" id="rTxn" placeholder="e.g. 123456789012">
+      </div>
+    </div>
+
+    <button class="btn-main" onclick="submitReg()">✅ Submit Registration</button>
+    <button class="btn-ghost" onclick="goHome()">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 3: PENDING ══════════ -->
+<div class="screen" id="pendingScreen">
+  <div class="pending-wrap">
+    <div class="pending-ico">⏳</div>
+    <div class="pending-pill">Payment Under Review</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px" id="pendName"></div>
+    <div style="font-size:14px;color:var(--gray2);margin-bottom:24px;line-height:1.7">Your payment is being verified by our admin.<br>Access will be activated within 2–4 hours.</div>
+    <div class="pass-display">
+      <div style="font-size:12px;color:var(--gray);margin-bottom:8px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px">Your Login Password</div>
+      <div class="pass-val" id="pendPass"></div>
+      <div class="pass-hint">First 2 letters of name + Last 4 digits of mobile</div>
+    </div>
+    <button class="btn-main" onclick="goAccess()">Go to Login →</button>
+    <button class="btn-ghost" style="max-width:300px;margin:10px auto" onclick="goHome()">Back to Home</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 4: ACCESS LOGIN ══════════ -->
+<div class="screen" id="accessScreen">
+  <div class="login-screen-wrap">
+    <div style="width:100%;max-width:380px">
+      <button class="back" onclick="goHome()" style="padding:0 0 16px">← Home</button>
+      <div class="access-card">
+        <div style="font-size:36px;text-align:center;margin-bottom:12px">🔐</div>
+        <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;margin-bottom:6px">Student Login</div>
+        <div style="font-size:13px;color:var(--gray2);text-align:center;margin-bottom:18px">Enter your mobile number and password</div>
+        <div class="hint-box">
+          Password = <strong>First 2 letters of name</strong> + <strong>Last 4 digits of mobile</strong><br>
+          Example: Rahul Sharma, 9876543210 → <strong>Ra3210</strong>
+        </div>
+        <div class="fgrp"><label>Mobile Number</label><input type="tel" id="lPhone" placeholder="10-digit mobile" maxlength="10"></div>
+        <div class="fgrp"><label>Password</label><input type="password" id="lPass" placeholder="Your password"></div>
+        <button class="btn-main" onclick="doLogin()">Login →</button>
+        <button class="btn-ghost" style="margin-top:8px" onclick="goRegister()">New student? Register here</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 5: BLOCKED ══════════ -->
+<div class="screen" id="blockedScreen">
+  <div class="blocked-full">
+    <div class="blocked-ico">🚫</div>
+    <div class="blocked-title">Access Blocked</div>
+    <div class="blocked-msg">
+      Your account was accessed from a new device.<br>
+      For security, your access has been suspended.<br><br>
+      Contact CM Academy to restore:<br>
+      <strong style="color:var(--gold);font-size:18px">📞 8010634300</strong>
+    </div>
+    <button class="btn-ghost" style="margin-top:24px;max-width:200px" onclick="goHome()">Home</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 6: DASHBOARD ══════════ -->
+<div class="screen" id="dashScreen">
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-mark" id="dashInitial">?</div>
+      <div>
+        <div class="brand-name" id="dashName">Student</div>
+        <div class="brand-sub" id="dashPhone"></div>
+      </div>
+    </div>
+    <div class="hdr-right" onclick="doLogout()" style="color:var(--red)">Logout</div>
+  </div>
+  <div class="dash-hero">
+    <h2>My Test Series Dashboard</h2>
+    <p>Select a subject to start practising</p>
+  </div>
+  <div class="stats-row" id="dashStats"></div>
+  <div class="sec-hdr">My Subjects</div>
+  <div class="subj-dash" id="dashSubjects"></div>
+</div>
+
+<!-- ══════════ SCREEN 7: PAPERS ══════════ -->
+<div class="screen" id="papersScreen">
+  <div class="hdr">
+    <button class="back" onclick="showDash()" style="padding:0">← Dashboard</button>
+    <div id="papersTitle" style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold)"></div>
+    <div style="width:60px"></div>
+  </div>
+  <div id="papersList" style="padding-top:14px"></div>
+</div>
+
+<!-- ══════════ SCREEN 8: TEST ══════════ -->
+<div class="screen" id="testScreen">
+  <div class="test-hdr">
+    <div class="test-top">
+      <div>
+        <div class="test-meta-t" id="tMeta"></div>
+        <div class="test-name">CM Academy Test Series</div>
+      </div>
+      <div class="timer" id="tTimer">60:00</div>
+    </div>
+    <div class="prog-bar-wrap"><div class="prog-bar-fill" id="tBar"></div></div>
+  </div>
+  <div class="q-ctr" id="tQCtr"></div>
+  <div id="tArea"></div>
+  <div class="nav-strip">
+    <button class="nbtn" onclick="prevQ()">← Prev</button>
+    <button class="nbtn" onclick="skipQ()">Skip</button>
+    <button class="nbtn primary" id="tNextBtn" onclick="nextQ()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 9: RESULT ══════════ -->
+<div class="screen" id="resultScreen">
+  <button class="back" onclick="showPapers()">← Papers</button>
+  <div class="res-wrap">
+    <div class="res-card" id="resCard"></div>
+    <div class="exp-sec-title">💡 Answers & Explanations</div>
+    <div id="expArea"></div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 10: ADMIN LOGIN ══════════ -->
+<div class="screen" id="adminLoginScreen">
+  <div class="login-screen-wrap" style="background:linear-gradient(135deg,#0f0505,#0a0a14)">
+    <div class="login-box">
+      <div style="font-size:36px;text-align:center;margin-bottom:12px">🛡</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--red);text-align:center;margin-bottom:20px">Admin Panel Login</div>
+      <div class="fgrp"><label>Admin Password</label><input type="password" id="aPass" placeholder="Enter admin password"></div>
+      <button class="btn-main" style="background:linear-gradient(135deg,var(--red),#b91c1c)" onclick="doAdminLogin()">Enter Admin Panel</button>
+      <button class="btn-ghost" style="margin-top:8px" onclick="goHome()">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 11: ADMIN PANEL ══════════ -->
+<div class="screen" id="adminScreen">
+  <div class="admin-hdr">
+    <div>
+      <div class="admin-title">🛡 Admin Panel</div>
+      <div class="admin-sub">CM Academy · Class 10 · English Medium</div>
+    </div>
+    <button onclick="doAdminLogout()" style="background:none;border:none;color:var(--gray2);cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif">Logout</button>
+  </div>
+  <div class="a-stats" id="aStats"></div>
+  <div class="filter-row">
+    <button class="flt-btn on" onclick="filterA('all',this)">All</button>
+    <button class="flt-btn" onclick="filterA('pending',this)">Pending ⏳</button>
+    <button class="flt-btn" onclick="filterA('active',this)">Active ✅</button>
+    <button class="flt-btn" onclick="filterA('blocked',this)">Blocked 🚫</button>
+  </div>
+  <div id="aList"></div>
+</div>
+
+<script>
+// ════════════════════════════
+//  CONSTANTS & STORAGE
+// ════════════════════════════
+const ADMIN_PWD = 'CMADMINramesh@99';
+const UPI = '8010634300@paytm';
+
+const getStu = () => JSON.parse(localStorage.getItem('cm_en_students') || '[]');
+const saveStu = d => localStorage.setItem('cm_en_students', JSON.stringify(d));
+const getProg = () => JSON.parse(localStorage.getItem('cm_en_progress') || '{}');
+const saveProg = d => localStorage.setItem('cm_en_progress', JSON.stringify(d));
+const curStu = () => { const p = sessionStorage.getItem('cm_en_cur'); return p ? getStu().find(s=>s.phone===p)||null : null; };
+
+// ════════════════════════════
+//  DEVICE FINGERPRINT
+// ════════════════════════════
+function getFP() {
+  const raw = [navigator.userAgent,navigator.language,screen.width+'x'+screen.height,new Date().getTimezoneOffset(),navigator.hardwareConcurrency||0,navigator.maxTouchPoints||0].join('|');
+  let h=0;
+  for(let i=0;i<raw.length;i++){h=((h<<5)-h)+raw.charCodeAt(i);h|=0;}
+  return Math.abs(h).toString(36);
+}
+
+// ════════════════════════════
+//  PASSWORD
+// ════════════════════════════
+function genPwd(name, phone) {
+  const chars=[...name.replace(/\s+/g,'')];
+  return chars.slice(0,2).join('') + phone.slice(-4);
+}
+
+// ════════════════════════════
+//  NAVIGATION
+// ════════════════════════════
+const show = id => { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); };
+const goHome = () => show('homeScreen');
+const goRegister = () => show('registerScreen');
+const goAccess = () => show('accessScreen');
+const goAdminLogin = () => show('adminLoginScreen');
+const showDash = () => { renderDash(); show('dashScreen'); };
+const showPapers = () => show('papersScreen');
+
+// ════════════════════════════
+//  ALERT
+// ════════════════════════════
+function alert2(msg, type='inf') {
+  const b = document.getElementById('alertBox');
+  b.className='alert on '+type;
+  b.textContent=msg;
+  setTimeout(()=>b.classList.remove('on'),3000);
+}
+
+function copyUPI() {
+  if(navigator.clipboard){navigator.clipboard.writeText(UPI).then(()=>alert2('UPI ID copied! ✓','ok')).catch(()=>alert2('UPI: '+UPI,'inf'));}else{alert2('UPI: '+UPI,'inf');}
+}
+
+// ════════════════════════════
+//  SUBJECTS
+// ════════════════════════════
+const SUBS = {
+  math:    {name:'Mathematics',  icon:'📐', color:'#e8a020'},
+  science: {name:'Science',      icon:'🔬', color:'#22c55e'},
+  social:  {name:'Social Science',icon:'🌍',color:'#3b82f6'},
+  english: {name:'English',      icon:'📖', color:'#a855f7'},
+  hindi:   {name:'Hindi',        icon:'📝', color:'#ef4444'},
+  marathi: {name:'Marathi',      icon:'✍️', color:'#f97316'},
+  sanskrit:{name:'Sanskrit',     icon:'🪔', color:'#eab308'},
+};
+const DIFFS = ['A','B','C','D'];
+const DLBL  = {A:'Easy',B:'Medium',C:'Hard',D:'Very Hard'};
+
+// ════════════════════════════
+//  QUESTION BANKS (English Medium)
+//  40 MCQ + 10 Short Answer per paper set
+// ════════════════════════════
+const QB = {
+  math: {
+    mcq:[
+      {q:'The LCM of 12 and 18 is:',opts:['36','24','48','72'],ans:0,exp:'LCM(12,18): 12=2²×3, 18=2×3². LCM=2²×3²=36'},
+      {q:'If 2x + 5 = 15, then x = ?',opts:['5','4','6','3'],ans:0,exp:'2x=15-5=10, x=10/2=5'},
+      {q:'The area of a circle with radius 7 cm is: (π=22/7)',opts:['154 cm²','144 cm²','132 cm²','176 cm²'],ans:0,exp:'A=πr²=22/7×49=154 cm²'},
+      {q:'√144 + √169 = ?',opts:['25','27','24','26'],ans:0,exp:'√144=12, √169=13. 12+13=25'},
+      {q:'The HCF of 24 and 36 is:',opts:['12','6','18','24'],ans:0,exp:'24=2³×3, 36=2²×3². HCF=2²×3=12'},
+      {q:'If the 5th term of an AP is 15 and first term is 3, common difference is:',opts:['3','4','2','5'],ans:0,exp:'a₅=a+(5-1)d ⟹ 15=3+4d ⟹ d=3'},
+      {q:'Volume of a cube with side 5 cm is:',opts:['125 cm³','100 cm³','25 cm³','75 cm³'],ans:0,exp:'V=s³=5³=125 cm³'},
+      {q:'tan 30° = ?',opts:['1/√3','√3','1','1/2'],ans:0,exp:'tan 30°=1/√3 is a standard trigonometric value'},
+      {q:'The roots of x² - 5x + 6 = 0 are:',opts:['2 and 3','1 and 6','2 and 4','3 and 4'],ans:0,exp:'x²-5x+6=(x-2)(x-3)=0, so x=2 or x=3'},
+      {q:'A number when divided by 7 gives quotient 8 and remainder 5. The number is:',opts:['61','56','63','59'],ans:0,exp:'Number = divisor×quotient + remainder = 7×8+5=61'},
+    ],
+    sa:[
+      {q:'Find the quadratic equation whose roots are 4 and -3.',marks:2,model:'Sum of roots = 4+(-3) = 1. Product = 4×(-3) = -12. Equation: x² - (sum)x + product = 0 → x² - x - 12 = 0'},
+      {q:'The perimeter of a rectangle is 48 cm. If length is 14 cm, find the breadth and area.',marks:3,model:'Perimeter=2(l+b) ⟹ 48=2(14+b) ⟹ b=10 cm. Area=14×10=140 cm²'},
+      {q:'In an AP, the first term is 2 and the common difference is 3. Find the sum of first 10 terms.',marks:3,model:'Sₙ=n/2[2a+(n-1)d]=10/2[4+27]=5×31=155'},
+    ]
+  },
+  science:{
+    mcq:[
+      {q:'The speed of light in vacuum is approximately:',opts:['3×10⁸ m/s','3×10⁶ m/s','3×10¹⁰ m/s','3×10⁴ m/s'],ans:0,exp:'Speed of light c = 3×10⁸ m/s in vacuum (standard constant)'},
+      {q:'The chemical formula of water is:',opts:['H₂O','HO₂','H₂O₂','HO'],ans:0,exp:'Water = H₂O (2 hydrogen atoms + 1 oxygen atom)'},
+      {q:'The human heart has how many chambers?',opts:['4','2','3','5'],ans:0,exp:'Heart has 4 chambers: right atrium, left atrium, right ventricle, left ventricle'},
+      {q:'Photosynthesis takes place in:',opts:['Chloroplast','Mitochondria','Nucleus','Ribosome'],ans:0,exp:'Chloroplasts contain chlorophyll and are the site of photosynthesis'},
+      {q:'Newton\'s second law states F = ?',opts:['ma','mv','m/a','m+a'],ans:0,exp:'F=ma (Force = mass × acceleration) — Newton\'s 2nd law of motion'},
+      {q:'pH of pure water is:',opts:['7','1','14','0'],ans:0,exp:'Pure water is neutral with pH = 7 (neither acidic nor basic)'},
+      {q:'Which gas is produced during photosynthesis?',opts:['Oxygen','Carbon dioxide','Nitrogen','Hydrogen'],ans:0,exp:'Plants take CO₂ and release O₂ during photosynthesis'},
+      {q:'Resistance is measured in:',opts:['Ohm (Ω)','Ampere','Volt','Watt'],ans:0,exp:'Electrical resistance is measured in Ohms (Ω) — named after Georg Ohm'},
+      {q:'The atomic number of Carbon is:',opts:['6','12','8','14'],ans:0,exp:'Carbon has atomic number 6 (6 protons). Atomic mass is 12.'},
+      {q:'Which part of the brain controls balance and coordination?',opts:['Cerebellum','Cerebrum','Medulla','Thalamus'],ans:0,exp:'Cerebellum controls balance, coordination, and fine motor movements'},
+    ],
+    sa:[
+      {q:'Explain Ohm\'s Law with a formula and one real-life application.',marks:3,model:'Ohm\'s Law: V=IR (Voltage = Current × Resistance). Application: Used in designing electrical circuits, fuses, and resistors in household appliances.'},
+      {q:'Write the differences between plant cell and animal cell (any 3 points).',marks:3,model:'1) Plant cell has cell wall; animal cell does not. 2) Plant cell has chloroplast; animal cell does not. 3) Plant cell has large central vacuole; animal cell has small vacuoles.'},
+      {q:'What is refraction of light? State Snell\'s Law.',marks:2,model:'Refraction: Bending of light when it passes from one medium to another due to change in speed. Snell\'s Law: n₁sinθ₁ = n₂sinθ₂'},
+    ]
+  },
+  social:{
+    mcq:[
+      {q:'Who wrote the Indian National Anthem "Jana Gana Mana"?',opts:['Rabindranath Tagore','Bankim Chandra','Subhash Bose','Mahatma Gandhi'],ans:0,exp:'"Jana Gana Mana" was written by Rabindranath Tagore; adopted as national anthem in 1950'},
+      {q:'The Tropic of Cancer passes through how many Indian states?',opts:['8','6','5','9'],ans:0,exp:'Tropic of Cancer (23.5°N) passes through 8 Indian states: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram'},
+      {q:'Which is the largest ocean in the world?',opts:['Pacific Ocean','Atlantic Ocean','Indian Ocean','Arctic Ocean'],ans:0,exp:'Pacific Ocean is the largest, covering about 46% of all water surface'},
+      {q:'The Indian Constitution came into effect on:',opts:['26 Jan 1950','15 Aug 1947','26 Nov 1949','2 Oct 1950'],ans:0,exp:'Indian Constitution was adopted 26 Nov 1949 and came into force 26 Jan 1950 (Republic Day)'},
+      {q:'Which river is known as the "Sorrow of Bihar"?',opts:['Kosi','Ganga','Son','Gandak'],ans:0,exp:'River Kosi is called "Sorrow of Bihar" due to frequent floods changing its course'},
+      {q:'The Permanent Settlement of 1793 was introduced by:',opts:['Lord Cornwallis','Lord Dalhousie','Lord Curzon','Lord Wellesley'],ans:0,exp:'Lord Cornwallis introduced the Permanent Settlement (Zamindari system) in Bengal in 1793'},
+      {q:'WTO headquarters is located in:',opts:['Geneva','New York','Paris','London'],ans:0,exp:'WTO (World Trade Organization) is headquartered in Geneva, Switzerland'},
+      {q:'The Chipko Movement was related to:',opts:['Forest conservation','Water conservation','Soil conservation','Wildlife'],ans:0,exp:'Chipko Movement (1973, Uttarakhand) — villagers hugged trees to prevent logging'},
+      {q:'Which article of the Indian Constitution abolishes untouchability?',opts:['Article 17','Article 14','Article 15','Article 21'],ans:0,exp:'Article 17 abolishes untouchability and forbids its practice in any form'},
+      {q:'The latitude that divides the Earth into Northern and Southern hemispheres:',opts:['Equator (0°)','Tropic of Cancer','Arctic Circle','Tropic of Capricorn'],ans:0,exp:'The Equator at 0° latitude divides Earth into Northern and Southern hemispheres'},
+    ],
+    sa:[
+      {q:'Explain the causes and effects of the Non-Cooperation Movement (1920-22).',marks:3,model:'Causes: Jallianwala Bagh massacre, Rowlatt Act, Khilafat issue. Led by Gandhi. Effects: Mass participation of Indians, boycott of British goods/schools/courts; ended after Chauri Chaura incident.'},
+      {q:'What is globalisation? Mention two advantages and two disadvantages.',marks:3,model:'Globalisation: Integration of economies through trade, investment, technology. Advantages: Economic growth, access to goods. Disadvantages: Job loss in local industries, cultural homogenisation.'},
+      {q:'Describe the three tiers of government in India.',marks:2,model:'1) Central Government — Parliament (Lok Sabha & Rajya Sabha). 2) State Government — State Legislature. 3) Local Bodies — Panchayats (rural) & Municipalities (urban).'},
+    ]
+  },
+  english:{
+    mcq:[
+      {q:'Choose the correct form: "She ___ to school every day."',opts:['goes','go','going','gone'],ans:0,exp:'Third person singular (she/he/it) takes -s/-es in Simple Present Tense'},
+      {q:'Identify the noun: "The beautiful garden has lovely flowers."',opts:['garden','beautiful','lovely','has'],ans:0,exp:'"Garden" is a common noun (place). "Beautiful" and "lovely" are adjectives.'},
+      {q:'Passive voice of: "Ram writes a letter."',opts:['A letter is written by Ram','A letter was written by Ram','A letter written by Ram','Ram is written a letter'],ans:0,exp:'Simple Present Active → Passive: Object+is/am/are+V3+by+Subject'},
+      {q:'"Happy" antonym is:',opts:['Sad','Unhappy','Gladly','Happiness'],ans:0,exp:'"Sad" is the direct antonym (opposite) of "happy"'},
+      {q:'Choose the correct article: "___ honest man is always respected."',opts:['An','A','The','No article'],ans:0,exp:'"Honest" begins with a vowel sound (silent h), so "An" is used before it'},
+      {q:'Indirect speech: He said, "I am tired." → He said that ___',opts:['he was tired','he is tired','I was tired','he were tired'],ans:0,exp:'Direct → Indirect: "am" changes to "was", "I" changes to "he"'},
+      {q:'"Mend" is a synonym for:',opts:['Repair','Break','Build','Destroy'],ans:0,exp:'"Mend" means to repair or fix something; "Repair" is its synonym'},
+      {q:'Which is a compound sentence?',opts:['He worked hard, but he failed.','He worked hard.','Working hard, he succeeded.','He worked.'],ans:0,exp:'Compound sentence has two independent clauses joined by a coordinating conjunction (but, and, or)'},
+      {q:'The plural of "criterion" is:',opts:['Criteria','Criterions','Criterias','Criterium'],ans:0,exp:'"Criterion" is a Greek-origin word; its plural is "criteria" (not criterions)'},
+      {q:'"The sun rises in the east" — identify the tense:',opts:['Simple Present','Simple Past','Present Continuous','Future'],ans:0,exp:'Universal truths and habits use Simple Present Tense (rises = third person singular)'},
+    ],
+    sa:[
+      {q:'Write a letter to your school principal requesting permission for an educational trip.',marks:5,model:'Format: Date, To/From address, Subject, Salutation, Body (reason, details, assurance), Closing. Content: Polite request, mention destination/date/educational purpose, promise to follow rules.'},
+      {q:'Describe your favourite festival in 80-100 words.',marks:3,model:'Structure: Introduction (name & significance), Celebrations (how it is celebrated), Personal connection, Conclusion. Use descriptive language and vivid details.'},
+      {q:'Rewrite the following using reported speech: "I will help you," she said to him.',marks:2,model:'She told him that she would help him. (will→would, I→she, you→him)'},
+    ]
+  },
+  hindi:{
+    mcq:[
+      {q:'"वह स्कूल जाता है" — इस वाक्य में क्रिया कौनसी है?',opts:['जाता है','वह','स्कूल','है'],ans:0,exp:'"जाता है" क्रिया है — कार्य का बोध कराती है।'},
+      {q:'वचन बदलिए: "लड़का"',opts:['लड़के','लड़कों','लड़कनी','लड़का'],ans:0,exp:'"लड़का" एकवचन → "लड़के" बहुवचन।'},
+      {q:'"खुश" का विलोम शब्द है:',opts:['दुखी','नाखुश','प्रसन्न','उदास'],ans:0,exp:'"खुश" का विलोम "दुखी" है।'},
+      {q:'"आँखें चार होना" मुहावरे का अर्थ है:',opts:['आमने-सामने होना','झगड़ा होना','प्रेम होना','आश्चर्य होना'],ans:0,exp:'"आँखें चार होना" = आमने-सामने आना या मुलाकात होना।'},
+      {q:'कारक के कितने भेद होते हैं?',opts:['8','6','5','10'],ans:0,exp:'हिंदी में 8 कारक होते हैं: कर्ता, कर्म, करण, संप्रदान, अपादान, संबंध, अधिकरण, संबोधन।'},
+      {q:'"पानी" का पर्यायवाची शब्द है:',opts:['जल','नभ','धरा','पवन'],ans:0,exp:'"पानी" के पर्यायवाची: जल, नीर, वारि, तोय।'},
+      {q:'संज्ञा के कितने भेद हैं?',opts:['5','3','4','6'],ans:0,exp:'संज्ञा के 5 भेद: व्यक्तिवाचक, जातिवाचक, भाववाचक, समूहवाचक, द्रव्यवाचक।'},
+      {q:'"सुंदर" शब्द किस प्रकार का विशेषण है?',opts:['गुणवाचक','संख्यावाचक','परिमाणवाचक','सार्वनामिक'],ans:0,exp:'"सुंदर" गुण का बोध कराता है → गुणवाचक विशेषण।'},
+      {q:'"मेरी माँ खाना बना रही है।" — इसमें सर्वनाम कौनसा है?',opts:['मेरी','माँ','खाना','बना'],ans:0,exp:'"मेरी" उत्तम पुरुष सर्वनाम है।'},
+      {q:'लिंग बदलिए: "राजा"',opts:['रानी','राजकुमारी','महारानी','राजनी'],ans:0,exp:'"राजा" (पुल्लिंग) → "रानी" (स्त्रीलिंग)।'},
+    ],
+    sa:[
+      {q:'किसी भी एक महापुरुष पर 80-100 शब्दों में अनुच्छेद लिखिए।',marks:5,model:'Structure: जन्म-परिचय, महान कार्य, देश/समाज के लिए योगदान, प्रेरणा। उदाहरण: गांधीजी — सत्य, अहिंसा, स्वतंत्रता संग्राम।'},
+      {q:'"यात्रा" शब्द से वाक्य बनाइए और उसका कारक बताइए।',marks:2,model:'वाक्य: मैं यात्रा पर जा रहा हूँ। "यात्रा" — कर्म कारक (जाने का लक्ष्य)।'},
+      {q:'निम्नलिखित का विलोम लिखिए: सुख, दिन, सत्य, जीवन',marks:2,model:'सुख→दुख, दिन→रात, सत्य→असत्य, जीवन→मृत्यु'},
+    ]
+  },
+  marathi:{
+    mcq:[
+      {q:'"माझ्या घरी पाहुणे आले" - रेखांकित शब्दाचा विभक्ती प्रत्यय कोणता?',opts:['षष्ठी','सप्तमी','तृतीया','प्रथमा'],ans:0,exp:'"माझ्या" मध्ये "या" प्रत्यय षष्ठी विभक्ती दाखवतो (संबंध).'},
+      {q:'वचन बदला: "मुलगा"',opts:['मुले','मुलांना','मुलास','मुलगे'],ans:0,exp:'"मुलगा" एकवचन → "मुले" अनेकवचन.'},
+      {q:'"वाघ" चे स्त्रीलिंग काय?',opts:['वाघीण','वाघणी','वाघिन','वाघ्री'],ans:0,exp:'"वाघ" (पुल्लिंग) → "वाघीण" (स्त्रीलिंग).'},
+      {q:'खालीलपैकी क्रियाविशेषण कोणते?',opts:['हळूहळू','सुंदर','लाल','गोड'],ans:0,exp:'"हळूहळू" क्रियाविशेषण आहे — क्रियेची रीत सांगते.'},
+      {q:'"ती गाणे म्हणते" — वाक्याचा प्रकार?',opts:['विधानार्थी','प्रश्नार्थी','उद्गारार्थी','आज्ञार्थी'],ans:0,exp:'एखादी गोष्ट सांगते → विधानार्थी वाक्य.'},
+      {q:'"हत्ती" चे विरुद्धार्थी शब्द?',opts:['उंदीर','लहान','छोटा','नाही'],ans:3,exp:'हत्ती या शब्दाला मराठीत थेट विरुद्धार्थी नाही.'},
+      {q:'म्हण पूर्ण करा: "असेल मनी तर ___"',opts:['दिसेल जनी','मिळे धनी','कळे गुणी','दिसे वनी'],ans:0,exp:'पूर्ण म्हण: "असेल मनी तर दिसेल जनी."'},
+      {q:'खालीलपैकी तत्सम शब्द कोणता?',opts:['आकाश','आभाळ','গগন','नभ'],ans:0,exp:'"आकाश" संस्कृतातून आलेला तत्सम शब्द आहे.'},
+      {q:'"सुंदर" शब्दाचा विरुद्धार्थी?',opts:['कुरूप','असुंदर','बेढब','सर्व सही'],ans:0,exp:'"सुंदर" चा विरुद्धार्थी "कुरूप" आहे.'},
+      {q:'खालीलपैकी विशेषण कोणते?',opts:['सुंदर','धावणे','आकाश','लवकर'],ans:0,exp:'"सुंदर" नामाचे गुण सांगते → विशेषण.'},
+    ],
+    sa:[
+      {q:'तुमच्या आवडत्या सणाबद्दल ८०-१०० शब्दांत निबंध लिहा.',marks:5,model:'रचना: परिचय, कधी साजरा होतो, कसा साजरा करतात, काय विशेष, निष्कर्ष. उदा. दिवाळी — फटाके, दिवे, फराळ, आनंद.'},
+      {q:'पुढील शब्दांचे विरुद्धार्थी लिहा: सुख, रात्र, सत्य, मित्र',marks:2,model:'सुख→दुःख, रात्र→दिवस, सत्य→असत्य, मित्र→शत्रू'},
+      {q:'"श्रमाचे महत्त्व" या विषयावर ५ वाक्ये लिहा.',marks:3,model:'श्रम हे यशाचे मूळ आहे. परिश्रमी माणूस कधीही हरत नाही. इतिहासात थोर व्यक्तींनी परिश्रमाने यश मिळवले. श्रमाशिवाय यश मिळत नाही. आपण नेहमी कष्टाळू असले पाहिजे.'},
+    ]
+  },
+  sanskrit:{
+    mcq:[
+      {q:'"बालः" शब्दस्य बहुवचनम् किम्?',opts:['बालाः','बालम्','बालेन','बालात्'],ans:0,exp:'"बालः" प्रथमा एकवचन → बहुवचन "बालाः" (अकारान्त पुल्लिंग).'},
+      {q:'"गच्छति" क्रियापदस्य अर्थः किम् (English)?',opts:['He goes','I go','We go','They go'],ans:0,exp:'"गच्छति" = He/She goes (प्रथम पुरुष एकवचन, लट्लकार).'},
+      {q:'संस्कृते "Water" शब्दः किम्?',opts:['वारि / जलम्','नभः','धरा','पवनः'],ans:0,exp:'Water = वारि or जलम् in Sanskrit.'},
+      {q:'"पठ" धातोः लट्लकारे प्रथमपुरुष एकवचनम्?',opts:['पठति','पठसि','पठामि','पठन्ति'],ans:0,exp:'"पठ" + ति = पठति (He reads) — प्रथम पुरुष एकवचन.'},
+      {q:'संस्कृते "माता" इत्यस्य अर्थः किम्?',opts:['Mother','Father','Sister','Brother'],ans:0,exp:'"माता" = Mother. पिता=Father, भगिनी=Sister, भ्राता=Brother.'},
+      {q:'अस्मि, असि, अस्ति — इत्यस्य क्रमः किम्?',opts:['Iam, YouAre, HeIs','HeIs, YouAre, IAm','WeAre, IAm, YouAre','YouAre, HeIs, IAm'],ans:0,exp:'अस्मि=I am, असि=You are, अस्ति=He/She/It is (लट्लकार).'},
+      {q:'"रामः पाठशालाम् गच्छति" — रामः कस्मिन् विभक्तौ?',opts:['प्रथमा','द्वितीया','तृतीया','षष्ठी'],ans:0,exp:'"रामः" कर्ता है → प्रथमा विभक्ति.'},
+      {q:'संस्कृते "Book" = ?',opts:['पुस्तकम्','लेखनी','पत्रम्','ग्रन्थः'],ans:0,exp:'"पुस्तकम्" = Book in Sanskrit. लेखनी=pen, पत्रम्=letter, ग्रन्थः=scripture.'},
+      {q:'"सुंदर" शब्दस्य संस्कृत रूपम्?',opts:['सुन्दरम् / रमणीयम्','कुरूपम्','विशालम्','महत्'],ans:0,exp:'"सुन्दरम्" or "रमणीयम्" = Beautiful in Sanskrit.'},
+      {q:'द्वन्द्व समासस्य उदाहरणम् किम्?',opts:['रामलक्ष्मणौ','राजपुरुषः','महापुरुषः','नीलकमलम्'],ans:0,exp:'"रामलक्ष्मणौ" = राम च लक्ष्मणश्च → द्वन्द्व समास (two equal members joined).'},
+    ],
+    sa:[
+      {q:'Write 5 Sanskrit words for "sky" and use any one in a sentence.',marks:2,model:'आकाशम्, नभः, গগनम्, अम्बरम्, व्योम। Sentence: आकाशे तारकाः सन्ति। (Stars are in the sky.)'},
+      {q:'Translate into Sanskrit: "The boy goes to school."',marks:2,model:'बालः पाठशालाम् गच्छति। (बालः=boy, पाठशालाम्=to school (2nd case), गच्छति=goes)'},
+      {q:'Write the लट्लकार conjugation (all 3 persons, singular only) of the verb "पठ्" (to read).',marks:3,model:'प्रथम पुरुष: पठति (He reads). मध्यम पुरुष: पठसि (You read). उत्तम पुरुष: पठामि (I read).'},
+    ]
+  }
+};
+
+// ════════════════════════════
+//  QUESTION GENERATOR
+// ════════════════════════════
+function genQuestions(subject, paperNum, difficulty) {
+  const bank = QB[subject] || QB.math;
+  const mcqBank = bank.mcq || [];
+  const saBank  = bank.sa  || [];
+
+  // Generate 40 MCQs + 10 SA = 50 questions
+  const all = [];
+  for(let i=0;i<40;i++){
+    const base = mcqBank[i % mcqBank.length];
+    all.push({id:i, type:'mcq', ...base,
+      question:`Q${i+1}. ${base.q}`,
+      marks: difficulty==='D'?2:1});
+  }
+  for(let i=0;i<10;i++){
+    const base = saBank[i % saBank.length];
+    all.push({id:40+i, type:'sa', ...base,
+      question:`Q${41+i}. ${base.q}`,
+      answer:'', marks:base.marks||2});
+  }
+  return all;
+}
+
+// ════════════════════════════
+//  HOME - select subject
+// ════════════════════════════
+function selectSubjectHome(sub) {
+  if(!curStu()) { goAccess(); return; }
+  openPapers(sub);
+}
+
+// ════════════════════════════
+//  REGISTER
+// ════════════════════════════
+function submitReg() {
+  const name  = document.getElementById('rName').value.trim();
+  const phone = document.getElementById('rPhone').value.trim();
+  const school= document.getElementById('rSchool').value.trim();
+  const board = document.getElementById('rBoard').value;
+  const dist  = document.getElementById('rDist').value;
+  const txn   = document.getElementById('rTxn').value.trim();
+
+  if(!name)              { alert2('Please enter your name','err'); return; }
+  if(!/^\d{10}$/.test(phone)) { alert2('Enter a valid 10-digit mobile number','err'); return; }
+  if(!txn)               { alert2('Enter Transaction ID','err'); return; }
+
+  const students = getStu();
+  if(students.find(s=>s.phone===phone)) {
+    alert2('Already registered! Please login.','inf');
+    setTimeout(goAccess,1500); return;
+  }
+
+  const password = genPwd(name, phone);
+  const fp = getFP();
+
+  students.push({
+    id: Date.now().toString(36),
+    name, phone, school, board, dist, txn, password,
+    fingerprint: fp, devices:[fp],
+    status:'pending',
+    registeredAt: new Date().toISOString(),
+    activatedAt:null, amount:99
+  });
+  saveStu(students);
+
+  document.getElementById('pendName').textContent = name + ', registration successful! ✓';
+  document.getElementById('pendPass').textContent = password;
+  show('pendingScreen');
+  alert2('Registration submitted! Admin will verify soon.','ok');
+}
+
+// ════════════════════════════
+//  LOGIN
+// ════════════════════════════
+function doLogin() {
+  const phone = document.getElementById('lPhone').value.trim();
+  const pass  = document.getElementById('lPass').value.trim();
+
+  if(!/^\d{10}$/.test(phone)) { alert2('Enter valid mobile number','err'); return; }
+  if(!pass)                   { alert2('Enter password','err'); return; }
+
+  const students = getStu();
+  const s = students.find(x=>x.phone===phone);
+  if(!s)              { alert2('Not registered. Please register first.','err'); return; }
+  if(s.password!==pass){ alert2('Incorrect password','err'); return; }
+  if(s.status==='pending'){ alert2('Payment under review. Please wait 2–4 hours.','inf'); return; }
+  if(s.status==='blocked'){ show('blockedScreen'); return; }
+
+  // Device check
+  const fp = getFP();
+  if(s.devices.length>0 && !s.devices.includes(fp)) {
+    const idx = students.indexOf(s);
+    students[idx].status='blocked';
+    students[idx].devices.push(fp);
+    students[idx].blockedAt=new Date().toISOString();
+    students[idx].blockReason='New device detected';
+    saveStu(students);
+    show('blockedScreen'); return;
+  }
+  if(!s.devices.includes(fp)) {
+    const idx = students.indexOf(s);
+    students[idx].devices.push(fp);
+    students[idx].activatedAt = students[idx].activatedAt || new Date().toISOString();
+    saveStu(students);
+  }
+
+  sessionStorage.setItem('cm_en_cur', phone);
+  renderDash();
+  show('dashScreen');
+}
+
+function doLogout() {
+  sessionStorage.removeItem('cm_en_cur');
+  goHome();
+}
+
+// ════════════════════════════
+//  DASHBOARD
+// ════════════════════════════
+function renderDash() {
+  const s = curStu(); if(!s) return;
+  const nameArr = [...s.name.replace(/\s+/g,'')];
+  document.getElementById('dashInitial').textContent = nameArr[0]||'?';
+  document.getElementById('dashName').textContent = s.name;
+  document.getElementById('dashPhone').textContent = s.phone;
+
+  const prog = getProg();
+  const sp   = prog[s.phone]||{};
+  let done=0, total=7*10*4;
+  Object.values(sp).forEach(sub=>Object.values(sub).forEach(paper=>DIFFS.forEach(d=>{var pd=paper[d];if(pd&&pd.completed)done++;})));
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat-c"><div class="stat-v">${done}</div><div class="stat-l">Done</div></div>
+    <div class="stat-c"><div class="stat-v">${total-done}</div><div class="stat-l">Remaining</div></div>
+    <div class="stat-c"><div class="stat-v">₹99</div><div class="stat-l">Paid</div></div>
+    <div class="stat-c"><div class="stat-v">${done>0?Math.round(done/total*100):0}%</div><div class="stat-l">Complete</div></div>
+  `;
+
+  const subHTML = Object.entries(SUBS).map(([k,v])=>{
+    const subP = sp[k]||{};
+    let d2=0;
+    for(let p=1;p<=10;p++) DIFFS.forEach(d=>{var pp=subP[p];if(pp&&pp[d]&&pp[d].completed)d2++;});
+    return `<div class="subj-row" onclick="openPapers('${k}')">
+      <div class="subj-row-ico">${v.icon}</div>
+      <div class="subj-row-info">
+        <div class="subj-row-name">${v.name}</div>
+        <div class="subj-row-prog"><div class="subj-row-bar" style="width:${d2/40*100}%"></div></div>
+        <div class="subj-row-meta">${d2}/40 papers completed</div>
+      </div>
+      <div class="subj-row-arr">›</div>
+    </div>`;
+  }).join('');
+  document.getElementById('dashSubjects').innerHTML = subHTML;
+}
+
+// ════════════════════════════
+//  PAPERS
+// ════════════════════════════
+let curSubject='';
+function openPapers(sub) {
+  const s = curStu();
+  if(!s) { goAccess(); return; }
+  if(s.status!=='active') { alert2('Access not yet activated. Please wait.','err'); return; }
+  curSubject=sub;
+  const sv=SUBS[sub];
+  document.getElementById('papersTitle').textContent = sv.icon+' '+sv.name;
+
+  const prog=getProg();
+  const sp=(prog[s.phone]||{})[sub]||{};
+
+  let html='';
+  DIFFS.forEach(d=>{
+    const dc={'A':'dA','B':'dB','C':'dC','D':'dD'}[d];
+    html+=`<div class="diff-group">
+      <div class="diff-hdr"><span class="diff-badge ${dc}">LEVEL ${d}</span><span class="diff-name">${DLBL[d]}</span></div>`;
+    for(let p=1;p<=10;p++){
+      var _sp=sp[p]||{};var pd=_sp[d]||null;
+      const done=pd&&pd.completed;
+      var _prev=sp[p-1]||{};var _prevD=_prev[d]||null;
+      const locked=d!=='A'&&p>1&&!(_prevD&&_prevD.completed);
+      html+=`<div class="paper-card ${done?'done':''} ${locked?'locked':''}" onclick="${locked?'':` startTest('${sub}',${p},'${d}')`}">
+        <div>
+          <div class="pc-title">Paper ${p} — Level ${d}</div>
+          <div class="pc-meta">40 MCQ + 10 Short Answer · 60 min</div>
+        </div>
+        ${done?`<div class="pc-score">${pd.score}%</div>`:locked?'<div style="color:var(--gray);font-size:18px">🔒</div>':'<div style="color:var(--gray2);font-size:20px">▶</div>'}
+      </div>`;
+    }
+    html+='</div>';
+  });
+  document.getElementById('papersList').innerHTML=html;
+  show('papersScreen');
+}
+
+// ════════════════════════════
+//  TEST ENGINE
+// ════════════════════════════
+let TS={};
+let TI=null;
+
+function startTest(sub,paperNum,diff){
+  const questions=genQuestions(sub,paperNum,diff);
+  TS={sub,paperNum,diff,questions,
+    answers:new Array(questions.length).fill(null), // null=skip, for MCQ=0-3, for SA=string
+    currentQ:0,
+    startTime:Date.now(),
+    timeLeft:60*60,submitted:false};
+  document.getElementById('tMeta').textContent=`${SUBS[sub].name} · Paper ${paperNum} · Level ${diff} — ${DLBL[diff]}`;
+  renderQ();
+  startTimer2();
+  show('testScreen');
+}
+
+function startTimer2(){
+  clearInterval(TI);
+  TI=setInterval(()=>{
+    TS.timeLeft--;
+    const m=Math.floor(TS.timeLeft/60),s=TS.timeLeft%60;
+    const el=document.getElementById('tTimer');
+    el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className='timer'+(TS.timeLeft<300?' warn':'');
+    if(TS.timeLeft<=0) submitTest();
+  },1000);
+}
+
+function renderQ(){
+  const {questions,currentQ,answers}=TS;
+  const q=questions[currentQ];
+  const tot=questions.length;
+  document.getElementById('tQCtr').textContent=`Question ${currentQ+1} of ${tot}`;
+  document.getElementById('tBar').style.width=((currentQ+1)/tot*100)+'%';
+  const nb=document.getElementById('tNextBtn');
+  if(currentQ===tot-1){nb.textContent='Submit ✓';nb.onclick=submitTest;}
+  else{nb.textContent='Next →';nb.onclick=nextQ;}
+
+  if(q.type==='mcq'){
+    const sel=answers[currentQ];
+    document.getElementById('tArea').innerHTML=`
+      <div class="q-card">
+        <div class="q-tag">MCQ · ${TS.diff} Level · ${q.marks} mark${q.marks>1?'s':''}</div>
+        <div class="q-txt">${q.question}</div>
+        <div class="opts">${q.options.map((o,i)=>`
+          <button class="opt-btn ${sel===i?'sel':''}" onclick="selOpt(${i})">
+            <span class="opt-key">${['A','B','C','D'][i]}</span>${o}
+          </button>`).join('')}
+        </div>
+      </div>`;
+  } else {
+    const val=answers[currentQ]||'';
+    document.getElementById('tArea').innerHTML=`
+      <div class="sa-card">
+        <div class="sa-tag">Short Answer · ${q.marks} marks</div>
+        <div class="sa-txt">${q.question}</div>
+        <textarea class="sa-area" placeholder="Write your answer here..." onchange="selSA(this.value)" oninput="selSA(this.value)">${val}</textarea>
+        <div class="sa-marks">[${q.marks} marks] Write a clear, complete answer.</div>
+      </div>`;
+  }
+}
+
+function selOpt(i){ TS.answers[TS.currentQ]=i; renderQ(); }
+function selSA(v){ TS.answers[TS.currentQ]=v; }
+function prevQ(){ if(TS.currentQ>0){TS.currentQ--;renderQ();} }
+function nextQ(){ if(TS.currentQ<TS.questions.length-1){TS.currentQ++;renderQ();} }
+function skipQ(){ TS.answers[TS.currentQ]=null; nextQ(); }
+
+function submitTest(){
+  clearInterval(TI);
+  const {questions,answers,sub,paperNum,diff}=TS;
+  let correct=0,wrong=0,skipped=0,saAttempted=0;
+
+  questions.forEach((q,i)=>{
+    if(q.type==='mcq'){
+      if(answers[i]===null||answers[i]===undefined) skipped++;
+      else if(answers[i]===q.ans) correct++;
+      else wrong++;
+    } else {
+      if(answers[i]&&String(answers[i]).trim().length>5) saAttempted++;
+      else skipped++;
+    }
+  });
+
+  const mcqTotal=40,saTotal=10;
+  const score=Math.round((correct/mcqTotal)*100);
+  const timeTaken=Math.round((Date.now()-TS.startTime)/1000/60);
+
+  // Save
+  const st=curStu();
+  const prog=getProg();
+  if(!prog[st.phone]) prog[st.phone]={};
+  if(!prog[st.phone][sub]) prog[st.phone][sub]={};
+  if(!prog[st.phone][sub][paperNum]) prog[st.phone][sub][paperNum]={};
+  prog[st.phone][sub][paperNum][diff]={completed:true,score,correct,wrong,skipped,saAttempted,timeTaken,date:new Date().toISOString()};
+  saveProg(prog);
+
+  const g=score>=90?'🏆 Outstanding':score>=75?'⭐ Excellent':score>=60?'👍 Good':score>=40?'📖 Keep Practising':'❗ Needs More Work';
+  const gc=score>=75?'var(--green)':score>=50?'var(--gold)':'var(--red)';
+
+  document.getElementById('resCard').innerHTML=`
+    <div style="font-size:12px;color:var(--gray2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">${SUBS[sub].name} · Paper ${paperNum} · Level ${diff}</div>
+    <div class="res-pct">${score}%</div>
+    <div class="res-grade" style="color:${gc}">${g}</div>
+    <div class="res-sub">Time: ${timeTaken} min · ${mcqTotal} MCQ + ${saTotal} Short Answer</div>
+    <div class="res-stats">
+      <div class="rs"><div class="rs-v rc">${correct}</div><div class="rs-l">Correct ✓</div></div>
+      <div class="rs"><div class="rs-v rw">${wrong}</div><div class="rs-l">Wrong ✗</div></div>
+      <div class="rs"><div class="rs-v rk">${skipped}</div><div class="rs-l">Skipped —</div></div>
+    </div>`;
+
+  const expHTML=questions.map((q,i)=>{
+    const ua=answers[i];
+    if(q.type==='mcq'){
+      const isc=ua===q.ans,iss=ua===null||ua===undefined;
+      const bc=iss?'eb-skip':isc?'eb-right':'eb-wrong';
+      const bt=iss?'Skipped':isc?'Correct ✓':'Wrong ✗';
+      return `<div class="exp-card">
+        <span class="exp-badge ${bc}">${bt}</span>
+        <div class="exp-q">${q.question}</div>
+        ${!iss&&!isc?`<div style="font-size:12px;color:var(--red);margin-bottom:6px">Your answer: ${q.options[ua]}</div>`:''}
+        <div class="exp-ans">✓ Correct: ${q.options[q.ans]}</div>
+        <div class="exp-txt">💡 ${q.exp}</div>
+      </div>`;
+    } else {
+      const written=ua&&String(ua).trim().length>5;
+      return `<div class="exp-card">
+        <span class="exp-badge ${written?'eb-right':'eb-skip'}">${written?'Attempted':'Not Attempted'}</span>
+        <div class="exp-q">${q.question}</div>
+        ${written?`<div style="font-size:12px;color:#93c5fd;margin-bottom:6px;border:1px solid rgba(59,130,246,0.2);padding:8px;border-radius:6px">Your answer: ${String(ua).substring(0,150)}${String(ua).length>150?'...':''}</div>`:''}
+        <div class="exp-ans">📝 Model Answer: ${q.model}</div>
+      </div>`;
+    }
+  }).join('');
+  document.getElementById('expArea').innerHTML=expHTML;
+  show('resultScreen');
+}
+
+// ════════════════════════════
+//  ADMIN
+// ════════════════════════════
+function doAdminLogin(){
+  if(document.getElementById('aPass').value===ADMIN_PWD){ renderAdmin(); show('adminScreen'); }
+  else alert2('Incorrect admin password','err');
+}
+function doAdminLogout(){ show('adminLoginScreen'); }
+
+function renderAdmin(filter='all'){
+  const stu=getStu();
+  const prog=getProg();
+  const total=stu.length, active=stu.filter(s=>s.status==='active').length;
+  const pending=stu.filter(s=>s.status==='pending').length, blocked=stu.filter(s=>s.status==='blocked').length;
+
+  document.getElementById('aStats').innerHTML=`
+    <div class="a-stat"><div class="a-val">${total}</div><div class="a-lbl">Total</div></div>
+    <div class="a-stat"><div class="a-val" style="color:var(--green)">${active}</div><div class="a-lbl">Active</div></div>
+    <div class="a-stat"><div class="a-val">₹${active*99}</div><div class="a-lbl">Revenue</div></div>
+    <div class="a-stat"><div class="a-val" style="color:orange">${pending}</div><div class="a-lbl">Pending</div></div>
+    <div class="a-stat"><div class="a-val" style="color:var(--red)">${blocked}</div><div class="a-lbl">Blocked</div></div>
+    <div class="a-stat"><div class="a-val">${total*40}</div><div class="a-lbl">Papers Total</div></div>`;
+
+  const list=filter==='all'?stu:stu.filter(s=>s.status===filter);
+  if(!list.length){ document.getElementById('aList').innerHTML=`<div style="text-align:center;color:var(--gray);padding:40px;font-family:'DM Sans',sans-serif">No students found</div>`; return; }
+
+  const html=list.map(s=>{
+    const sp=prog[s.phone]||{};
+    let dt=0;
+    Object.values(sp).forEach(sub=>Object.values(sub).forEach(p=>DIFFS.forEach(d=>{var pd=p[d];if(pd&&pd.completed)dt++;})));
+    const stag=s.status==='active'?'<span class="stag stag-active">✓ Active</span>':
+               s.status==='pending'?'<span class="stag stag-pend">⏳ Pending</span>':'<span class="stag stag-block">🚫 Blocked</span>';
+    const btns=s.status==='pending'?
+      `<button class="stu-btn sb-verify" onclick="verStu('${s.phone}')">✓ Verify</button>`:
+      s.status==='active'?
+      `<button class="stu-btn sb-block" onclick="blkStu('${s.phone}')">🚫 Block</button>`:
+      `<button class="stu-btn sb-unblock" onclick="ublkStu('${s.phone}')">↺ Unblock</button>`;
+    return `<div class="stu-card">
+      <div class="stu-top"><div class="stu-name">${s.name}</div>${stag}</div>
+      <div class="stu-phone">📞 ${s.phone}</div>
+      <div class="stu-txn">💳 TXN: ${s.txn||'N/A'} &nbsp;|&nbsp; 📅 ${new Date(s.registeredAt).toLocaleDateString('en-IN')}</div>
+      <div class="stu-tags">
+        <span class="stag stag-paid">₹99 Paid</span>
+        ${s.board?`<span class="stag" style="background:rgba(255,255,255,0.05);color:var(--gray2);border:1px solid var(--border2)">${s.board}</span>`:''}
+        ${s.dist?`<span class="stag" style="background:rgba(255,255,255,0.05);color:var(--gray2);border:1px solid var(--border2)">${s.dist}</span>`:''}
+        <span class="stag" style="background:rgba(255,255,255,0.05);color:var(--gray2);border:1px solid var(--border2)">${dt} tests done</span>
+      </div>
+      <div class="stu-btns">
+        ${btns}
+        <button class="stu-btn sb-view" onclick="viewProg('${s.phone}')">📊 Progress</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('aList').innerHTML=html;
+}
+
+function filterA(f,btn){ document.querySelectorAll('.flt-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); renderAdmin(f); }
+
+function verStu(phone){
+  const s=getStu(), i=s.findIndex(x=>x.phone===phone);
+  s[i].status='active'; s[i].activatedAt=new Date().toISOString();
+  saveStu(s); alert2(s[i].name+' verified! ✓','ok'); renderAdmin();
+}
+function blkStu(phone){
+  const s=getStu(), i=s.findIndex(x=>x.phone===phone);
+  s[i].status='blocked'; s[i].blockedAt=new Date().toISOString();
+  saveStu(s); alert2('Blocked','inf'); renderAdmin();
+}
+function ublkStu(phone){
+  const s=getStu(), i=s.findIndex(x=>x.phone===phone);
+  s[i].status='active'; delete s[i].blockedAt;
+  s[i].devices=[s[i].fingerprint];
+  saveStu(s); alert2('Unblocked & device reset ✓','ok'); renderAdmin();
+}
+function viewProg(phone){
+  const s=getStu().find(x=>x.phone===phone);
+  const prog=getProg(), sp=prog[phone]||{};
+  let msg=`Student: ${s.name}\nMobile: ${phone}\nBoard: ${s.board||'N/A'}\n\nProgress:\n`;
+  Object.entries(sp).forEach(([sub,papers])=>{
+    let d=0; Object.values(papers).forEach(p=>DIFFS.forEach(df=>{var pd=p[df];if(pd&&pd.completed)d++;}));
+    msg+=`${(SUBS[sub]&&SUBS[sub].name)||sub}: ${d}/40\n`;
+  });
+  alert(msg);
+}
+
+// Demo data
+function addDemo(){
+  if(getStu().length) return;
+  const demos=[
+    {name:'Rahul Sharma',phone:'9876543210',school:'CM Academy Nashik',board:'Maharashtra SSC',dist:'Nashik',txn:'TXN12345678901',status:'active'},
+    {name:'Priya Patil',phone:'8765432109',school:'St. Marys School',board:'CBSE',dist:'Pune',txn:'TXN98765432109',status:'active'},
+    {name:'Amit Deshmukh',phone:'7654321098',school:'CM Academy Kolhapur',board:'Maharashtra SSC',dist:'Kolhapur',txn:'TXN11223344556',status:'pending'},
+  ];
+  const fp=getFP();
+  const s=demos.map(d=>({id:Date.now().toString(36)+Math.random().toString(36).substr(2,5),
+    ...d, password:genPwd(d.name,d.phone),
+    fingerprint:fp,devices:[fp],
+    registeredAt:new Date(Date.now()-Math.random()*7*24*3600000).toISOString(),
+    activatedAt:d.status==='active'?new Date().toISOString():null,amount:99}));
+  saveStu(s);
+}
+addDemo();
+</script>
+</body>
+</html>

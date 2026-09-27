@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM Academy – TET Test Series 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0D1F3C;
+  --gold: #F5C518;
+  --gold2: #e6b800;
+  --deep: #07152a;
+  --white: #ffffff;
+  --red: #e53935;
+  --green: #2e7d32;
+  --paper1: #1a3a6b;
+  --paper2: #6b1a1a;
+  --correct: #43a047;
+  --wrong: #e53935;
+  --skip: #fb8c00;
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans Devanagari', sans-serif; background: var(--deep); color: var(--white); min-height: 100vh; }
+
+.site-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #1a2f5e 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 14px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.logo-circle {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--gold); display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 18px;
+  color: var(--navy); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(245,197,24,0.3);
+}
+.header-text h1 { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: 1px; }
+.header-text p { font-size: 11px; color: #aab8d8; margin-top: 2px; }
+.header-badge { margin-left: auto; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 11px; padding: 4px 12px; border-radius: 20px; }
+
+#home-screen { padding: 24px 16px; max-width: 900px; margin: 0 auto; }
+.home-banner {
+  background: linear-gradient(135deg, #112244 0%, #1a3a6b 50%, #112244 100%);
+  border: 2px solid var(--gold); border-radius: 16px;
+  padding: 26px 22px; text-align: center; margin-bottom: 24px;
+  position: relative; overflow: hidden;
+}
+.home-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(245,197,24,0.12) 0%, transparent 70%); }
+.home-banner h2 { font-family: 'Rajdhani', sans-serif; font-size: 30px; font-weight: 700; color: var(--gold); letter-spacing: 2px; position: relative; }
+.home-banner .sub { color: #ccd5ea; font-size: 13px; margin-top: 8px; position: relative; }
+.home-banner .tagline { display: inline-block; margin-top: 12px; background: rgba(245,197,24,0.15); border: 1px solid rgba(245,197,24,0.4); color: var(--gold); padding: 5px 16px; border-radius: 20px; font-size: 12px; position: relative; }
+
+.info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+.info-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(245,197,24,0.2); border-radius: var(--radius); padding: 14px; text-align: center; }
+.info-card .num { font-size: 26px; font-weight: 700; color: var(--gold); font-family: 'Rajdhani',sans-serif; }
+.info-card .lbl { font-size: 10px; color: #aab8d8; margin-top: 4px; }
+
+.paper-tabs { display: flex; gap: 0; margin-bottom: 18px; background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 4px; }
+.paper-tab { flex: 1; padding: 11px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.3s; background: transparent; color: #aab8d8; }
+.paper-tab.active-p1 { background: var(--paper1); color: var(--gold); }
+.paper-tab.active-p2 { background: var(--paper2); color: #ffb3b3; }
+
+.papers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+.paper-card { background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.12); border-radius: var(--radius); padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.25s; }
+.paper-card:hover { transform: translateY(-3px); border-color: var(--gold); background: rgba(245,197,24,0.08); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+.paper-card.p1-card { border-top: 3px solid #4a90d9; }
+.paper-card.p2-card { border-top: 3px solid #d94a4a; }
+.paper-card .pnum { font-family: 'Rajdhani', sans-serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+.paper-card .plabel { font-size: 10px; color: #7a8fb0; margin-top: 3px; }
+.paper-card .pqs { font-size: 10px; color: #ccd5ea; margin-top: 5px; }
+.paper-card .lock-icon { font-size: 13px; margin-top: 5px; }
+.paper-card.unlocked .lock-icon { color: var(--correct); }
+.paper-card.locked .lock-icon { color: #7a8fb0; }
+
+.section-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-heading h3 { font-size: 15px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+.section-heading .line { flex: 1; height: 1px; background: rgba(245,197,24,0.2); }
+
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay.open { display: flex; }
+.modal-box { background: linear-gradient(135deg, #112244, #0D1F3C); border: 2px solid var(--gold); border-radius: 16px; padding: 30px 26px; width: 90%; max-width: 360px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.8); animation: popIn 0.3s ease; }
+@keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-box .modal-icon { font-size: 38px; margin-bottom: 10px; }
+.modal-box h3 { color: var(--gold); font-size: 17px; margin-bottom: 4px; }
+.modal-box p { color: #aab8d8; font-size: 12px; margin-bottom: 18px; }
+.modal-box input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(245,197,24,0.4); border-radius: 8px; color: var(--white); font-size: 16px; text-align: center; letter-spacing: 3px; outline: none; font-family: 'Rajdhani', sans-serif; margin-bottom: 12px; }
+.modal-box input:focus { border-color: var(--gold); }
+.modal-box input.err-shake { border-color: var(--red); animation: shake 0.3s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.modal-err { color: var(--red); font-size: 12px; min-height: 16px; margin-bottom: 10px; }
+.btn-enter { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border: none; border-radius: 8px; color: var(--navy); font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'Noto Sans Devanagari', sans-serif; }
+.btn-cancel { width: 100%; padding: 10px; margin-top: 8px; background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #7a8fb0; cursor: pointer; font-size: 12px; }
+.hint-text { font-size: 10px; color: rgba(245,197,24,0.5); margin-top: 10px; }
+
+#test-screen { display: none; min-height: 100vh; }
+.test-topbar { background: var(--navy); border-bottom: 2px solid var(--gold); padding: 10px 16px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 50; }
+.test-title { font-family: 'Rajdhani',sans-serif; font-size: 15px; font-weight: 600; color: var(--gold); }
+.test-paper-badge { padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+.badge-p1 { background: var(--paper1); color: #7bb8ff; border: 1px solid #4a90d9; }
+.badge-p2 { background: var(--paper2); color: #ffb3b3; border: 1px solid #d94a4a; }
+.timer-box { margin-left: auto; background: rgba(0,0,0,0.3); border: 1.5px solid rgba(245,197,24,0.4); border-radius: 8px; padding: 5px 12px; text-align: center; }
+.timer-label { font-size: 9px; color: #7a8fb0; }
+.timer-val { font-family: 'Rajdhani',sans-serif; font-size: 20px; font-weight: 700; color: var(--gold); }
+.timer-val.urgent { color: var(--red); animation: blink 1s infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.test-progress { background: rgba(255,255,255,0.04); padding: 8px 16px; display: flex; gap: 8px; align-items: center; }
+.prog-bar { flex: 1; height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 0.4s; }
+.prog-text { font-size: 11px; color: #7a8fb0; white-space: nowrap; }
+
+.subject-header { background: rgba(255,255,255,0.04); border-left: 4px solid var(--gold); padding: 10px 16px; margin: 16px 16px 10px; border-radius: 0 8px 8px 0; }
+.subject-header h4 { font-size: 14px; color: var(--gold); }
+.subject-header p { font-size: 10px; color: #7a8fb0; margin-top: 2px; }
+
+.question-block { margin: 0 16px 18px; background: rgba(255,255,255,0.03); border: 1.5px solid rgba(255,255,255,0.09); border-radius: var(--radius); padding: 16px; }
+.q-num { font-size: 11px; color: var(--gold); font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.q-num span { background: var(--gold); color: var(--navy); border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+.q-text { font-size: 15px; line-height: 1.7; margin-bottom: 14px; color: #e8edf7; }
+.q-text-en { font-size: 11px; color: #7a8fb0; margin-top: -10px; margin-bottom: 12px; font-style: italic; }
+
+.options-grid { display: grid; gap: 7px; }
+.opt-btn { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 8px; cursor: pointer; text-align: left; color: var(--white); font-family: 'Noto Sans Devanagari', sans-serif; font-size: 13px; line-height: 1.5; transition: all 0.2s; width: 100%; }
+.opt-btn:hover:not(.selected):not(.correct):not(.wrong) { border-color: rgba(245,197,24,0.4); background: rgba(245,197,24,0.06); }
+.opt-key { background: rgba(255,255,255,0.1); border-radius: 4px; padding: 2px 7px; font-weight: 700; font-size: 11px; flex-shrink: 0; margin-top: 1px; font-family: 'Rajdhani', sans-serif; }
+.opt-btn.selected { border-color: var(--gold); background: rgba(245,197,24,0.12); }
+.opt-btn.selected .opt-key { background: var(--gold); color: var(--navy); }
+.opt-btn.correct { border-color: var(--correct); background: rgba(67,160,71,0.15); }
+.opt-btn.correct .opt-key { background: var(--correct); color: white; }
+.opt-btn.wrong { border-color: var(--wrong); background: rgba(229,57,53,0.12); }
+.opt-btn.wrong .opt-key { background: var(--wrong); color: white; }
+
+.explanation-box { margin-top: 10px; padding: 11px 13px; background: rgba(255,255,255,0.04); border-radius: 8px; border-left: 3px solid var(--gold); display: none; }
+.explanation-box.show { display: block; }
+.exp-label { font-size: 10px; color: var(--gold); font-weight: 700; margin-bottom: 5px; }
+.explanation-box p { font-size: 12px; color: #ccd5ea; line-height: 1.6; }
+
+.submit-area { padding: 20px 16px; text-align: center; }
+.btn-submit { padding: 14px 40px; border-radius: 10px; background: linear-gradient(135deg, var(--red), #c62828); border: none; color: white; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'Noto Sans Devanagari', sans-serif; box-shadow: 0 4px 20px rgba(229,57,53,0.4); transition: transform 0.2s; }
+.btn-submit:hover { transform: translateY(-2px); }
+
+.confirm-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 300; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.confirm-modal.open { display: flex; }
+.confirm-box { background: #0D1F3C; border: 2px solid var(--red); border-radius: 16px; padding: 28px; width: 90%; max-width: 360px; text-align: center; }
+.confirm-box h3 { color: var(--red); margin-bottom: 10px; font-size: 17px; }
+.confirm-box p { color: #aab8d8; font-size: 12px; margin-bottom: 18px; line-height: 1.6; }
+.confirm-btns { display: flex; gap: 10px; }
+.btn-confirm-yes { flex: 1; padding: 12px; background: var(--red); border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 13px; }
+.btn-confirm-no { flex: 1; padding: 12px; background: transparent; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 8px; color: #aab8d8; cursor: pointer; font-size: 13px; }
+
+#result-screen { display: none; padding: 20px 16px; max-width: 700px; margin: 0 auto; }
+.result-hero { background: linear-gradient(135deg, #112244, #1a3a6b); border: 2px solid var(--gold); border-radius: 16px; padding: 26px 18px; text-align: center; margin-bottom: 18px; }
+.result-score-ring { width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(var(--gold) var(--pct,0%), rgba(255,255,255,0.1) 0%); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; position: relative; }
+.result-score-ring::before { content: ''; position: absolute; inset: 10px; border-radius: 50%; background: #112244; }
+.score-inner { position: relative; z-index: 1; text-align: center; }
+.score-pct { font-family: 'Rajdhani',sans-serif; font-size: 28px; font-weight: 700; color: var(--gold); }
+.score-label { font-size: 9px; color: #7a8fb0; }
+.result-grade { font-size: 22px; margin-top: 8px; }
+.result-grade-text { font-size: 16px; font-weight: 700; margin-top: 4px; }
+.result-grade-text.pass { color: var(--correct); }
+.result-grade-text.fail { color: var(--wrong); }
+.score-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 14px; }
+.score-stat { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 6px; text-align: center; }
+.score-stat .val { font-family: 'Rajdhani',sans-serif; font-size: 22px; font-weight: 700; }
+.score-stat .val.c { color: var(--correct); }
+.score-stat .val.w { color: var(--wrong); }
+.score-stat .val.s { color: var(--skip); }
+.score-stat .lbl { font-size: 10px; color: #7a8fb0; margin-top: 2px; }
+
+.subj-result-grid { display: grid; gap: 8px; margin-bottom: 18px; }
+.subj-row { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+.subj-icon { font-size: 20px; }
+.subj-info { flex: 1; }
+.subj-name { font-size: 13px; font-weight: 600; }
+.subj-bar-wrap { height: 4px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 5px; overflow: hidden; }
+.subj-bar { height: 100%; border-radius: 3px; background: var(--gold); }
+.subj-marks { font-family: 'Rajdhani',sans-serif; font-size: 15px; font-weight: 700; color: var(--gold); }
+
+.analysis-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.analysis-table th { background: var(--navy); color: var(--gold); padding: 9px 7px; text-align: left; border-bottom: 2px solid rgba(245,197,24,0.3); }
+.analysis-table td { padding: 8px 7px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
+.tag-c { background: rgba(67,160,71,0.15); color: var(--correct); border-radius: 4px; padding: 2px 7px; font-size: 10px; }
+.tag-w { background: rgba(229,57,53,0.12); color: var(--wrong); border-radius: 4px; padding: 2px 7px; font-size: 10px; }
+.tag-s { background: rgba(251,140,0,0.12); color: var(--skip); border-radius: 4px; padding: 2px 7px; font-size: 10px; }
+
+.btn-home-back { display: block; width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border: none; border-radius: 10px; color: var(--navy); font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 18px; margin-bottom: 30px; font-family: 'Noto Sans Devanagari', sans-serif; }
+.watermark-footer { text-align: center; padding: 12px; color: rgba(255,255,255,0.12); font-size: 10px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 8px; }
+
+/* PASSWORD TABLE for admin */
+.pwd-table-section { background: rgba(255,255,255,0.03); border: 1px solid rgba(245,197,24,0.15); border-radius: 12px; padding: 16px; margin-top: 20px; }
+.pwd-table-section h4 { color: var(--gold); font-size: 13px; margin-bottom: 12px; }
+.pwd-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
+.pwd-item { background: rgba(255,255,255,0.04); border-radius: 6px; padding: 6px 10px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+.pwd-item .pn { color: #7a8fb0; }
+.pwd-item .pw { color: var(--gold); font-family: 'Rajdhani',sans-serif; font-size: 12px; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-circle">CM</div>
+  <div class="header-text">
+    <h1>CM ACADEMY</h1>
+    <p>Nashik | Jaisingpur | Kolhapur &nbsp;|&nbsp; 8010634300</p>
+  </div>
+  <div class="header-badge">TET 2025</div>
+</header>
+
+<!-- HOME SCREEN -->
+<div id="home-screen">
+  <div class="home-banner">
+    <h2>📚 TET Test Series 2025</h2>
+    <p class="sub">महाराष्ट्र शिक्षक पात्रता परीक्षा | Maharashtra Teacher Eligibility Test</p>
+    <span class="tagline">Paper I (इयत्ता १–५) | 20 Full-Length Tests | 3000+ प्रश्न</span>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card"><div class="num">40</div><div class="lbl">एकूण Papers<br>Total Papers</div></div>
+    <div class="info-card"><div class="num">150</div><div class="lbl">प्रश्न / Paper<br>Questions</div></div>
+    <div class="info-card"><div class="num">150</div><div class="lbl">गुण / Paper<br>Marks</div></div>
+  </div>
+
+  <div class="paper-tabs">
+    <button class="paper-tab active-p1" id="tab-p1" onclick="switchTab('p1')">📘 Paper I — Class 1 to 5</button>
+    <button class="paper-tab" id="tab-p2" onclick="switchTab('p2')">📗 Paper II — Class 6 to 8</button>
+  </div>
+
+  <div id="p1-section">
+    <div class="section-heading">
+      <h3>📘 Paper I — इयत्ता १ ते ५</h3>
+      <div class="line"></div>
+      <span style="font-size:10px;color:#7a8fb0;">20 Papers • 150 Qs each</span>
+    </div>
+    <div class="papers-grid" id="p1-grid"></div>
+    <div class="pwd-table-section">
+      <h4>🔐 Paper I — Password List (Admin Reference)</h4>
+      <div class="pwd-grid" id="pwd-p1-grid"></div>
+    </div>
+  </div>
+
+  <div id="p2-section" style="display:none;">
+    <div class="section-heading">
+      <h3>📗 Paper II — इयत्ता ६ ते ८</h3>
+      <div class="line"></div>
+      <span style="font-size:10px;color:#7a8fb0;">20 Papers • 150 Qs each</span>
+    </div>
+    <div class="papers-grid" id="p2-grid"></div>
+    <div class="pwd-table-section">
+      <h4>🔐 Paper II — Password List (Admin Reference)</h4>
+      <div class="pwd-grid" id="pwd-p2-grid"></div>
+    </div>
+  </div>
+
+  <div class="watermark-footer">© CM Academy 2025 | सर्व हक्क राखीव | All Rights Reserved | 8010634300</div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay" id="pwd-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🔐</div>
+    <h3 id="modal-paper-title">Paper 1</h3>
+    <p id="modal-paper-info">Password टाका / Enter Password</p>
+    <input type="password" id="pwd-input" placeholder="••••••••" maxlength="20" onkeydown="if(event.key==='Enter')checkPwd()">
+    <div class="modal-err" id="modal-err"></div>
+    <button class="btn-enter" onclick="checkPwd()">🚀 Test सुरू करा / Start Test</button>
+    <button class="btn-cancel" onclick="closeModal()">← रद्द करा / Cancel</button>
+    <div class="hint-text" id="hint-text"></div>
+  </div>
+</div>
+
+<!-- CONFIRM SUBMIT -->
+<div class="confirm-modal" id="confirm-modal">
+  <div class="confirm-box">
+    <h3>⚠️ Test Submit करायची का?</h3>
+    <p id="confirm-msg">Submit केल्यानंतर बदल करता येणार नाही.</p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-yes" onclick="finalSubmit()">✅ होय, Submit</button>
+      <button class="btn-confirm-no" onclick="closeConfirm()">← परत जा</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+  <div class="test-topbar">
+    <div>
+      <div class="test-title" id="test-title">TET Paper I – Test 1</div>
+      <span class="test-paper-badge badge-p1" id="test-badge">Paper I</span>
+    </div>
+    <div class="timer-box">
+      <div class="timer-label">वेळ / Time Left</div>
+      <div class="timer-val" id="timer-display">2:30:00</div>
+    </div>
+  </div>
+  <div class="test-progress">
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-text" id="prog-text">0 / 150</div>
+  </div>
+  <div id="test-body"></div>
+  <div class="submit-area">
+    <button class="btn-submit" onclick="openConfirm()">📤 Test Submit करा</button>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <div class="result-hero">
+    <div class="result-score-ring" id="score-ring">
+      <div class="score-inner">
+        <div class="score-pct" id="score-pct">0%</div>
+        <div class="score-label">Score</div>
+      </div>
+    </div>
+    <div class="result-grade" id="result-grade">🎉</div>
+    <div class="result-grade-text" id="result-grade-text">Excellent!</div>
+    <div class="score-grid">
+      <div class="score-stat"><div class="val c" id="r-correct">0</div><div class="lbl">✅ बरोबर</div></div>
+      <div class="score-stat"><div class="val w" id="r-wrong">0</div><div class="lbl">❌ चुकीचे</div></div>
+      <div class="score-stat"><div class="val s" id="r-skip">0</div><div class="lbl">⬜ सोडलेले</div></div>
+    </div>
+    <div style="margin-top:12px;color:#aab8d8;font-size:12px;" id="r-marks-line"></div>
+  </div>
+
+  <div class="section-heading" style="margin-bottom:10px;">
+    <h3>📊 विषयनिहाय कामगिरी / Subject-wise Score</h3>
+    <div class="line"></div>
+  </div>
+  <div class="subj-result-grid" id="subj-result-grid"></div>
+
+  <div class="section-heading" style="margin-bottom:10px;margin-top:18px;">
+    <h3>📋 उत्तर विश्लेषण / Answer Analysis</h3>
+    <div class="line"></div>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.08);">
+    <table class="analysis-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>विषय</th>
+          <th>प्रश्न</th>
+          <th>तुमचे उत्तर</th>
+          <th>बरोबर उत्तर</th>
+          <th>स्थिती</th>
+          <th>स्पष्टीकरण</th>
+        </tr>
+      </thead>
+      <tbody id="analysis-body"></tbody>
+    </table>
+  </div>
+  <button class="btn-home-back" onclick="goHome()">🏠 मुख्यपानावर जा / Go to Home</button>
+</div>
+
+<script>
+// ====================== PASSWORDS ======================
+const PASSWORDS = {
+  p1: ['TET1P1@cm','TET2P1@cm','TET3P1@cm','TET4P1@cm','TET5P1@cm','TET6P1@cm','TET7P1@cm','TET8P1@cm','TET9P1@cm','TET10P1@cm','TET11P1@cm','TET12P1@cm','TET13P1@cm','TET14P1@cm','TET15P1@cm','TET16P1@cm','TET17P1@cm','TET18P1@cm','TET19P1@cm','TET20P1@cm'],
+  p2: ['TET1P2@cm','TET2P2@cm','TET3P2@cm','TET4P2@cm','TET5P2@cm','TET6P2@cm','TET7P2@cm','TET8P2@cm','TET9P2@cm','TET10P2@cm','TET11P2@cm','TET12P2@cm','TET13P2@cm','TET14P2@cm','TET15P2@cm','TET16P2@cm','TET17P2@cm','TET18P2@cm','TET19P2@cm','TET20P2@cm']
+};
+
+// ====================== SUBJECTS ======================
+const SUBJECTS_P1 = [
+  { name:'बाल विकास व अध्यापनशास्त्र', nameEn:'Child Development & Pedagogy', icon:'🧠', qs:30 },
+  { name:'भाषा I — मराठी', nameEn:'Language I — Marathi', icon:'📖', qs:30 },
+  { name:'भाषा II — इंग्रजी', nameEn:'Language II — English', icon:'🔤', qs:30 },
+  { name:'गणित', nameEn:'Mathematics', icon:'🔢', qs:30 },
+  { name:'पर्यावरण अभ्यास', nameEn:'Environmental Studies', icon:'🌿', qs:30 }
+];
+const SUBJECTS_P2 = [
+  { name:'बाल विकास व अध्यापनशास्त्र', nameEn:'Child Development & Pedagogy', icon:'🧠', qs:30 },
+  { name:'भाषा I — मराठी', nameEn:'Language I — Marathi', icon:'📖', qs:30 },
+  { name:'भाषा II — इंग्रजी', nameEn:'Language II — English', icon:'🔤', qs:30 },
+  { name:'गणित व विज्ञान / सामाजिक शास्त्र', nameEn:'Mathematics & Science / Social Studies', icon:'📐', qs:60 }
+];
+
+// ====================== QUESTION BANKS ======================
+const QS = {
+  cdp: [
+    {mr:'Vygotsky ZPD म्हणजे?',en:'ZPD?',opts:["एकट्याने", "मदतीने करता येते", "शिक्षकाचे", "श्रेणी"],ans:1,exp:'मदतीने साध्य = ZPD.'},
+    {mr:'Piaget Concrete Operational वय?',en:'Age?',opts:["0-2", "2-7", "7-11", "11+"],ans:2,exp:'7-11 वर्षे.'},
+    {mr:'Bloom\'s Taxonomy सर्वोच्च?',en:'Highest?',opts:["Knowledge", "Application", "Evaluation", "Creating"],ans:3,exp:'Creating.'},
+    {mr:'RTE 2009 वयोगट?',en:'Age?',opts:["3-6", "6-14", "5-15", "6-18"],ans:1,exp:'6-14 वर्षे.'},
+    {mr:'Gardner बुद्धिमत्ता किती?',en:'MI?',opts:["5", "6", "7", "8"],ans:3,exp:'8 Multiple Intelligences.'},
+    {mr:'Pavlov प्रयोग?',en:'Pavlov?',opts:["उंदीर", "माकड", "कुत्रा", "मांजर"],ans:2,exp:'कुत्रा.'},
+    {mr:'Formative Assessment?',en:'Formative?',opts:["वार्षिक", "शिकण्यादरम्यान मूल्यमापन", "लेखी", "गुण"],ans:1,exp:'शिकण्यादरम्यान.'},
+    {mr:'NEP 2020 Foundational Stage?',en:'NEP?',opts:["Class 1-5", "Pre-primary to Class 2", "Class 3-5", "Nursery"],ans:1,exp:'3-8 वर्षे.'},
+    {mr:'Scaffolding कोणाचे?',en:'By?',opts:["Piaget", "Vygotsky", "Bruner", "Skinner"],ans:2,exp:'Jerome Bruner.'},
+    {mr:'Dyslexia?',en:'Dyslexia?',opts:["गणित", "वाचन-लेखन", "सुनणे", "बोलणे"],ans:1,exp:'वाचन-लेखन.'},
+    {mr:'Transfer of Learning?',en:'Transfer?',opts:["शाळा बदल", "ज्ञानाचा दुसऱ्यात वापर", "वर्ग", "परीक्षा"],ans:1,exp:'ज्ञान दुसऱ्यात वापरणे.'},
+    {mr:'CCE कधी सुरू?',en:'CCE?',opts:["2005", "2009", "2010", "2015"],ans:1,exp:'2009.'},
+    {mr:'Project Method?',en:'Project?',opts:["Teacher-centred", "Student-centred", "Book", "Exam"],ans:1,exp:'Student-centred.'},
+    {mr:'Critical Period भाषा?',en:'Language?',opts:["0-1", "1-3", "2-7", "7-12"],ans:2,exp:'2-7 वर्षे.'},
+    {mr:'Summative Assessment?',en:'Summative?',opts:["पूर्वी", "दरम्यान", "शिकल्यानंतर", "दररोज"],ans:2,exp:'शिकल्यानंतर.'},
+    {mr:'Preoperational Stage वय?',en:'Age?',opts:["0-2", "2-7", "7-11", "11+"],ans:1,exp:'2-7 वर्षे.'},
+    {mr:'Intrinsic Motivation?',en:'Intrinsic?',opts:["बाह्य बक्षीस", "स्वतःच्या आवडीसाठी", "भीतीने", "पालकांसाठी"],ans:1,exp:'आंतरिक इच्छा.'},
+    {mr:'Maslow Hierarchy सर्वोच्च?',en:'Maslow?',opts:["Safety", "Belongingness", "Esteem", "Self-Actualization"],ans:3,exp:'Self-Actualization.'},
+    {mr:'Operant Conditioning जनक?',en:'OC?',opts:["Pavlov", "Skinner", "Piaget", "Bruner"],ans:1,exp:'B.F. Skinner.'},
+    {mr:'Inclusive Education?',en:'Inclusive?',opts:["हुशार", "दिव्यांग", "सर्व मुले", "गरीब"],ans:2,exp:'सर्व मुले एकत्र.'},
+    {mr:'Constructivism ज्ञान?',en:'Constructivism?',opts:["पुस्तक", "शिक्षक", "अनुभवातून", "रटाळणे"],ans:2,exp:'अनुभवातून.'},
+    {mr:'IEP?',en:'IEP?',opts:["Integrated Edu", "Individualized Education Program", "Inclusive Plan", "Instructional"],ans:1,exp:'Individualized Education Program.'},
+    {mr:'NEP 2020 Middle Stage?',en:'Middle?',opts:["Class 1-5", "Class 3-5", "Class 6-8", "Class 9-12"],ans:2,exp:'Class 6-8.'},
+    {mr:'Diagnostic Assessment?',en:'Diagnostic?',opts:["अंतिम गुण", "अडचणी शोधणे", "बक्षीस", "Rank"],ans:1,exp:'अडचणी शोधणे.'},
+    {mr:'Peer Learning?',en:'Peer?',opts:["शिक्षकाकडून", "समवयस्कांकडून", "पुस्तक", "Online"],ans:1,exp:'एकमेकांकडून.'},
+    {mr:'ADHD?',en:'ADHD?',opts:["दृष्टी", "श्रवण", "एकाग्रता विकार", "स्मरणशक्ती"],ans:2,exp:'Attention Deficit.'},
+    {mr:'Norm-Referenced Test?',en:'NRT?',opts:["स्वतःशी", "इतरांशी तुलना", "मागील वर्षाशी", "अभ्यासक्रम"],ans:1,exp:'इतरांशी तुलना.'},
+    {mr:'Sensorimotor Stage वय?',en:'Age?',opts:["0-2", "2-7", "7-11", "11+"],ans:0,exp:'0-2 वर्षे.'},
+    {mr:'Formal Operational Stage वय?',en:'Age?',opts:["0-2", "2-7", "7-11", "11+"],ans:3,exp:'11+ वर्षे.'},
+    {mr:'Multiple Intelligence Theory?',en:'MI?',opts:["Piaget", "Vygotsky", "Gardner", "Bloom"],ans:2,exp:'Howard Gardner.'},
+    {mr:'Dyscalculia?',en:'Dyscalculia?',opts:["वाचन", "लेखन", "गणित अडचण", "बोलणे"],ans:2,exp:'गणित Learning Disability.'},
+    {mr:'Dysgraphia?',en:'Dysgraphia?',opts:["वाचन", "लेखन अडचण", "गणित", "सुनणे"],ans:1,exp:'लेखन अडचण.'},
+    {mr:'Positive Reinforcement?',en:'PR?',opts:["शिक्षा", "चांगल्यासाठी बक्षीस", "वाईटासाठी", "दुर्लक्ष"],ans:1,exp:'बक्षीस.'},
+    {mr:'Negative Reinforcement?',en:'NR?',opts:["शिक्षा", "अप्रिय काढणे", "बक्षीस", "दुर्लक्ष"],ans:1,exp:'अप्रिय काढणे.'},
+    {mr:'Inquiry-based Learning?',en:'IBL?',opts:["Lecture", "मूल स्वतः शोधते", "Rote", "Direct"],ans:1,exp:'मूल प्रश्न विचारते.'},
+    {mr:'Experiential Learning जनक?',en:'EL?',opts:["Piaget", "David Kolb", "Vygotsky", "Bruner"],ans:1,exp:'David Kolb.'},
+    {mr:'ZPD मध्ये MKO?',en:'MKO?',opts:["फक्त मूल", "More Knowledgeable Other", "फक्त पालक", "पुस्तक"],ans:1,exp:'शिक्षक पालक मित्र.'},
+    {mr:'Accommodation Piaget?',en:'Accommodation?',opts:["जुन्यात", "नवीनसाठी Schema बदल", "विसरणे", "नाही"],ans:1,exp:'Schema बदल.'},
+    {mr:'Assimilation Piaget?',en:'Assimilation?',opts:["नवीन माहिती जुन्यात", "Schema बदल", "नाकारणे", "नवा"],ans:0,exp:'जुन्या Schema मध्ये.'},
+    {mr:'Discovery Learning?',en:'Discovery?',opts:["Piaget", "Vygotsky", "Bruner", "Skinner"],ans:2,exp:'Bruner.'},
+    {mr:'Metacognition?',en:'Metacognition?',opts:["दुसऱ्याच्या", "स्वतःच्या विचारांबद्दल जाणीव", "पुस्तक", "परीक्षा"],ans:1,exp:'स्वतःच्या विचारांबद्दल.'},
+    {mr:'ADHD साठी उपाय?',en:'ADHD strategies?',opts:["जास्त गृहपाठ", "Short Tasks+Breaks", "फक्त शिक्षा", "न बसवणे"],ans:1,exp:'Short Tasks, Breaks.'},
+    {mr:'Gifted IQ?',en:'Gifted?',opts:["70 कमी", "90-110", "110-130", "130+"],ans:3,exp:'IQ 130+.'},
+    {mr:'Portfolio Assessment?',en:'Portfolio?',opts:["फक्त गुण", "कामांचा संग्रह", "शिक्षकाचे", "पालकांचे"],ans:1,exp:'कामांचा संग्रह.'},
+    {mr:'Cooperative Learning?',en:'Cooperative?',opts:["एकट्याने", "गटाने ध्येय", "स्पर्धेने", "पुस्तक"],ans:1,exp:'गटाने मिळून.'},
+    {mr:'Nature vs Nurture: Nature?',en:'Nature?',opts:["पालनपोषण", "अनुवंशिक गुण", "शाळा", "मित्र"],ans:1,exp:'Genetic गुण.'},
+    {mr:'Motivation प्रकार?',en:'Types?',opts:["1", "2", "3", "4"],ans:1,exp:'Intrinsic आणि Extrinsic.'},
+    {mr:'Active Learning?',en:'Active?',opts:["शिक्षक बोलतो", "मूल सक्रिय", "पुस्तक", "Lecture"],ans:1,exp:'मूल सक्रिय.'},
+    {mr:'Remedial Teaching?',en:'Remedial?',opts:["हुशारांसाठी", "अडचणींसाठी", "परीक्षा", "गृहपाठ"],ans:1,exp:'अडचणींसाठी.'},
+    {mr:'Child-Centred Education?',en:'Child-Centred?',opts:["शिक्षक", "पुस्तक", "मूल", "पालक"],ans:2,exp:'मूल केंद्रस्थानी.'},
+    {mr:'Self-Efficacy?',en:'Self-Efficacy?',opts:["स्वतःवरील विश्वास", "दुसऱ्यावर", "ज्ञान", "कौशल्य"],ans:0,exp:'Bandura: स्वतःवरील विश्वास.'},
+    {mr:'Social Learning Theory?',en:'SLT?',opts:["Piaget", "Vygotsky", "Bandura", "Skinner"],ans:2,exp:'Albert Bandura.'},
+    {mr:'VAK म्हणजे?',en:'VAK?',opts:["Very Active Kids", "Visual Auditory Kinesthetic", "Verbal Abstract", "Visual Abstract"],ans:1,exp:'Visual Auditory Kinesthetic.'},
+    {mr:'ASD लक्षण?',en:'ASD?',opts:["गणित", "सामाजिक संवाद", "वाचन", "श्रवण"],ans:1,exp:'सामाजिक संवाद.'},
+    {mr:'Conservation Piaget?',en:'Conservation?',opts:["स्वरूप बदलले तरी प्रमाण सारखे", "नष्ट", "वाढते", "बदलते"],ans:0,exp:'Concrete Operational.'},
+    {mr:'Egocentrism Piaget?',en:'Egocentrism?',opts:["स्वार्थी", "दुसऱ्याच्या दृष्टिकोनातून पाहता न येणे", "नेतृत्व", "आत्मकेंद्री"],ans:1,exp:'Preoperational.'},
+    {mr:'Object Permanence?',en:'Object?',opts:["दिसत नसली तरी अस्तित्व", "नाहीशी", "बदलते", "दिसते"],ans:0,exp:'Sensorimotor.'},
+    {mr:'Moral Development Theory?',en:'Moral?',opts:["Piaget", "Kohlberg", "Vygotsky", "Bandura"],ans:1,exp:'Lawrence Kohlberg.'},
+    {mr:'Attachment Theory?',en:'Attachment?',opts:["Piaget", "Bowlby", "Vygotsky", "Erikson"],ans:1,exp:'John Bowlby.'},
+    {mr:'Growth Mindset?',en:'Growth?',opts:["Dweck", "Piaget", "Gardner", "Bloom"],ans:0,exp:'Carol Dweck.'},
+    {mr:'Fixed Mindset?',en:'Fixed?',opts:["विकसित होते", "अपरिवर्तनीय", "शिकणे शक्य", "प्रयत्नाने"],ans:1,exp:'क्षमता ठरलेली.'},
+    {mr:'UDL?',en:'UDL?',opts:["एकच", "सर्वांसाठी लवचिक", "फक्त दिव्यांग", "Online"],ans:1,exp:'Universal Design for Learning.'},
+    {mr:'IQ सूत्र?',en:'IQ Formula?',opts:["MA/CA×10", "MA/CA×100", "CA/MA×100", "MA×CA"],ans:1,exp:'(MA/CA)×100.'},
+    {mr:'Average IQ?',en:'Average?',opts:["50-70", "70-90", "90-110", "110-130"],ans:2,exp:'90-110.'},
+    {mr:'Intellectual Disability IQ?',en:'ID?',opts:["70 कमी", "90-110", "110-130", "130+"],ans:0,exp:'IQ < 70.'},
+    {mr:'Learning Outcome?',en:'LO?',opts:["परीक्षा", "शिकल्यावर काय करावे", "गृहपाठ", "वेळापत्रक"],ans:1,exp:'शिकल्यानंतर काय करावे.'},
+    {mr:'Hidden Curriculum?',en:'Hidden?',opts:["गुप्त", "अप्रत्यक्ष मूल्ये", "परीक्षा", "पाठ्यपुस्तक"],ans:1,exp:'अप्रत्यक्ष शिकणे.'},
+    {mr:'Andragogy?',en:'Andragogy?',opts:["मुलांचे", "प्रौढांचे शिक्षणशास्त्र", "शिशूंचे", "विशेष"],ans:1,exp:'Knowles: प्रौढ.'},
+    {mr:'Mind Map?',en:'Mind Map?',opts:["परीक्षा", "विचार संघटित", "गृहपाठ", "शिस्त"],ans:1,exp:'विचार दृश्य.'},
+    {mr:'Flipped Classroom?',en:'Flipped?',opts:["घरी शिकणे वर्गात सराव", "वर्गात घरी", "दोन्ही", "Online"],ans:0,exp:'घरी Video वर्गात सराव.'},
+    {mr:'NCF 2005?',en:'NCF?',opts:["Rote", "ज्ञान जीवनाशी", "परीक्षाकेंद्री", "Teacher"],ans:1,exp:'ज्ञान जीवनाशी.'},
+    {mr:'No Detention Policy?',en:'Detention?',opts:["1-5", "1-8", "कधीच", "1-10"],ans:1,exp:'Class 1-8.'},
+    {mr:'Schema Piaget?',en:'Schema?',opts:["पुस्तकाचे", "मानसिक संरचना", "वर्ग", "परीक्षा"],ans:1,exp:'मानसिक संरचना.'},
+    {mr:'Cognitive Development?',en:'Cognitive?',opts:["शारीरिक", "बुद्धी विचारशक्ती", "भावनिक", "सामाजिक"],ans:1,exp:'बुद्धी स्मृती तर्क.'},
+    {mr:'Affective Domain?',en:'Affective?',opts:["ज्ञान", "कौशल्ये", "मूल्ये भावना", "शारीरिक"],ans:2,exp:'मूल्ये दृष्टिकोन.'},
+    {mr:'Psychomotor Domain?',en:'Psychomotor?',opts:["ज्ञान", "भावना", "शारीरिक कौशल्ये", "मूल्ये"],ans:2,exp:'शारीरिक कौशल्ये.'},
+    {mr:'Continuous Assessment?',en:'CA?',opts:["एकाच", "वेळोवेळी feedback", "कमी काम", "जास्त गुण"],ans:1,exp:'वेळोवेळी feedback.'},
+    {mr:'Kohlberg Pre-conventional?',en:'Kohlberg?',opts:["शिक्षा+बक्षीस", "सामाजिक", "सार्वत्रिक", "कायदा"],ans:0,exp:'शिक्षा टाळणे.'},
+    {mr:'Erikson Identity वय?',en:'Identity?',opts:["0-1", "6-12", "12-18", "18-40"],ans:2,exp:'12-18 वर्षे.'},
+    {mr:'Aptitude?',en:'Aptitude?',opts:["सध्याचे ज्ञान", "जन्मजात क्षमता", "अभ्यास", "परीक्षा"],ans:1,exp:'जन्मजात क्षमता.'},
+    {mr:'Criterion-Referenced Test?',en:'CRT?',opts:["इतरांशी", "निकषांशी", "शिक्षकाच्या", "Rank"],ans:1,exp:'निकषांशी.'},
+    {mr:'Jigsaw Method?',en:'Jigsaw?',opts:["एकट्याने", "गट तज्ञ", "Lecture", "Online"],ans:1,exp:'प्रत्येक expert.'},
+    {mr:'Concept Mapping?',en:'CM?',opts:["परीक्षा", "संकल्पनांचे जाळे", "गृहपाठ", "वाचन"],ans:1,exp:'संकल्पना दृश्य.'},
+    {mr:'Curriculum?',en:'Curriculum?',opts:["फक्त पाठ्यपुस्तक", "सर्व शैक्षणिक अनुभव", "परीक्षा", "गृहपाठ"],ans:1,exp:'सर्व शैक्षणिक.'},
+    {mr:'Brainstorming?',en:'Brainstorm?',opts:["एकट्याने", "गटाने कल्पना", "परीक्षा", "गृहपाठ"],ans:1,exp:'गटाने कल्पना.'},
+    {mr:'Role Play?',en:'Role?',opts:["गणित", "सामाजिक कौशल्ये", "भूगोल", "विज्ञान"],ans:1,exp:'सामाजिक.'},
+    {mr:'Differentiated Instruction?',en:'DI?',opts:["सर्वांना एकच", "गरजानुसार बदल", "gifted", "दिव्यांग"],ans:1,exp:'गरजानुसार.'},
+    {mr:'Problem-Based Learning?',en:'PBL?',opts:["उत्तराने", "समस्येने सुरुवात", "पाठाने", "परीक्षेने"],ans:1,exp:'वास्तविक समस्येपासून.'},
+    {mr:'Emotional Intelligence EQ?',en:'EQ?',opts:["IQ जास्त", "भावना ओळखणे व्यवस्थापन", "बुद्धी", "गणित"],ans:1,exp:'भावना ओळखणे.'},
+    {mr:'Learning Pyramid Retention?',en:'Retention?',opts:["Lecture", "वाचणे", "इतरांना शिकवणे", "Video"],ans:2,exp:'90% Teaching Others.'},
+    {mr:'Feedback?',en:'Feedback?',opts:["शिक्षण कमी", "शिक्षण सुधारते", "काहीच नाही", "गोंधळ"],ans:1,exp:'प्रगती कळते.'},
+    {mr:'Mastery Learning?',en:'Mastery?',opts:["एकत्र पुढे", "mastery नंतर पुढे", "वेगाने", "एकट्याने"],ans:1,exp:'Mastery नंतरच.'},
+    {mr:'Self-Regulated Learning?',en:'SRL?',opts:["शिक्षकावर", "स्वतः नियोजन", "रटाळणे", "परीक्षा"],ans:1,exp:'स्वतः ध्येय.'},
+    {mr:'Critical Thinking?',en:'CT?',opts:["नेहमी नाकारणे", "तर्कशुद्ध विश्लेषण", "रटाळणे", "अनुकरण"],ans:1,exp:'तर्क पुरावा.'},
+    {mr:'Equilibration Piaget?',en:'Equilibration?',opts:["Assim+Accomm समतोल", "फक्त Assim.", "फक्त Acc.", "नष्ट"],ans:0,exp:'समतोल.'},
+    {mr:'LAD कोणाचे?',en:'LAD?',opts:["Piaget", "Vygotsky", "Chomsky", "Skinner"],ans:2,exp:'Noam Chomsky.'},
+    {mr:'Play-based Learning?',en:'Play?',opts:["वेळ वाया", "सामाजिक भावनिक विकास", "मनोरंजन", "शारीरिक"],ans:1,exp:'सर्वांगीण विकास.'},
+    {mr:'Seriation Piaget?',en:'Seriation?',opts:["वर्गीकरण", "क्रमाने लावणे", "संख्या", "रंग"],ans:1,exp:'क्रमाने लावणे.'},
+    {mr:'Thematic Teaching?',en:'Thematic?',opts:["एका थीमभोवती सर्व", "एक विषय", "परीक्षा", "Rote"],ans:0,exp:'थीमभोवती.'},
+    {mr:'Survey Method?',en:'Survey?',opts:["एकाचा", "मोठ्या गटाची माहिती", "प्रयोग", "निरीक्षण"],ans:1,exp:'मोठ्या गटाकडून.'},
+    {mr:'Observation Method?',en:'Observation?',opts:["जलद", "नैसर्गिक वर्तन", "कमी वेळ", "सोपे"],ans:1,exp:'नैसर्गिक वर्तन.'},
+    {mr:'Case Study?',en:'Case Study?',opts:["मोठ्या गटाचा", "एकाचा सखोल", "परीक्षा", "गृहपाठ"],ans:1,exp:'सखोल अभ्यास.'},
+    {mr:'Educational Psychology?',en:'Edu Psy?',opts:["इमारत", "शिकवणे सुधारणे", "वेतन", "वेळापत्रक"],ans:1,exp:'शिकवणे सुधारणे.'},
+    {mr:'Portfolio advantage?',en:'Portfolio?',opts:["एकाच परीक्षेत", "दीर्घकालीन प्रगती", "कमी वेळ", "गुण"],ans:1,exp:'दीर्घकालीन.'},
+    {mr:'S-R Theory?',en:'SR?',opts:["Piaget", "Watson-Skinner", "Bruner", "Bandura"],ans:1,exp:'Behaviorism.'},
+    {mr:'Attention Span?',en:'Span?',opts:["1-2 मिनिटे", "5-20 मिनिटे", "1 तास", "2 तास"],ans:1,exp:'5-20 मिनिटे.'},
+    {mr:'Validity?',en:'Validity?',opts:["सातत्यपूर्ण", "जे मोजायचे ते", "सोपे", "जलद"],ans:1,exp:'योग्य measurement.'},
+    {mr:'Reliability?',en:'Reliability?',opts:["सातत्यपूर्ण", "योग्य", "सोपे", "जलद"],ans:0,exp:'Consistent results.'},
+    {mr:'Teacher as Facilitator?',en:'Facilitator?',opts:["सर्व सांगतो", "मार्गदर्शक", "परीक्षा", "गृहपाठ"],ans:1,exp:'मार्गदर्शक.'},
+    {mr:'Scaffolding बदलते?',en:'Scaffolding?',opts:["वाढत", "कमी होत जाते", "सारखे", "बंद"],ans:1,exp:'सुरुवातीला जास्त नंतर कमी.'},
+    {mr:'Anecdotal Record?',en:'Anecdotal?',opts:["Test scores", "घटनांच्या नोंदी", "Grade", "Homework"],ans:1,exp:'घटनांच्या नोंदी.'},
+    {mr:'Socialization?',en:'Social?',opts:["एकट्याने", "समाजाचे नियम", "परीक्षा", "गृहपाठ"],ans:1,exp:'समाजाचे नियम.'},
+    {mr:'Vygotsky Social Dev?',en:'Vygotsky?',opts:["Individual", "Social interaction", "Biological", "Behaviorism"],ans:1,exp:'सामाजिक संवाद.'},
+    {mr:'Egocentrism Stage?',en:'Stage?',opts:["Sensorimotor", "Preoperational", "Concrete", "Formal"],ans:1,exp:'Preoperational.'},
+    {mr:'Object Permanence Stage?',en:'Stage?',opts:["Sensorimotor", "Preoperational", "Concrete", "Formal"],ans:0,exp:'Sensorimotor.'},
+    {mr:'Positive Punishment?',en:'PP?',opts:["बक्षीस", "अप्रिय जोडणे", "काढणे", "दुर्लक्ष"],ans:1,exp:'अप्रिय जोडणे.'},
+    {mr:'Negative Punishment?',en:'NP?',opts:["बक्षीस", "जोडणे", "आवडती काढणे", "दुर्लक्ष"],ans:2,exp:'आवडती काढणे.'},
+    {mr:'Summative vs Formative?',en:'Diff?',opts:["सारखे", "Summ=शेवटी Form=दरम्यान", "उलट", "सारखे"],ans:1,exp:'Summ=शेवटी Form=दरम्यान.'},
+    {mr:'Gifted Enrichment?',en:'Gifted?',opts:["Remedial", "Enrichment Programs", "Rote", "Detention"],ans:1,exp:'Enrichment.'},
+    {mr:'Integrated Curriculum?',en:'IC?',opts:["एक विषय", "विविध एकत्र", "गणित", "भाषा"],ans:1,exp:'विषय एकत्र.'},
+    {mr:'Parallel Play?',en:'Parallel?',opts:["एकत्र", "बाजूने स्वतंत्र", "एकट्याने", "स्पर धा"],ans:1,exp:'बाजूला पण एकत्र नाही.'},
+    {mr:'Bloom Cognitive Domain levels?',en:'Levels?',opts:["4", "5", "6", "7"],ans:2,exp:'6 levels.'},
+    {mr:'Psychoanalysis Theory?',en:'Psycho?',opts:["Piaget", "Vygotsky", "Freud", "Bandura"],ans:2,exp:'Sigmund Freud.'},
+    {mr:'Extrinsic Motivation?',en:'Extrinsic?',opts:["आंतरिक इच्छा", "बाह्य बक्षीस", "स्वतःसाठी", "आनंदासाठी"],ans:1,exp:'बाह्य बक्षीस.'},
+    {mr:'Holistic Development?',en:'Holistic?',opts:["फक्त बुद्धी", "सर्वांगीण विकास", "फक्त शारीरिक", "फक्त भावनिक"],ans:1,exp:'सर्वांगीण.'},
+    {mr:'Assessment for Learning?',en:'AFL?',opts:["Summative", "Formative", "Diagnostic", "Normative"],ans:1,exp:'Formative.'},
+    {mr:'Meaningful Learning?',en:'Ausubel?',opts:["Rote", "नवीन ज्ञान जुन्याशी जोडणे", "Visual", "Auditory"],ans:1,exp:'जुन्याशी जोडणे.'},
+    {mr:'NCF 2005 Learning?',en:'NCF?',opts:["जास्त अभ्यासक्रम", "कमी पण खोल", "Rote", "Exam"],ans:1,exp:'कमी पण खोल.'},
+    {mr:'Rote Learning?',en:'Rote?',opts:["समजून शिकणे", "न समजता पाठ करणे", "गटाने", "प्रयोगाने"],ans:1,exp:'न समजता पाठ.'},
+    {mr:'Problem Solving Skills?',en:'PS?',opts:["Rote", "Critical thinking+application", "Memorization", "Reading"],ans:1,exp:'Critical thinking.'},
+    {mr:'Differentiated assessment?',en:'DA?',opts:["सर्वांना एकच", "वेगळ्या पद्धती वापरणे", "फक्त लेखी", "फक्त MCQ"],ans:1,exp:'वेगळ्या पद्धती.'},
+    {mr:'Stimulus-Response Theory?',en:'SR Theory?',opts:["Piaget", "Watson+Skinner", "Bruner", "Bandura"],ans:1,exp:'Behaviorism.'},
+    {mr:'Portfolio assessment purpose?',en:'Portfolio purpose?',opts:["Rank ठरवणे", "Progress दाखवणे", "Sort करणे", "Punish करणे"],ans:1,exp:'Progress दाखवणे.'},
+    {mr:'Cognitive dissonance?',en:'Cognitive dissonance?',opts:["Agreement", "Conflicting beliefs causing discomfort", "Peace", "Confusion"],ans:1,exp:'Conflicting beliefs.'},
+    {mr:'Bloom Analysis level?',en:'Analysis level?',opts:["1st", "2nd", "3rd", "4th"],ans:3,exp:'4th level.'},
+    {mr:'Zone of Proximal Development who helps?',en:'ZPD help?',opts:["Nobody", "MKO", "Only books", "Only exam"],ans:1,exp:'More Knowledgeable Other.'},
+    {mr:'Assessment of Learning?',en:'AOL?',opts:["Formative", "Summative", "Diagnostic", "Normative"],ans:1,exp:'Summative.'},
+    {mr:'Maslow 2nd level?',en:'Maslow 2?',opts:["Physiological", "Safety", "Belongingness", "Esteem"],ans:1,exp:'Safety needs.'},
+    {mr:'Child development domain?',en:'Domains?',opts:["1", "2", "3", "4"],ans:2,exp:'3: शारीरिक भावनिक संज्ञानात्मक.'},
+    {mr:'Readiness for learning?',en:'Readiness?',opts:["Age only", "Maturity+Experience", "IQ only", "Teacher decision"],ans:1,exp:'Maturity+Experience.'},
+    {mr:'Language development stage: babbling?',en:'Babbling?',opts:["0-3 months", "4-6 months", "6-10 months", "12+ months"],ans:2,exp:'6-10 months.'},
+    {mr:'Role of play in learning?',en:'Role?',opts:["No role", "Critical for all-round development", "Only physical", "Only social"],ans:1,exp:'सर्वांगीण विकास.'},
+    {mr:'Intrinsic vs Extrinsic: better?',en:'Better?',opts:["Extrinsic", "Intrinsic", "Both equal", "Neither"],ans:1,exp:'Intrinsic for sustained learning.'},
+    {mr:'Types of evaluation?',en:'Types?',opts:["1", "2", "3", "4"],ans:2,exp:'3: Formative Summative Diagnostic.'},
+    {mr:'Peer assessment benefit?',en:'Peer assess?',opts:["Less accurate", "Builds critical thinking+responsibility", "Waste of time", "Only for teachers"],ans:1,exp:'Critical thinking+responsibility.'},
+    {mr:'Inclusive class strategy?',en:'Strategy?',opts:["Same material all", "Multiple means of representation", "Only visual", "Only auditory"],ans:1,exp:'Multiple means.'},
+    {mr:'Giftedness signs?',en:'Gifted signs?',opts:["Low IQ", "High creativity+quick learning", "Average", "Slow"],ans:1,exp:'High creativity+quick learning.'},
+    {mr:'Kohlberg conventional stage?',en:'Conventional?',opts:["Reward/punishment", "Social norms and rules", "Universal principles", "No morality"],ans:1,exp:'Social norms and rules.'},
+    {mr:'NCF stands for?',en:'NCF?',opts:["National Curriculum Framework", "National Content Format", "New Curriculum File", "National Council Format"],ans:0,exp:'National Curriculum Framework.'}
+  ],
+  mar: [
+    {mr:'"आनंद" समानार्थी?',en:'Synonym?',opts:["दुःख", "हर्ष", "राग", "भीती"],ans:1,exp:'हर्ष सुख.'},
+    {mr:'मराठी स्वर किती?',en:'Vowels?',opts:["10", "11", "12", "14"],ans:2,exp:'12 स्वर.'},
+    {mr:'"राम शाळेत गेला" कर्ता?',en:'Subject?',opts:["शाळा", "गेला", "राम", "शाळेत"],ans:2,exp:'राम.'},
+    {mr:'उपसर्ग म्हणजे?',en:'Prefix?',opts:["शेवटी", "आधी येणारा", "स्वतंत्र", "क्रियापद"],ans:1,exp:'शब्दाच्या आधी.'},
+    {mr:'रूपक अलंकार?',en:'Rupak?',opts:["उपमा", "उपमेय-उपमान एकच", "अतिशयोक्ती", "विरोध"],ans:1,exp:'उपमेय हेच उपमान.'},
+    {mr:'"वरण-भात" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:1,exp:'द्वंद्व.'},
+    {mr:'अव्यय म्हणजे?',en:'Avyay?',opts:["रूप बदलणारे", "रूप न बदलणारे", "क्रियापद", "सर्वनाम"],ans:1,exp:'रूप न बदलणारे.'},
+    {mr:'"जल" शब्द प्रकार?',en:'Type?',opts:["तद्भव", "तत्सम", "परकीय", "देशी"],ans:1,exp:'तत्सम.'},
+    {mr:'मराठी व्यंजने?',en:'Consonants?',opts:["25", "30", "36", "40"],ans:2,exp:'36.'},
+    {mr:'"सूर्य" समानार्थी?',en:'Synonym?',opts:["चंद्र", "तारा", "भास्कर", "आकाश"],ans:2,exp:'भास्कर.'},
+    {mr:'प्रत्यय म्हणजे?',en:'Suffix?',opts:["आधी", "शेवटी जोडला जाणारा", "स्वतंत्र", "सर्वनाम"],ans:1,exp:'शब्दाच्या शेवटी.'},
+    {mr:'"महिला" लिंग?',en:'Gender?',opts:["पुल्लिंग", "स्त्रीलिंग", "नपुंसकलिंग", "उभयलिंगी"],ans:1,exp:'स्त्रीलिंग.'},
+    {mr:'"शाळा" अनेकवचन?',en:'Plural?',opts:["शाळे", "शाळा", "शाळ्या", "शाळांनी"],ans:2,exp:'शाळा/शाळ्या.'},
+    {mr:'क्रियापद म्हणजे?',en:'Verb?',opts:["नाम", "सर्वनाम", "क्रियापद", "विशेषण"],ans:2,exp:'क्रिया दर्शवतो.'},
+    {mr:'समास म्हणजे?',en:'Compound?',opts:["दोन शब्दांचा मेळ", "शब्दांची फोड", "वाक्यप्रकार", "संधी"],ans:0,exp:'दोन शब्द मिळून.'},
+    {mr:'संधी म्हणजे?',en:'Sandhi?',opts:["दोन शब्दांचा मेळ", "दोन वर्णांचे मिलन", "वाक्य", "अलंकार"],ans:1,exp:'वर्णांचे मिलन.'},
+    {mr:'उपमा अलंकार?',en:'Upama?',opts:["दोन सारख्याच", "जसा/सारखा वापरून", "अतिशयोक्ती", "विरोध"],ans:1,exp:'जसा सारखा.'},
+    {mr:'अतिशयोक्ती अलंकार?',en:'Exag?',opts:["तुलना", "अतिरंजित वर्णन", "विरोध", "श्लेष"],ans:1,exp:'अतिरंजित.'},
+    {mr:'"चंद्र" विरुद्धार्थी?',en:'Antonym?',opts:["सूर्य", "तारा", "आकाश", "रात्र"],ans:0,exp:'सूर्य.'},
+    {mr:'"सत्य" विरुद्धार्थी?',en:'Antonym?',opts:["खरे", "असत्य", "न्याय", "धर्म"],ans:1,exp:'असत्य.'},
+    {mr:'मराठी लिपी?',en:'Script?',opts:["रोमन", "अरबी", "देवनागरी", "बंगाली"],ans:2,exp:'देवनागरी.'},
+    {mr:'"पाऊस" लिंग?',en:'Gender?',opts:["पुल्लिंग", "स्त्रीलिंग", "नपुंसकलिंग", "उभयलिंगी"],ans:0,exp:'पुल्लिंग.'},
+    {mr:'"पुस्तक" लिंग?',en:'Gender?',opts:["पुल्लिंग", "स्त्रीलिंग", "नपुंसकलिंग", "उभयलिंगी"],ans:2,exp:'नपुंसकलिंग.'},
+    {mr:'तत्पुरुष प्रधान पद?',en:'Main?',opts:["पहिले", "दुसरे", "दोन्ही", "कोणतेच"],ans:1,exp:'उत्तरपद.'},
+    {mr:'बहुव्रीही प्रधान?',en:'Main?',opts:["पहिले", "दुसरे", "दोन्ही", "बाहेरचे"],ans:3,exp:'बाहेरचे.'},
+    {mr:'कर्मधारय समास?',en:'Compound?',opts:["दोन संज्ञा", "विशेषण+संज्ञा", "क्रिया+संज्ञा", "दोन विरुद्ध"],ans:1,exp:'विशेषण+संज्ञा.'},
+    {mr:'"विद्यार्थी" संधी?',en:'Sandhi?',opts:["विद्या+अर्थी", "विद्य+आर्थी", "विद्यार्+थी", "विद्+यार्थी"],ans:0,exp:'विद्या+अर्थी.'},
+    {mr:'"देवालय" संधी?',en:'Sandhi?',opts:["देव+आलय", "दे+वालय", "देवा+लय", "देव+अलय"],ans:0,exp:'देव+आलय.'},
+    {mr:'"राजा" अनेकवचन?',en:'Plural?',opts:["राजे", "राजास", "राजांनी", "राजाचे"],ans:0,exp:'राजे.'},
+    {mr:'"मुलगा" स्त्रीलिंग?',en:'Feminine?',opts:["मुली", "मुलगी", "मुलीण", "मुलांनी"],ans:1,exp:'मुलगी.'},
+    {mr:'"घोडा" स्त्रीलिंग?',en:'Feminine?',opts:["घोडी", "घोडीण", "घोडे", "घोड्या"],ans:0,exp:'घोडी.'},
+    {mr:'"सिंह" स्त्रीलिंग?',en:'Feminine?',opts:["सिंहीण", "सिंही", "सिंहे", "सिंहिणी"],ans:0,exp:'सिंहीण.'},
+    {mr:'"मोर" स्त्रीलिंग?',en:'Feminine?',opts:["मोरी", "मोरीण", "लांडोर", "मोरे"],ans:2,exp:'लांडोर.'},
+    {mr:'"राम खेळतो" काळ?',en:'Tense?',opts:["भूतकाळ", "वर्तमानकाळ", "भविष्यकाळ", "आज्ञार्थ"],ans:1,exp:'वर्तमानकाळ.'},
+    {mr:'"राम खेळला" काळ?',en:'Tense?',opts:["भूतकाळ", "वर्तमानकाळ", "भविष्यकाळ", "संभाव्य"],ans:0,exp:'भूतकाळ.'},
+    {mr:'"राम खेळेल" काळ?',en:'Tense?',opts:["भूतकाळ", "वर्तमानकाळ", "भविष्यकाळ", "आज्ञार्थ"],ans:2,exp:'भविष्यकाळ.'},
+    {mr:'"मी" "तू" "तो" प्रकार?',en:'Type?',opts:["नाम", "सर्वनाम", "क्रियापद", "विशेषण"],ans:1,exp:'सर्वनाम.'},
+    {mr:'विशेषण कशाचे?',en:'Adjective?',opts:["क्रियापद", "सर्वनाम", "नाम", "अव्यय"],ans:2,exp:'नामाचे.'},
+    {mr:'क्रियाविशेषण कशाचे?',en:'Adverb?',opts:["नाम", "क्रियापद", "सर्वनाम", "विशेषण"],ans:1,exp:'क्रियापदाचे.'},
+    {mr:'"सुंदर" शब्दप्रकार?',en:'Type?',opts:["नाम", "सर्वनाम", "विशेषण", "क्रियापद"],ans:2,exp:'विशेषण.'},
+    {mr:'"हळूहळू" शब्दप्रकार?',en:'Type?',opts:["नाम", "क्रियाविशेषण", "विशेषण", "क्रियापद"],ans:1,exp:'क्रियाविशेषण.'},
+    {mr:'श्लेष अलंकार?',en:'Shlesh?',opts:["तुलना", "एकाच शब्दाचे अनेक अर्थ", "अतिशयोक्ती", "विरोध"],ans:1,exp:'अनेक अर्थ.'},
+    {mr:'यमक अलंकार?',en:'Yamak?',opts:["तुलना", "पुनरावृत्ती वेगळ्या अर्थाने", "अतिशयोक्ती", "विरोध"],ans:1,exp:'पुनरावृत्ती.'},
+    {mr:'अनुप्रास अलंकार?',en:'Anupras?',opts:["एकाच वर्णाची पुनरावृत्ती", "तुलना", "विरोध", "अतिशयोक्ती"],ans:0,exp:'एकाच वर्णाची.'},
+    {mr:'"चहा" भाषा?',en:'Language?',opts:["संस्कृत", "अरबी", "चिनी", "फारसी"],ans:2,exp:'चिनी.'},
+    {mr:'"किल्ला" भाषा?',en:'Language?',opts:["संस्कृत", "अरबी", "फारसी", "पोर्तुगीज"],ans:1,exp:'अरबी.'},
+    {mr:'"बटाटा" भाषा?',en:'Language?',opts:["संस्कृत", "अरबी", "पोर्तुगीज", "फारसी"],ans:2,exp:'पोर्तुगीज.'},
+    {mr:'"खिडकी" भाषा?',en:'Language?',opts:["संस्कृत", "फारसी", "अरबी", "पोर्तुगीज"],ans:1,exp:'फारसी.'},
+    {mr:'वाक्याचे भाग?',en:'Parts?',opts:["1", "2", "3", "4"],ans:1,exp:'2: उद्देश विधेय.'},
+    {mr:'विधेय म्हणजे?',en:'Predicate?',opts:["कर्ता", "क्रियापद+इतर", "कर्म", "विशेषण"],ans:1,exp:'उद्देशाबद्दल माहिती.'},
+    {mr:'पूर्ण विराम?',en:'Full stop?',opts:["प्रश्नानंतर", "वाक्य पूर्ण", "उद्गारानंतर", "अपूर्ण"],ans:1,exp:'वाक्य पूर्ण.'},
+    {mr:'प्रश्नचिन्ह?',en:'Q mark?',opts:["विधानानंतर", "प्रश्नानंतर", "उद्गारानंतर", "यादी"],ans:1,exp:'प्रश्नानंतर.'},
+    {mr:'उद्गारचिन्ह?',en:'Excl?',opts:["प्रश्न", "विधान", "तीव्र भावना", "यादी"],ans:2,exp:'तीव्र भावना.'},
+    {mr:'मराठी भाषेचे जनक?',en:'Father?',opts:["ज्ञानेश्वर", "मुकुंदराज", "तुकाराम", "नामदेव"],ans:1,exp:'मुकुंदराज.'},
+    {mr:'ज्ञानेश्वरी भाषा?',en:'Language?',opts:["संस्कृत", "हिंदी", "मराठी", "प्राकृत"],ans:2,exp:'मराठी.'},
+    {mr:'तुकारामांचे साहित्य?',en:'Tukaram?',opts:["कादंबरी", "अभंग", "नाटक", "कविता"],ans:1,exp:'अभंग.'},
+    {mr:'"विपरीत" अर्थ?',en:'Meaning?',opts:["सारखे", "उलट/विरुद्ध", "मोठे", "लहान"],ans:1,exp:'उलट.'},
+    {mr:'"अभय" अर्थ?',en:'Meaning?',opts:["भय", "भयाभाव", "आनंद", "दुःख"],ans:1,exp:'निर्भय.'},
+    {mr:'विभक्ती किती?',en:'Vibhakti?',opts:["6", "7", "8", "9"],ans:2,exp:'8.'},
+    {mr:'"ने नी" विभक्ती?',en:'Vibhakti?',opts:["प्रथमा", "द्वितीया", "तृतीया", "चतुर्थी"],ans:2,exp:'तृतीया.'},
+    {mr:'"ला स" विभक्ती?',en:'Vibhakti?',opts:["प्रथमा", "द्वितीया", "तृतीया", "चतुर्थी"],ans:1,exp:'द्वितीया.'},
+    {mr:'"साठी करता" विभक्ती?',en:'Vibhakti?',opts:["तृतीया", "चतुर्थी", "पंचमी", "षष्ठी"],ans:1,exp:'चतुर्थी.'},
+    {mr:'संधी प्रकार?',en:'Types?',opts:["2", "3", "4", "5"],ans:1,exp:'3: स्वर व्यंजन विसर्ग.'},
+    {mr:'"चालणे" क्रियापद?',en:'Verb?',opts:["सकर्मक", "अकर्मक", "द्विकर्मक", "संयुक्त"],ans:1,exp:'अकर्मक.'},
+    {mr:'"देणे" क्रियापद?',en:'Verb?',opts:["अकर्मक", "सकर्मक", "संयुक्त", "प्रेरणार्थक"],ans:1,exp:'सकर्मक.'},
+    {mr:'नाम म्हणजे?',en:'Noun?',opts:["क्रिया", "व्यक्ती वस्तू स्थान", "वर्णन", "प्रश्न"],ans:1,exp:'व्यक्ती वस्तू स्थान.'},
+    {mr:'सर्वनाम म्हणजे?',en:'Pronoun?',opts:["नामाऐवजी", "क्रिया", "वर्णन", "जोडणारा"],ans:0,exp:'नामाऐवजी.'},
+    {mr:'विरोधाभास?',en:'Paradox?',opts:["तुलना", "विरोधात्मक सत्य", "अतिशयोक्ती", "श्लेष"],ans:1,exp:'परस्परविरुद्ध.'},
+    {mr:'"पेन्सिल" भाषा?',en:'Language?',opts:["फ्रेंच", "इंग्रजी", "अरबी", "जर्मन"],ans:1,exp:'इंग्रजी.'},
+    {mr:'"शाळा" भाषा?',en:'Language?',opts:["संस्कृत शाला", "अरबी", "फारसी", "इंग्रजी"],ans:0,exp:'संस्कृत.'},
+    {mr:'काव्यात छंद?',en:'Meter?',opts:["अर्थ", "लय/ताल", "अलंकार", "शब्द"],ans:1,exp:'लय ताल.'},
+    {mr:'वारकरी संप्रदाय?',en:'Varkari?',opts:["शिव", "विठ्ठल भक्ती", "राम", "देवी"],ans:1,exp:'विठ्ठल.'},
+    {mr:'ओवी प्रकार?',en:'Ovi?',opts:["गद्य", "पद्य", "संधी", "समास"],ans:1,exp:'पद्य.'},
+    {mr:'एकनाथांचे साहित्य?',en:'Eknath?',opts:["अभंग आणि भारुड", "कादंबरी", "नाटक", "निबंध"],ans:0,exp:'अभंग भारुड.'},
+    {mr:'"ज्ञ" अक्षर?',en:'Letter?',opts:["स्वर", "संयुक्त व्यंजन", "उष्म", "अर्धस्वर"],ans:1,exp:'ज्+ञ.'},
+    {mr:'महाप्राण व्यंजन?',en:'Mahapran?',opts:["क ग च", "ख घ छ झ", "अ आ", "म न"],ans:1,exp:'जास्त श्वास.'},
+    {mr:'अल्पप्राण व्यंजन?',en:'Alpapran?',opts:["क ग च ज", "ख घ छ", "अ आ", "म न"],ans:0,exp:'कमी श्वास.'},
+    {mr:'कारक म्हणजे?',en:'Karak?',opts:["अलंकार", "संज्ञा-क्रियापद संबंध", "संधी", "समास"],ans:1,exp:'संबंध.'},
+    {mr:'अनुस्वार?',en:'Anusvaar?',opts:["विसर्ग", "नासिक्य उच्चार", "जोडाक्षर", "स्वर"],ans:1,exp:'नाकातून.'},
+    {mr:'विसर्ग?',en:'Visarg?',opts:["अनुनासिक", "श्वास बाहेर", "जोडाक्षर", "पूर्ण विराम"],ans:1,exp:'श्वास बाहेर.'},
+    {mr:'"आत्मविश्वास" संधी?',en:'Sandhi?',opts:["आत्म+विश्वास", "आ+त्म", "आत्मवि+श्वास", "आत्मविश्व+आस"],ans:0,exp:'आत्म+विश्वास.'},
+    {mr:'"देशभक्ती" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:0,exp:'तत्पुरुष.'},
+    {mr:'"राजपुत्र" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:0,exp:'तत्पुरुष.'},
+    {mr:'"नवरात्र" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "द्विगु", "कर्मधारय"],ans:2,exp:'द्विगु.'},
+    {mr:'"लक्ष्मी-सरस्वती" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:1,exp:'द्वंद्व.'},
+    {mr:'"पीतांबर" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:2,exp:'बहुव्रीही.'},
+    {mr:'"गजानन" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "बहुव्रीही", "कर्मधारय"],ans:2,exp:'बहुव्रीही.'},
+    {mr:'भारुड कोणी लिहिले?',en:'Bharud?',opts:["ज्ञानेश्वर", "नामदेव", "एकनाथ", "तुकाराम"],ans:2,exp:'एकनाथ.'},
+    {mr:'मराठी नामाचे प्रकार?',en:'Types?',opts:["2", "3", "4", "5"],ans:1,exp:'3 प्रकार.'},
+    {mr:'"दगड" प्रकार?',en:'Type?',opts:["विशेषनाम", "सामान्यनाम", "भाववाचकनाम", "द्रव्यवाचकनाम"],ans:1,exp:'सामान्यनाम.'},
+    {mr:'"मुंबई" प्रकार?',en:'Type?',opts:["विशेषनाम", "सामान्यनाम", "भाववाचकनाम", "द्रव्यवाचकनाम"],ans:0,exp:'विशेषनाम.'},
+    {mr:'"आनंद" नाम प्रकार?',en:'Type?',opts:["विशेषनाम", "सामान्यनाम", "भाववाचकनाम", "द्रव्यवाचकनाम"],ans:2,exp:'भाववाचकनाम.'},
+    {mr:'सर्वनामाचे प्रकार?',en:'Types?',opts:["3", "4", "5", "6"],ans:1,exp:'4 प्रकार.'},
+    {mr:'"कोण" सर्वनाम?',en:'Type?',opts:["पुरुषवाचक", "दर्शक", "संबंधी", "प्रश्नार्थी"],ans:3,exp:'प्रश्नार्थी.'},
+    {mr:'"हा" "ती" सर्वनाम?',en:'Type?',opts:["पुरुषवाचक", "दर्शक", "संबंधी", "प्रश्नार्थी"],ans:1,exp:'दर्शक.'},
+    {mr:'विशेषणाचे प्रकार?',en:'Types?',opts:["2", "3", "4", "5"],ans:2,exp:'4 प्रकार.'},
+    {mr:'"लाल फूल" "लाल"?',en:'Type?',opts:["संख्यावाचक", "गुणवाचक", "परिमाणवाचक", "सार्वनामिक"],ans:1,exp:'गुणवाचक.'},
+    {mr:'"पाच मुले" "पाच"?',en:'Type?',opts:["गुणवाचक", "संख्यावाचक", "परिमाणवाचक", "सार्वनामिक"],ans:1,exp:'संख्यावाचक.'},
+    {mr:'"थोडे पाणी" "थोडे"?',en:'Type?',opts:["गुणवाचक", "संख्यावाचक", "परिमाणवाचक", "सार्वनामिक"],ans:2,exp:'परिमाणवाचक.'},
+    {mr:'क्रियापदाचे मुख्य प्रकार?',en:'Types?',opts:["1", "2", "3", "4"],ans:1,exp:'2: सकर्मक अकर्मक.'},
+    {mr:'"उगवणे" क्रियापद?',en:'Verb?',opts:["सकर्मक", "अकर्मक", "संयुक्त", "प्रेरणार्थक"],ans:1,exp:'अकर्मक.'},
+    {mr:'"शिकवणे" क्रियापद?',en:'Verb?',opts:["अकर्मक", "सकर्मक", "संयुक्त", "प्रेरणार्थक"],ans:3,exp:'प्रेरणार्थक.'},
+    {mr:'द्वंद्व समास उदाहरण?',en:'Example?',opts:["राजपुत्र", "वरण-भात", "पीतांबर", "महाराज"],ans:1,exp:'वरण-भात.'},
+    {mr:'मराठी गद्याचा प्रारंभ?',en:'Prose?',opts:["12व्या शतकात", "13व्या", "14व्या", "15व्या"],ans:0,exp:'12-13 व्या शतकात.'},
+    {mr:'तद्भव शब्द?',en:'Tadbhav?',opts:["संस्कृतमधून थेट", "संस्कृतचे बदललेले", "परकीय", "इंग्रजी"],ans:1,exp:'संस्कृतचे बदललेले.'},
+    {mr:'"पाणी" शब्द प्रकार?',en:'Type?',opts:["तत्सम", "तद्भव", "परकीय", "देशी"],ans:1,exp:'तद्भव.'},
+    {mr:'मराठी वर्णमालेत एकूण?',en:'Total?',opts:["48", "52", "56", "60"],ans:1,exp:'52.'},
+    {mr:'वाक्यातील उद्देश?',en:'Subject?',opts:["क्रियापद", "कर्त्याबद्दल", "कर्ता", "कर्म"],ans:2,exp:'कर्ता.'},
+    {mr:'मराठी भाषाकुल?',en:'Family?',opts:["द्रविडी", "Indo-Aryan", "Sino-Tibetan", "Semitic"],ans:1,exp:'Indo-Aryan.'},
+    {mr:'"नम: + कार" संधी?',en:'Sandhi?',opts:["नमस्कार", "नमःकार", "नमकार", "नमाकार"],ans:0,exp:'नमस्कार.'},
+    {mr:'"पंचवटी" समास?',en:'Compound?',opts:["तत्पुरुष", "द्वंद्व", "द्विगु", "कर्मधारय"],ans:2,exp:'द्विगु.'},
+    {mr:'"स्त्री" पुल्लिंग?',en:'Masculine?',opts:["पुरुष", "माणूस", "नर", "वर"],ans:0,exp:'पुरुष.'},
+    {mr:'"आई" पुल्लिंग?',en:'Masculine?',opts:["पिता", "बाप", "वडील", "दोन्ही"],ans:2,exp:'वडील.'},
+    {mr:'कालवाचक क्रियाविशेषण उदाहरण?',en:'Example?',opts:["आज", "तेथे", "हळू", "खूप"],ans:0,exp:'आज.'},
+    {mr:'स्थलवाचक क्रियाविशेषण उदाहरण?',en:'Example?',opts:["आज", "तेथे", "हळू", "खूप"],ans:1,exp:'तेथे.'},
+    {mr:'प्रकारवाचक क्रियाविशेषण उदाहरण?',en:'Example?',opts:["आज", "तेथे", "हळू", "खूप"],ans:2,exp:'हळू.'},
+    {mr:'मराठीत प्रश्न वाक्य ओळखावे कसे?',en:'How to identify?',opts:["प्रश्नचिन्हाने", "पूर्ण विरामाने", "उद्गाराने", "विरामचिन्हाने"],ans:0,exp:'प्रश्नचिन्ह.'},
+    {mr:'भाव वाचक नाम तयार होते कसे?',en:'Formation?',opts:["विशेषण+ता/पण/त्व", "नाम+ता", "क्रियापद+ता", "सर्वनाम+ता"],ans:0,exp:'विशेषण+ता/पण/त्व.'},
+    {mr:'"सुंदरता" हे कोणते नाम?',en:'Type?',opts:["विशेषनाम", "सामान्यनाम", "भाववाचकनाम", "द्रव्यवाचकनाम"],ans:2,exp:'भाववाचकनाम.'},
+    {mr:'"सोने" हे कोणते नाम?',en:'Type?',opts:["विशेषनाम", "सामान्यनाम", "भाववाचकनाम", "द्रव्यवाचकनाम"],ans:3,exp:'द्रव्यवाचकनाम.'},
+    {mr:'प्रेरणार्थक क्रियापद म्हणजे?',en:'Causative?',opts:["स्वतः करणे", "दुसऱ्याला करायला लावणे", "प्रश्न विचारणे", "नकार"],ans:1,exp:'दुसऱ्याला करायला लावणे.'},
+    {mr:'जोडशब्द म्हणजे?',en:'Jodakshar?',opts:["दोन वेगळे शब्द", "दोन सारखे अर्थाचे शब्द", "विशेषण", "नाम"],ans:1,exp:'दोन सारखे अर्थाचे शब्द.'},
+    {mr:'मराठीत "ळ" कोणत्या प्रकारचे?',en:'"ळ" type?',opts:["स्पर्शव्यंजन", "उष्मव्यंजन", "अर्धस्वर", "पार्श्विक"],ans:3,exp:'पार्श्विक.'}
+  ],
+  eng: [
+    {mr:'Plural "Child"?',en:'Plural?',opts:["Childs", "Childes", "Children", "Childrens"],ans:2,exp:'Children.'},
+    {mr:'Adjective in "tall boy"?',en:'Adj?',opts:["boy", "won", "tall", "race"],ans:2,exp:'Tall.'},
+    {mr:'Tense "has been reading"?',en:'Tense?',opts:["Simple Present", "Present Perfect", "Present Perfect Continuous", "Past Continuous"],ans:2,exp:'Present Perfect Continuous.'},
+    {mr:'Passive "She writes a letter"?',en:'Passive?',opts:["A letter is written by her", "was written", "has been written", "is being written"],ans:0,exp:'Is written by her.'},
+    {mr:'Synonym "Brave"?',en:'Syn?',opts:["Coward", "Fearful", "Courageous", "Timid"],ans:2,exp:'Courageous.'},
+    {mr:'"She _____ to school every day"?',en:'Fill?',opts:["go", "goes", "going", "gone"],ans:1,exp:'Goes.'},
+    {mr:'Antonym "Ancient"?',en:'Ant?',opts:["Old", "Modern", "Historical", "Vintage"],ans:1,exp:'Modern.'},
+    {mr:'"___ honest girl"?',en:'Article?',opts:["a", "an", "the", "no"],ans:1,exp:'An.'},
+    {mr:'"What a beautiful sunset!" type?',en:'Type?',opts:["Declarative", "Interrogative", "Imperative", "Exclamatory"],ans:3,exp:'Exclamatory.'},
+    {mr:'Correct spelling Accommodate?',en:'Spell?',opts:["Accomodate", "Accommodate", "Acommodate", "Acomodate"],ans:1,exp:'Accommodate.'},
+    {mr:'"Tired _____ waiting"?',en:'Prep?',opts:["for", "with", "of", "from"],ans:2,exp:'Of.'},
+    {mr:'Compound sentence?',en:'Compound?',opts:["She sings.", "She sings and dances.", "She who sings.", "Singing is fun."],ans:1,exp:'Two clauses + and.'},
+    {mr:'Benevolent meaning?',en:'Meaning?',opts:["Cruel", "Kind and generous", "Angry", "Lazy"],ans:1,exp:'Kind generous.'},
+    {mr:'"Neither nor _____ coming"?',en:'Verb?',opts:["are", "is", "were", "have"],ans:1,exp:'Is.'},
+    {mr:'Simile?',en:'Simile?',opts:["Direct comparison", "like or as", "Human qualities", "Exaggeration"],ans:1,exp:'Like or as.'},
+    {mr:'Antonym "Accept"?',en:'Ant?',opts:["Receive", "Reject", "Give", "Allow"],ans:1,exp:'Reject.'},
+    {mr:'Plural "Ox"?',en:'Plural?',opts:["Oxs", "Oxes", "Oxen", "Oxens"],ans:2,exp:'Oxen.'},
+    {mr:'Plural "Tooth"?',en:'Plural?',opts:["Tooths", "Toothes", "Teeth", "Teeths"],ans:2,exp:'Teeth.'},
+    {mr:'Plural "Mouse"?',en:'Plural?',opts:["Mouses", "Mousies", "Mice", "Micies"],ans:2,exp:'Mice.'},
+    {mr:'Plural "Leaf"?',en:'Plural?',opts:["Leafs", "Leafes", "Leaves", "Leafves"],ans:2,exp:'Leaves.'},
+    {mr:'"He _____ to school yesterday"?',en:'Past?',opts:["go", "goes", "went", "gone"],ans:2,exp:'Went.'},
+    {mr:'"I _____ already" present perfect?',en:'Fill?',opts:["eat", "ate", "have eaten", "had eaten"],ans:2,exp:'Have eaten.'},
+    {mr:'"By the time arrived she _____"?',en:'Fill?',opts:["left", "has left", "had left", "leaves"],ans:2,exp:'Had left.'},
+    {mr:'Passive "They are building a bridge"?',en:'Passive?',opts:["is built", "is being built by them", "was built", "has been built"],ans:1,exp:'Is being built.'},
+    {mr:'Ephemeral meaning?',en:'Meaning?',opts:["Eternal", "Short-lived", "Strong", "Beautiful"],ans:1,exp:'Short-lived.'},
+    {mr:'Prolific meaning?',en:'Meaning?',opts:["Lazy", "Producing much output", "Silent", "Strict"],ans:1,exp:'Producing much.'},
+    {mr:'"I wish I _____ rich"?',en:'Fill?',opts:["am", "was", "were", "be"],ans:2,exp:'Were.'},
+    {mr:'Metaphor?',en:'Metaphor?',opts:["like/as comparison", "Direct comparison without like/as", "Exaggeration", "Repetition"],ans:1,exp:'Direct comparison.'},
+    {mr:'"good _____ mathematics"?',en:'Prep?',opts:["in", "at", "on", "for"],ans:1,exp:'At.'},
+    {mr:'"interested _____ music"?',en:'Prep?',opts:["in", "at", "on", "for"],ans:0,exp:'In.'},
+    {mr:'Synonym "Enigmatic"?',en:'Syn?',opts:["Clear", "Mysterious", "Loud", "Simple"],ans:1,exp:'Mysterious.'},
+    {mr:'Antonym "Verbose"?',en:'Ant?',opts:["Talkative", "Quiet", "Concise", "Loud"],ans:2,exp:'Concise.'},
+    {mr:'"She _____ this book in 2020"?',en:'Tense?',opts:["writes", "wrote", "has written", "is writing"],ans:1,exp:'Wrote.'},
+    {mr:'"I am happy" reported speech?',en:'Reported?',opts:["he is", "he was", "he were", "he has been"],ans:1,exp:'He was.'},
+    {mr:'"I will come" reported speech?',en:'Reported?',opts:["she will", "she would", "she shall", "she should"],ans:1,exp:'She would.'},
+    {mr:'"Would you please _____ quiet"?',en:'Fill?',opts:["be", "are", "were", "been"],ans:0,exp:'Be.'},
+    {mr:'Elder or Older for age?',en:'Which?',opts:["He is elder than me", "He is older than me", "Both correct", "Neither"],ans:1,exp:'Older.'},
+    {mr:'Loquacious meaning?',en:'Meaning?',opts:["Silent", "Very talkative", "Intelligent", "Brave"],ans:1,exp:'Very talkative.'},
+    {mr:'"She ran _____ she could"?',en:'Fill?',opts:["as fast as", "more fast than", "faster that", "most fast"],ans:0,exp:'As fast as.'},
+    {mr:'Noun in "Honesty is the best policy"?',en:'Noun?',opts:["is", "the", "Honesty", "best"],ans:2,exp:'Honesty.'},
+    {mr:'"Although" is?',en:'Conjunction?',opts:["Addition", "Contrast", "Reason", "Result"],ans:1,exp:'Contrast.'},
+    {mr:'Use since or for: since 2019?',en:'Since/for?',opts:["since", "for", "from", "during"],ans:0,exp:'Since.'},
+    {mr:'Use since or for: for 3 hours?',en:'Since/for?',opts:["since", "for", "from", "during"],ans:1,exp:'For.'},
+    {mr:'"Myself" pronoun type?',en:'Type?',opts:["Personal", "Reflexive", "Relative", "Demonstrative"],ans:1,exp:'Reflexive.'},
+    {mr:'"book that I read" that is?',en:'Type?',opts:["Personal", "Relative pronoun", "Demonstrative", "Conjunction"],ans:1,exp:'Relative pronoun.'},
+    {mr:'"This" "That" are?',en:'Type?',opts:["Personal", "Reflexive", "Demonstrative", "Relative"],ans:2,exp:'Demonstrative.'},
+    {mr:'"Wow! What a shot!" interjection?',en:'Inter?',opts:["What", "shot", "Wow", "a"],ans:2,exp:'Wow.'},
+    {mr:'Altruistic meaning?',en:'Meaning?',opts:["Selfish", "Caring for others welfare", "Greedy", "Lazy"],ans:1,exp:'Caring for others.'},
+    {mr:'Gerund in "Swimming is fun"?',en:'Gerund?',opts:["Swimming", "is", "fun", "none"],ans:0,exp:'Swimming.'},
+    {mr:'"To swim" in "I love to swim" is?',en:'Type?',opts:["Gerund", "Infinitive", "Participle", "Preposition"],ans:1,exp:'Infinitive.'},
+    {mr:'Past Participle "Break"?',en:'PP?',opts:["Breaked", "Broke", "Broken", "Broked"],ans:2,exp:'Broken.'},
+    {mr:'Past Participle "Choose"?',en:'PP?',opts:["Choosed", "Chose", "Chosen", "Chosed"],ans:2,exp:'Chosen.'},
+    {mr:'Past Participle "Fly"?',en:'PP?',opts:["Flied", "Flew", "Flown", "Flowed"],ans:2,exp:'Flown.'},
+    {mr:'Passive "Someone stole my wallet"?',en:'Passive?',opts:["Wallet is stolen", "Wallet was stolen by someone", "Has been stolen", "Had been stolen"],ans:1,exp:'Was stolen.'},
+    {mr:'"Unless you work hard you _____ fail"?',en:'Fill?',opts:["will", "would", "shall", "should"],ans:0,exp:'Will.'},
+    {mr:'"If I were a bird I _____ fly"?',en:'Fill?',opts:["will", "would", "shall", "can"],ans:1,exp:'Would.'},
+    {mr:'Negative prefix "happy"?',en:'Prefix?',opts:["dis", "un", "im", "in"],ans:1,exp:'Unhappy.'},
+    {mr:'Negative prefix "possible"?',en:'Prefix?',opts:["un", "dis", "im", "in"],ans:2,exp:'Impossible.'},
+    {mr:'Suffix make "teach" noun?',en:'Suffix?',opts:["-tion", "-er", "-ment", "-ful"],ans:1,exp:'Teacher.'},
+    {mr:'Suffix make "enjoy" noun?',en:'Suffix?',opts:["-er", "-ment", "-ful", "-tion"],ans:1,exp:'Enjoyment.'},
+    {mr:'"Loudly" in "She spoke loudly" is?',en:'Type?',opts:["Adjective", "Adverb", "Noun", "Pronoun"],ans:1,exp:'Adverb.'},
+    {mr:'Ambiguous meaning?',en:'Meaning?',opts:["Clear", "Having more than one meaning", "Loud", "Direct"],ans:1,exp:'Multiple meanings.'},
+    {mr:'Redundant meaning?',en:'Meaning?',opts:["Essential", "No longer needed", "Important", "New"],ans:1,exp:'No longer needed.'},
+    {mr:'Eloquent meaning?',en:'Meaning?',opts:["Silent", "Fluent persuasive speaker", "Confused", "Lazy"],ans:1,exp:'Fluent speaker.'},
+    {mr:'Diligent meaning?',en:'Meaning?',opts:["Lazy", "Hardworking and careful", "Careless", "Proud"],ans:1,exp:'Hardworking.'},
+    {mr:'Synonym "Abundant"?',en:'Syn?',opts:["Scarce", "Plentiful", "Empty", "Rare"],ans:1,exp:'Plentiful.'},
+    {mr:'Antonym "Transparent"?',en:'Ant?',opts:["Clear", "Obvious", "Opaque", "Visible"],ans:2,exp:'Opaque.'},
+    {mr:'Antonym "Temporary"?',en:'Ant?',opts:["Brief", "Short", "Permanent", "Recent"],ans:2,exp:'Permanent.'},
+    {mr:'Conjunction in "poor but honest"?',en:'Conj?',opts:["poor", "but", "He", "honest"],ans:1,exp:'But.'},
+    {mr:'Adverb in "She works very hard"?',en:'Adv?',opts:["She", "works", "very", "hard"],ans:2,exp:'Very.'},
+    {mr:'"_____ he was tired he continued"?',en:'Fill?',opts:["Because", "Although", "So", "Therefore"],ans:1,exp:'Although.'},
+    {mr:'"as tall _____ her mother"?',en:'Fill?',opts:["than", "as", "like", "of"],ans:1,exp:'As.'},
+    {mr:'"taller _____ his brother"?',en:'Fill?',opts:["as", "like", "than", "from"],ans:2,exp:'Than.'},
+    {mr:'Garrulous meaning?',en:'Meaning?',opts:["Silent", "Excessively talkative", "Brave", "Intelligent"],ans:1,exp:'Excessively talkative.'},
+    {mr:'"Each of the boys _____ come"?',en:'Verb?',opts:["have", "has", "are", "were"],ans:1,exp:'Has.'},
+    {mr:'"One of the students _____ absent"?',en:'Verb?',opts:["are", "were", "is", "have"],ans:2,exp:'Is.'},
+    {mr:'Oxymoron?',en:'Oxymoron?',opts:["Exaggeration", "Two contradictory terms together", "Comparison", "Repetition"],ans:1,exp:'Contradictory terms.'},
+    {mr:'"The news _____ shocking"?',en:'Verb?',opts:["are", "were", "is", "have been"],ans:2,exp:'Is.'},
+    {mr:'Plural "Goose"?',en:'Plural?',opts:["Gooses", "Geese", "Goosies", "Goosen"],ans:1,exp:'Geese.'},
+    {mr:'Plural "Criterion"?',en:'Plural?',opts:["Criterions", "Criterias", "Criteria", "Criteriones"],ans:2,exp:'Criteria.'},
+    {mr:'Plural "Phenomenon"?',en:'Plural?',opts:["Phenomenons", "Phenomenas", "Phenoma", "Phenomena"],ans:3,exp:'Phenomena.'},
+    {mr:'Passive "The cat ate the mouse"?',en:'Passive?',opts:["Mouse is eaten", "Mouse was eaten by the cat", "Has been eaten", "Had been eaten"],ans:1,exp:'Was eaten.'},
+    {mr:'"He _____ know" correct negative?',en:'Fill?',opts:["don't", "doesn't", "isn't", "aren't"],ans:1,exp:'Doesn\'t.'},
+    {mr:'"She seems tired" verb type?',en:'Verb?',opts:["Action", "Linking verb", "Auxiliary", "Modal"],ans:1,exp:'Linking verb.'},
+    {mr:'Pragmatic meaning?',en:'Meaning?',opts:["Idealistic", "Practical", "Emotional", "Creative"],ans:1,exp:'Practical.'},
+    {mr:'Meticulous meaning?',en:'Meaning?',opts:["Careless", "Very careful and precise", "Lazy", "Brave"],ans:1,exp:'Very careful.'},
+    {mr:'Antonym "Gregarious"?',en:'Ant?',opts:["Social", "Outgoing", "Reclusive", "Friendly"],ans:2,exp:'Reclusive.'},
+    {mr:'Synonym "Obstinate"?',en:'Syn?',opts:["Flexible", "Stubborn", "Gentle", "Agreeable"],ans:1,exp:'Stubborn.'},
+    {mr:'Correct sentence?',en:'Which?',opts:["She doesn't like tea", "She don't like tea", "She doesn't likes", "She not like tea"],ans:0,exp:'She doesn\'t like tea.'},
+    {mr:'"Despite _____ tired she worked"?',en:'Fill?',opts:["to be", "being", "been", "be"],ans:1,exp:'Being.'},
+    {mr:'Tenacious meaning?',en:'Meaning?',opts:["Weak", "Holding firmly persistent", "Lazy", "Coward"],ans:1,exp:'Persistent.'},
+    {mr:'Candid meaning?',en:'Meaning?',opts:["Deceptive", "Honest and straightforward", "Reserved", "Indirect"],ans:1,exp:'Honest.'},
+    {mr:'Antonym "Frugal"?',en:'Ant?',opts:["Economical", "Thrifty", "Extravagant", "Careful"],ans:2,exp:'Extravagant.'},
+    {mr:'Synonym "Fortitude"?',en:'Syn?',opts:["Weakness", "Cowardice", "Courage", "Fear"],ans:2,exp:'Courage.'},
+    {mr:'"She asked whether he was coming" type?',en:'Type?',opts:["Direct speech", "Indirect speech", "Exclamatory", "Imperative"],ans:1,exp:'Indirect speech.'},
+    {mr:'Verbose meaning?',en:'Meaning?',opts:["Concise", "Using too many words", "Silent", "Clear"],ans:1,exp:'Too many words.'},
+    {mr:'"The jury _____ divided on verdict"?',en:'Verb?',opts:["was", "were", "is", "has"],ans:1,exp:'Were.'},
+    {mr:'Correct plural "Analysis"?',en:'Plural?',opts:["Analysises", "Analysis", "Analyses", "Analyzes"],ans:2,exp:'Analyses.'},
+    {mr:'Antonym "Prolific"?',en:'Ant?',opts:["Productive", "Fertile", "Barren", "Creative"],ans:2,exp:'Barren.'},
+    {mr:'Erroneous meaning?',en:'Meaning?',opts:["Correct", "Wrong or mistaken", "Unclear", "Perfect"],ans:1,exp:'Wrong.'},
+    {mr:'Lucid meaning?',en:'Meaning?',opts:["Confusing", "Clear and easy to understand", "Dark", "Complex"],ans:1,exp:'Clear.'},
+    {mr:'Passive "They will build a new road"?',en:'Passive?',opts:["Road is built", "Road will be built by them", "Road was built", "Road has been built"],ans:1,exp:'Will be built.'},
+    {mr:'Ambivalent meaning?',en:'Meaning?',opts:["Certain", "Having mixed feelings", "Confident", "Clear"],ans:1,exp:'Mixed feelings.'},
+    {mr:'"Had he worked hard he _____ passed"?',en:'Fill?',opts:["will have", "would have", "shall have", "could"],ans:1,exp:'Would have.'},
+    {mr:'Alliteration?',en:'What?',opts:["Rhyme at end", "Same consonant sound at start", "Exaggeration", "Contrast"],ans:1,exp:'Same consonant start.'},
+    {mr:'Indigenous meaning?',en:'Meaning?',opts:["Foreign", "Originating native to a place", "Imported", "Modern"],ans:1,exp:'Native.'},
+    {mr:'Antonym "Lenient"?',en:'Ant?',opts:["Easy", "Kind", "Strict", "Gentle"],ans:2,exp:'Strict.'},
+    {mr:'Synonym "Spurious"?',en:'Syn?',opts:["Genuine", "Real", "Fake", "True"],ans:2,exp:'Fake.'},
+    {mr:'Benign meaning?',en:'Meaning?',opts:["Harmful", "Kind or not harmful", "Strict", "Dangerous"],ans:1,exp:'Kind not harmful.'},
+    {mr:'Past Participle "Write"?',en:'PP?',opts:["Wrote", "Writed", "Written", "Write"],ans:2,exp:'Written.'},
+    {mr:'Past Participle "Begin"?',en:'PP?',opts:["Began", "Begined", "Begun", "Begin"],ans:2,exp:'Begun.'},
+    {mr:'Past Participle "Steal"?',en:'PP?',opts:["Stole", "Stealed", "Stolen", "Steal"],ans:2,exp:'Stolen.'},
+    {mr:'Impeccable meaning?',en:'Meaning?',opts:["Flawed", "Perfect and flawless", "Ordinary", "Damaged"],ans:1,exp:'Perfect.'},
+    {mr:'Antonym "Vague"?',en:'Ant?',opts:["Unclear", "Ambiguous", "Precise", "Fuzzy"],ans:2,exp:'Precise.'},
+    {mr:'Personification?',en:'What?',opts:["like/as", "Human qualities to non-human objects", "Exaggeration", "Sound imitation"],ans:1,exp:'Human qualities.'},
+    {mr:'Onomatopoeia?',en:'What?',opts:["Comparison", "Human qualities", "Word imitating sound", "Exaggeration"],ans:2,exp:'Sound imitation.'},
+    {mr:'Gregarious meaning?',en:'Meaning?',opts:["Solitary", "Sociable fond of company", "Aggressive", "Silent"],ans:1,exp:'Sociable.'},
+    {mr:'Type "Close the door!" ?',en:'Type?',opts:["Declarative", "Interrogative", "Imperative", "Exclamatory"],ans:2,exp:'Imperative.'},
+    {mr:'Type "Where are you going?" ?',en:'Type?',opts:["Declarative", "Interrogative", "Imperative", "Exclamatory"],ans:1,exp:'Interrogative.'},
+    {mr:'Prefix make "appear" negative?',en:'Prefix?',opts:["mis", "dis", "un", "im"],ans:1,exp:'Disappear.'},
+    {mr:'Eloquence meaning?',en:'Meaning?',opts:["Silence", "Fluent expressive speech", "Confusion", "Noise"],ans:1,exp:'Fluent speech.'},
+    {mr:'Reported "Do you like tea"?',en:'Reported?',opts:["that I like tea", "whether I liked tea", "if I like tea", "whether I like tea"],ans:1,exp:'Whether I liked.'},
+    {mr:'Past Participle "Ring"?',en:'PP?',opts:["Ringed", "Rang", "Rung", "Ring"],ans:2,exp:'Rung.'},
+    {mr:'Past Participle "Swim"?',en:'PP?',opts:["Swimed", "Swam", "Swum", "Swim"],ans:2,exp:'Swum.'},
+    {mr:'Past Participle "Sing"?',en:'PP?',opts:["Singed", "Sang", "Sung", "Sing"],ans:2,exp:'Sung.'},
+    {mr:'Antonym "Generous"?',en:'Ant?',opts:["Giving", "Stingy", "Charitable", "Liberal"],ans:1,exp:'Stingy.'},
+    {mr:'Synonym "Serene"?',en:'Syn?',opts:["Troubled", "Agitated", "Calm", "Angry"],ans:2,exp:'Calm.'},
+    {mr:'Antonym "Diligent"?',en:'Ant?',opts:["Hardworking", "Careful", "Lazy", "Precise"],ans:2,exp:'Lazy.'},
+    {mr:'Preposition: "She arrived _____ Monday"?',en:'Prep?',opts:["in", "at", "on", "by"],ans:2,exp:'On.'},
+    {mr:'Preposition: "He has been here _____ morning"?',en:'Prep?',opts:["since", "for", "from", "during"],ans:0,exp:'Since.'}
+  ],
+  math: [
+    {mr:'LCM of 12 and 18?',en:'LCM?',opts:["6", "24", "36", "72"],ans:2,exp:'36.'},
+    {mr:'√144 = ?',en:'Sqrt?',opts:["11", "12", "13", "14"],ans:1,exp:'12.'},
+    {mr:'25% of 200?',en:'25%?',opts:["25", "40", "50", "75"],ans:2,exp:'50.'},
+    {mr:'Perimeter l=8 b=5?',en:'P?',opts:["13cm", "26cm", "40cm", "80cm"],ans:1,exp:'26cm.'},
+    {mr:'3x = 27 x=?',en:'x?',opts:["7", "8", "9", "10"],ans:2,exp:'9.'},
+    {mr:'Area square side=7?',en:'Area?',opts:["28", "42", "49", "56"],ans:2,exp:'49cm².'},
+    {mr:'HCF of 24 and 36?',en:'HCF?',opts:["4", "6", "8", "12"],ans:3,exp:'12.'},
+    {mr:'3/4 as percentage?',en:'%?',opts:["60", "70", "75", "80"],ans:2,exp:'75%.'},
+    {mr:'Average of 10,20,30,40,50?',en:'Avg?',opts:["25", "28", "30", "35"],ans:2,exp:'30.'},
+    {mr:'SI: P=500 R=10% T=2yr?',en:'SI?',opts:["₹50", "₹75", "₹100", "₹150"],ans:2,exp:'₹100.'},
+    {mr:'0.5 × 0.5 = ?',en:'Mul?',opts:["0.025", "0.25", "2.5", "25"],ans:1,exp:'0.25.'},
+    {mr:'π ≈ ?',en:'π?',opts:["3.12", "3.14", "3.41", "3.24"],ans:1,exp:'3.14.'},
+    {mr:'1 km = ? m',en:'km?',opts:["10", "100", "1000", "10000"],ans:2,exp:'1000m.'},
+    {mr:'Divisible by both 3 and 5?',en:'Div?',opts:["25", "30", "35", "40"],ans:1,exp:'30.'},
+    {mr:'240km in 4hr speed?',en:'Speed?',opts:["40", "50", "60", "80"],ans:2,exp:'60km/h.'},
+    {mr:'2³ = ?',en:'Power?',opts:["6", "8", "16", "12"],ans:1,exp:'8.'},
+    {mr:'2⁵ = ?',en:'Power?',opts:["10", "16", "32", "64"],ans:2,exp:'32.'},
+    {mr:'√225 = ?',en:'Sqrt?',opts:["13", "14", "15", "16"],ans:2,exp:'15.'},
+    {mr:'√256 = ?',en:'Sqrt?',opts:["14", "15", "16", "17"],ans:2,exp:'16.'},
+    {mr:'LCM of 6, 8, 12?',en:'LCM?',opts:["24", "36", "48", "96"],ans:0,exp:'24.'},
+    {mr:'HCF of 18 and 27?',en:'HCF?',opts:["3", "6", "9", "18"],ans:2,exp:'9.'},
+    {mr:'20% of 500?',en:'20%?',opts:["50", "75", "100", "150"],ans:2,exp:'100.'},
+    {mr:'15% of 400?',en:'15%?',opts:["40", "50", "60", "70"],ans:2,exp:'60.'},
+    {mr:'Area l=10 b=6?',en:'Area?',opts:["16", "32", "60", "80"],ans:2,exp:'60cm².'},
+    {mr:'Perimeter square side=9?',en:'P?',opts:["18", "27", "36", "81"],ans:2,exp:'36cm.'},
+    {mr:'1/2 + 1/3 = ?',en:'Add?',opts:["2/5", "1/5", "5/6", "2/6"],ans:2,exp:'5/6.'},
+    {mr:'3/4 - 1/8 = ?',en:'Sub?',opts:["1/2", "5/8", "7/8", "3/8"],ans:1,exp:'5/8.'},
+    {mr:'2/3 × 3/4 = ?',en:'Mul?',opts:["1/2", "5/12", "6/12", "1/4"],ans:0,exp:'1/2.'},
+    {mr:'4/5 ÷ 2/5 = ?',en:'Div?',opts:["1", "2", "3", "4"],ans:1,exp:'2.'},
+    {mr:'5x + 3 = 28 x=?',en:'x?',opts:["4", "5", "6", "7"],ans:1,exp:'5.'},
+    {mr:'2x - 7 = 11 x=?',en:'x?',opts:["7", "8", "9", "10"],ans:2,exp:'9.'},
+    {mr:'Triangle angles sum?',en:'Sum?',opts:["90°", "180°", "270°", "360°"],ans:1,exp:'180°.'},
+    {mr:'Right angle = ?',en:'Angle?',opts:["45°", "60°", "90°", "180°"],ans:2,exp:'90°.'},
+    {mr:'Obtuse angle?',en:'Obtuse?',opts:["<90°", "=90°", "90°-180°", "=180°"],ans:2,exp:'90° to 180°.'},
+    {mr:'Acute angle?',en:'Acute?',opts:["<90°", "=90°", ">90°", "=180°"],ans:0,exp:'Less than 90°.'},
+    {mr:'Complementary angles sum?',en:'Comp?',opts:["90°", "180°", "270°", "360°"],ans:0,exp:'90°.'},
+    {mr:'Supplementary angles sum?',en:'Supp?',opts:["90°", "180°", "270°", "360°"],ans:1,exp:'180°.'},
+    {mr:'Circumference r=7 π=22/7?',en:'C?',opts:["22cm", "44cm", "66cm", "88cm"],ans:1,exp:'44cm.'},
+    {mr:'Area circle r=7 π=22/7?',en:'Area?',opts:["77cm²", "154cm²", "308cm²", "44cm²"],ans:1,exp:'154cm².'},
+    {mr:'Volume cube side=3?',en:'Vol?',opts:["9cm³", "18cm³", "27cm³", "81cm³"],ans:2,exp:'27cm³.'},
+    {mr:'Volume l=4 b=3 h=2?',en:'Vol?',opts:["12", "18", "24", "36"],ans:2,exp:'24cm³.'},
+    {mr:'4² + 3² = ?',en:'Sum?',opts:["7", "14", "25", "49"],ans:2,exp:'25.'},
+    {mr:'5² - 4² = ?',en:'Diff?',opts:["1", "3", "7", "9"],ans:3,exp:'9.'},
+    {mr:'Prime factor of 36?',en:'Prime?',opts:["4", "6", "2", "9"],ans:2,exp:'2 and 3.'},
+    {mr:'Prime numbers between 10-20?',en:'Primes?',opts:["11,13", "11,13,17", "11,13,17,19", "13,17,19"],ans:2,exp:'11,13,17,19.'},
+    {mr:'Smallest prime number?',en:'Smallest?',opts:["0", "1", "2", "3"],ans:2,exp:'2.'},
+    {mr:'Is 51 prime?',en:'51?',opts:["Yes", "No 51=3×17", "No 51=7×7", "No 51=2×25"],ans:1,exp:'Composite.'},
+    {mr:'Profit%: CP=100 SP=120?',en:'Profit%?',opts:["10", "15", "20", "25"],ans:2,exp:'20%.'},
+    {mr:'Loss%: CP=200 SP=160?',en:'Loss%?',opts:["10", "15", "20", "25"],ans:2,exp:'20%.'},
+    {mr:'Ratio 2:3 total=50 smaller part?',en:'Part?',opts:["15", "20", "25", "30"],ans:1,exp:'20.'},
+    {mr:'Ratio 3:5 total=80 larger part?',en:'Part?',opts:["30", "40", "50", "60"],ans:2,exp:'50.'},
+    {mr:'Mean of 5,10,15,20,25?',en:'Mean?',opts:["10", "12", "15", "20"],ans:2,exp:'15.'},
+    {mr:'Median of 3,7,2,9,5?',en:'Median?',opts:["3", "5", "7", "9"],ans:1,exp:'5.'},
+    {mr:'Mode of 2,3,3,5,7,3?',en:'Mode?',opts:["2", "3", "5", "7"],ans:1,exp:'3.'},
+    {mr:'D=S×T S=60 T=3?',en:'D?',opts:["20", "120", "180", "240"],ans:2,exp:'180km.'},
+    {mr:'A in 10d B in 15d together?',en:'Days?',opts:["4", "5", "6", "8"],ans:2,exp:'6 days.'},
+    {mr:'CI: P=1000 R=10% T=2yr Amount?',en:'Amount?',opts:["₹1100", "₹1200", "₹1210", "₹1250"],ans:2,exp:'₹1210.'},
+    {mr:'Distance (0,0) to (3,4)?',en:'D?',opts:["3", "4", "5", "7"],ans:2,exp:'5.'},
+    {mr:'Midpoint of (2,4) and (6,8)?',en:'Mid?',opts:["(3,5)", "(4,5)", "(4,6)", "(5,7)"],ans:2,exp:'(4,6).'},
+    {mr:'tan 45° = ?',en:'tan?',opts:["0", "1/√2", "1", "√3"],ans:2,exp:'1.'},
+    {mr:'sin 30° = ?',en:'sin?',opts:["0", "1/2", "√3/2", "1"],ans:1,exp:'1/2.'},
+    {mr:'cos 60° = ?',en:'cos?',opts:["0", "1/2", "√3/2", "1"],ans:1,exp:'1/2.'},
+    {mr:'sin 90° = ?',en:'sin?',opts:["0", "1/2", "√3/2", "1"],ans:3,exp:'1.'},
+    {mr:'cos 0° = ?',en:'cos?',opts:["0", "1/2", "√3/2", "1"],ans:3,exp:'1.'},
+    {mr:'Diagonals in hexagon?',en:'Diag?',opts:["6", "9", "12", "15"],ans:1,exp:'9.'},
+    {mr:'Exterior angle regular hexagon?',en:'Angle?',opts:["45°", "60°", "72°", "90°"],ans:1,exp:'60°.'},
+    {mr:'Interior angles sum pentagon?',en:'Sum?',opts:["360°", "450°", "540°", "720°"],ans:2,exp:'540°.'},
+    {mr:'Interior angles sum hexagon?',en:'Sum?',opts:["540°", "600°", "720°", "900°"],ans:2,exp:'720°.'},
+    {mr:'Hypotenuse: a=5 b=12?',en:'h?',opts:["10", "13", "15", "17"],ans:1,exp:'13.'},
+    {mr:'32 ÷ 0.4 = ?',en:'Div?',opts:["8", "80", "12.8", "128"],ans:1,exp:'80.'},
+    {mr:'0.6 × 0.6 = ?',en:'Mul?',opts:["0.036", "0.36", "3.6", "36"],ans:1,exp:'0.36.'},
+    {mr:'1.5² = ?',en:'Sq?',opts:["1.25", "2.25", "3.25", "4.5"],ans:1,exp:'2.25.'},
+    {mr:'5/8 as decimal?',en:'Dec?',opts:["0.5", "0.625", "0.75", "0.875"],ans:1,exp:'0.625.'},
+    {mr:'7/4 as mixed number?',en:'Mixed?',opts:["1½", "1¾", "2¼", "2½"],ans:1,exp:'1¾.'},
+    {mr:'2½ as improper fraction?',en:'Impr?',opts:["4/2", "5/2", "3/2", "7/2"],ans:1,exp:'5/2.'},
+    {mr:'√(81/16) = ?',en:'Sqrt?',opts:["3/4", "9/4", "9/16", "3/16"],ans:1,exp:'9/4.'},
+    {mr:'Cube of 4?',en:'4³?',opts:["16", "32", "64", "128"],ans:2,exp:'64.'},
+    {mr:'Cube root of 27?',en:'∛27?',opts:["2", "3", "4", "5"],ans:1,exp:'3.'},
+    {mr:'15 is what % of 75?',en:'%?',opts:["10", "15", "20", "25"],ans:2,exp:'20%.'},
+    {mr:'4x + 8 = 24 x=?',en:'x?',opts:["2", "3", "4", "5"],ans:2,exp:'4.'},
+    {mr:'6x - 12 = 18 x=?',en:'x?',opts:["3", "4", "5", "6"],ans:2,exp:'5.'},
+    {mr:'2(x+3) = 14 x=?',en:'x?',opts:["3", "4", "5", "6"],ans:1,exp:'4.'},
+    {mr:'Area triangle b=10 h=6?',en:'Area?',opts:["30", "60", "20", "15"],ans:0,exp:'30cm².'},
+    {mr:'Area parallelogram b=8 h=5?',en:'Area?',opts:["20", "24", "40", "80"],ans:2,exp:'40cm².'},
+    {mr:'Median of 4,6,8,10,12?',en:'Median?',opts:["6", "7", "8", "10"],ans:2,exp:'8.'},
+    {mr:'Range of 3,7,2,9,5?',en:'Range?',opts:["5", "6", "7", "9"],ans:2,exp:'7.'},
+    {mr:'4! = ?',en:'4!?',opts:["12", "18", "24", "36"],ans:2,exp:'24.'},
+    {mr:'⁵C₂ = ?',en:'Comb?',opts:["5", "8", "10", "15"],ans:2,exp:'10.'},
+    {mr:'P(even on die 1-6)?',en:'Prob?',opts:["1/6", "1/3", "1/2", "2/3"],ans:2,exp:'1/2.'},
+    {mr:'P(head on coin)?',en:'Prob?',opts:["1/4", "1/3", "1/2", "2/3"],ans:2,exp:'1/2.'},
+    {mr:'P(prime on die 1-6)?',en:'Prob?',opts:["1/6", "1/3", "1/2", "2/3"],ans:2,exp:'1/2.'},
+    {mr:'SI rate: P=800 SI=120 T=2yr?',en:'Rate?',opts:["5%", "7.5%", "10%", "15%"],ans:1,exp:'7.5%.'},
+    {mr:'72 km/h in m/s?',en:'m/s?',opts:["15", "18", "20", "25"],ans:2,exp:'20 m/s.'},
+    {mr:'27 m/s in km/h?',en:'km/h?',opts:["72", "81", "90", "97.2"],ans:3,exp:'97.2 km/h.'},
+    {mr:'Sum of first 10 natural numbers?',en:'Sum?',opts:["45", "50", "55", "60"],ans:2,exp:'55.'},
+    {mr:'Sum of first 10 odd numbers?',en:'Sum?',opts:["50", "75", "100", "110"],ans:2,exp:'100.'},
+    {mr:'GP: a=2 r=3 4th term?',en:'T₄?',opts:["18", "27", "54", "162"],ans:2,exp:'54.'},
+    {mr:'AP: a=5 d=3 10th term?',en:'T₁₀?',opts:["28", "30", "32", "35"],ans:2,exp:'32.'},
+    {mr:'Perimeter equilateral side=6?',en:'P?',opts:["12", "15", "18", "24"],ans:2,exp:'18cm.'},
+    {mr:'Area equilateral triangle side=4?',en:'Area?',opts:["4√3", "5√3", "6√3", "8√3"],ans:0,exp:'4√3 cm².'},
+    {mr:'Angle in semicircle?',en:'Angle?',opts:["45°", "60°", "90°", "120°"],ans:2,exp:'90° (Thales).'},
+    {mr:'tan 0° = ?',en:'tan?',opts:["0", "1", "undefined", "√3"],ans:0,exp:'0.'},
+    {mr:'sin 60° = ?',en:'sin?',opts:["1/2", "√3/2", "1", "√3"],ans:1,exp:'√3/2.'},
+    {mr:'cos 30° = ?',en:'cos?',opts:["1/2", "√3/2", "1", "√3"],ans:1,exp:'√3/2.'},
+    {mr:'LCM × HCF = ?',en:'LCM×HCF?',opts:["Sum of numbers", "Product of numbers", "Difference", "Average"],ans:1,exp:'Product.'},
+    {mr:'Prime numbers count in 1-50?',en:'Count?',opts:["13", "14", "15", "16"],ans:2,exp:'15.'},
+    {mr:'1+2+3+...+n formula?',en:'Formula?',opts:["n²", "n(n+1)/2", "n(n-1)/2", "n²/2"],ans:1,exp:'n(n+1)/2.'},
+    {mr:'CI formula?',en:'CI?',opts:["P×R×T/100", "P(1+R/100)ᵀ-P", "P+PRT", "P(1-R/100)ᵀ"],ans:1,exp:'P(1+R/100)ᵀ-P.'},
+    {mr:'1 litre = ? ml',en:'1L?',opts:["10", "100", "1000", "10000"],ans:2,exp:'1000 ml.'},
+    {mr:'1 kg = ? g',en:'1kg?',opts:["10", "100", "1000", "10000"],ans:2,exp:'1000 g.'},
+    {mr:'Diagonal of square side=5?',en:'Diag?',opts:["5", "5√2", "5√3", "10"],ans:1,exp:'5√2.'},
+    {mr:'Pythagorean triple: 6,8,??',en:'Third?',opts:["9", "10", "12", "14"],ans:1,exp:'10.'},
+    {mr:'Area of rhombus d₁=6 d₂=8?',en:'Area?',opts:["12", "24", "36", "48"],ans:1,exp:'24 cm².'},
+    {mr:'a:b=2:3 b:c=3:5 a:c=?',en:'Ratio?',opts:["2:5", "4:9", "1:3", "3:5"],ans:0,exp:'2:5.'},
+    {mr:'SI: P=1000 R=5% T=3yr?',en:'SI?',opts:["₹100", "₹125", "₹150", "₹200"],ans:2,exp:'₹150.'},
+    {mr:'Cube root of 64?',en:'∛64?',opts:["2", "3", "4", "5"],ans:2,exp:'4.'},
+    {mr:'Cube root of 125?',en:'∛125?',opts:["3", "4", "5", "6"],ans:2,exp:'5.'},
+    {mr:'1/4 as decimal?',en:'Dec?',opts:["0.1", "0.2", "0.25", "0.4"],ans:2,exp:'0.25.'},
+    {mr:'18 is 30% of?',en:'Total?',opts:["45", "50", "55", "60"],ans:3,exp:'60.'},
+    {mr:'Sum of angles in quadrilateral?',en:'Sum?',opts:["180°", "270°", "360°", "720°"],ans:2,exp:'360°.'},
+    {mr:'5 pencils cost ₹25 8 cost?',en:'Cost?',opts:["₹35", "₹40", "₹45", "₹50"],ans:1,exp:'₹40.'},
+    {mr:'100 ÷ 7 remainder?',en:'Rem?',opts:["1", "2", "3", "4"],ans:1,exp:'2.'},
+    {mr:'Smallest 4-digit number div by 7?',en:'Smallest?',opts:["1001", "1002", "1003", "1007"],ans:0,exp:'1001.'},
+    {mr:'Number of sides in octagon?',en:'Sides?',opts:["6", "7", "8", "9"],ans:2,exp:'8.'},
+    {mr:'Interior angle regular hexagon?',en:'Angle?',opts:["90°", "108°", "120°", "135°"],ans:2,exp:'120°.'}
+  ],
+  evs: [
+    {mr:'महाराष्ट्राची राजधानी?',en:'Capital?',opts:["पुणे", "नागपूर", "मुंबई", "नाशिक"],ans:2,exp:'मुंबई.'},
+    {mr:'Photosynthesis मध्ये कोणता वायू घेतात?',en:'Gas absorbed?',opts:["Oxygen", "CO₂", "Nitrogen", "Hydrogen"],ans:1,exp:'CO₂.'},
+    {mr:'पाण्याचे रासायनिक सूत्र?',en:'Formula?',opts:["CO₂", "H₂O", "O₂", "NaCl"],ans:1,exp:'H₂O.'},
+    {mr:'सूर्यमालेत किती ग्रह?',en:'Planets?',opts:["7", "8", "9", "10"],ans:1,exp:'8.'},
+    {mr:'भारताचा राष्ट्रीय पशू?',en:'Nat animal?',opts:["सिंह", "हत्ती", "वाघ", "घोडा"],ans:2,exp:'बंगाल वाघ.'},
+    {mr:'World Environment Day?',en:'Env Day?',opts:["5 March", "5 June", "5 September", "5 December"],ans:1,exp:'5 June.'},
+    {mr:'भारताचे राष्ट्रीय फूल?',en:'Nat flower?',opts:["गुलाब", "कमळ", "सूर्यफूल", "जास्वंद"],ans:1,exp:'कमळ.'},
+    {mr:'Vitamin D कुठून मिळते?',en:'Vit D source?',opts:["Vitamin A", "Vitamin B", "Vitamin C", "सूर्यप्रकाश"],ans:3,exp:'सूर्यप्रकाश.'},
+    {mr:'मानवी शरीरातील सर्वात मोठा अवयव?',en:'Largest organ?',opts:["फुफ्फुसे", "मेंदू", "त्वचा", "यकृत"],ans:2,exp:'त्वचा.'},
+    {mr:'पृथ्वीवर किती % पाणी?',en:'Water %?',opts:["50%", "61%", "71%", "81%"],ans:2,exp:'71%.'},
+    {mr:'Food Chain मध्ये Producer?',en:'Producer?',opts:["प्राणी", "वनस्पती", "बुरशी", "जीवाणू"],ans:1,exp:'वनस्पती.'},
+    {mr:'महाराष्ट्रातील सर्वात मोठे धरण?',en:'Largest dam?',opts:["कोयना", "जायकवाडी", "उजनी", "भंडारदरा"],ans:1,exp:'जायकवाडी.'},
+    {mr:'वायू प्रदूषणाचे मुख्य कारण?',en:'Air pollution?',opts:["वृक्षतोड", "वाहनांचा धूर", "जलप्रदूषण", "मातीची धूप"],ans:1,exp:'वाहने आणि कारखाने.'},
+    {mr:'ध्वनी प्रसारासाठी माध्यम?',en:'Sound needs?',opts:["निर्वात", "घन/द्रव/वायू", "फक्त वायू", "फक्त घन"],ans:1,exp:'माध्यम लागते.'},
+    {mr:'भारताचे राष्ट्रगीत कोणी लिहिले?',en:'Anthem by?',opts:["गांधी", "टागोर", "बंकिमचंद्र", "नेहरू"],ans:1,exp:'रवींद्रनाथ टागोर.'},
+    {mr:'भारताचे राष्ट्रीय पक्षी?',en:'Nat bird?',opts:["हंस", "गरुड", "मोर", "पोपट"],ans:2,exp:'मोर.'},
+    {mr:'भारताचे राष्ट्रीय खेळ?',en:'Nat game?',opts:["क्रिकेट", "कबड्डी", "हॉकी", "बॅडमिंटन"],ans:2,exp:'हॉकी.'},
+    {mr:'भारताचे राष्ट्रीय वृक्ष?',en:'Nat tree?',opts:["आंबा", "वड", "नीम", "पिंपळ"],ans:1,exp:'वडवृक्ष.'},
+    {mr:'भारताचे राष्ट्रीय फळ?',en:'Nat fruit?',opts:["केळे", "द्राक्षे", "आंबा", "संत्रा"],ans:2,exp:'आंबा.'},
+    {mr:'पृथ्वीचे वातावरण किती थर?',en:'Layers?',opts:["3", "4", "5", "6"],ans:2,exp:'5 थर.'},
+    {mr:'Ozone Layer कोणत्या थरात?',en:'Ozone?',opts:["Troposphere", "Stratosphere", "Mesosphere", "Thermosphere"],ans:1,exp:'Stratosphere.'},
+    {mr:'Greenhouse Effect साठी वायू?',en:'GHG?',opts:["Oxygen", "Nitrogen", "CO₂", "Hydrogen"],ans:2,exp:'CO₂.'},
+    {mr:'भारतातील सर्वात लांब नदी?',en:'Longest river?',opts:["गोदावरी", "यमुना", "गंगा", "सिंधू"],ans:2,exp:'गंगा.'},
+    {mr:'मानवी हृदयाचे किती कक्ष?',en:'Heart chambers?',opts:["2", "3", "4", "5"],ans:2,exp:'4.'},
+    {mr:'मानवी शरीरात किती हाडे?',en:'Bones?',opts:["106", "206", "306", "406"],ans:1,exp:'206.'},
+    {mr:'मानवी रक्ताचे मुख्य गट?',en:'Blood groups?',opts:["2", "3", "4", "6"],ans:2,exp:'4: A,B,AB,O.'},
+    {mr:'Universal Blood Donor?',en:'Donor?',opts:["A", "B", "AB", "O"],ans:3,exp:'O Negative.'},
+    {mr:'Universal Blood Recipient?',en:'Recipient?',opts:["A", "B", "AB", "O"],ans:2,exp:'AB Positive.'},
+    {mr:'मानवी मेंदूचे भाग?',en:'Brain parts?',opts:["2", "3", "4", "5"],ans:1,exp:'3: Cerebrum Cerebellum Brain stem.'},
+    {mr:'प्रकाशाचा वेग?',en:'Speed of light?',opts:["3×10⁶m/s", "3×10⁷m/s", "3×10⁸m/s", "3×10⁹m/s"],ans:2,exp:'3×10⁸m/s.'},
+    {mr:'ध्वनीचा वेग (हवेत)?',en:'Speed of sound?',opts:["33m/s", "330m/s", "3300m/s", "33000m/s"],ans:1,exp:'≈330m/s.'},
+    {mr:'Newton\'s First Law?',en:'Newton 1st?',opts:["Gravitation", "Inertia", "Action-Reaction", "Acceleration"],ans:1,exp:'Law of Inertia.'},
+    {mr:'F=ma — कोणता नियम?',en:'F=ma?',opts:["1st", "2nd", "3rd", "Gravitation"],ans:1,exp:'Newton\'s 2nd Law.'},
+    {mr:'पाण्याचा Boiling Point?',en:'Boiling?',opts:["90°C", "95°C", "100°C", "105°C"],ans:2,exp:'100°C.'},
+    {mr:'पाण्याचा Freezing Point?',en:'Freezing?',opts:["-10°C", "0°C", "10°C", "4°C"],ans:1,exp:'0°C.'},
+    {mr:'DNA पूर्ण नाव?',en:'DNA full form?',opts:["Deoxyribonucleic Acid", "Diribonucleic Acid", "Deoxyribose Acid", "Double Nucleic Acid"],ans:0,exp:'Deoxyribonucleic Acid.'},
+    {mr:'Cell Wall कशाची बनलेली?',en:'Cell Wall?',opts:["Protein", "Cellulose", "Starch", "Fat"],ans:1,exp:'Cellulose.'},
+    {mr:'Mitochondria चे कार्य?',en:'Mito function?',opts:["Protein synthesis", "Energy/ATP production", "Cell division", "Storage"],ans:1,exp:'Power House — ATP.'},
+    {mr:'Chloroplast कोठे असतो?',en:'Chloroplast?',opts:["प्राणी पेशी", "वनस्पती पेशी", "दोन्ही", "जीवाणू"],ans:1,exp:'वनस्पती पेशी.'},
+    {mr:'महाराष्ट्रातील सर्वात उंच शिखर?',en:'Highest peak MH?',opts:["सिंहगड", "कळसुबाई", "हरिश्चंद्रगड", "तोरणा"],ans:1,exp:'कळसुबाई 1646m.'},
+    {mr:'महाराष्ट्रातील सर्वात लांब नदी?',en:'Longest river MH?',opts:["कृष्णा", "भीमा", "गोदावरी", "पंचगंगा"],ans:2,exp:'गोदावरी.'},
+    {mr:'गोदावरी नदी कोठे उगम पावते?',en:'Godavari origin?',opts:["महाबळेश्वर", "त्र्यंबकेश्वर", "भीमाशंकर", "पुणे"],ans:1,exp:'त्र्यंबकेश्वर नाशिक.'},
+    {mr:'कृष्णा नदी उगम?',en:'Krishna origin?',opts:["नाशिक", "त्र्यंबकेश्वर", "महाबळेश्वर", "पुणे"],ans:2,exp:'महाबळेश्वर.'},
+    {mr:'भारताचे क्षेत्रफळ?',en:'India area?',opts:["2.5 million km²", "3.29 million km²", "4 million km²", "5 million km²"],ans:1,exp:'3.29 million km².'},
+    {mr:'भारतात किती राज्ये?',en:'States India?',opts:["27", "28", "29", "36"],ans:1,exp:'28.'},
+    {mr:'Acid Rain कशामुळे होते?',en:'Acid Rain?',opts:["CO₂", "SO₂ and NO₂", "O₃", "CH₄"],ans:1,exp:'SO₂ आणि NO₂.'},
+    {mr:'पाण्याचे pH मूल्य?',en:'pH water?',opts:["5", "6", "7", "8"],ans:2,exp:'7 (neutral).'},
+    {mr:'Acids चे pH?',en:'pH acids?',opts:["7 पेक्षा जास्त", "7 पेक्षा कमी", "7", "14"],ans:1,exp:'pH < 7.'},
+    {mr:'Bases चे pH?',en:'pH bases?',opts:["7 पेक्षा जास्त", "7 पेक्षा कमी", "7", "14+"],ans:0,exp:'pH > 7.'},
+    {mr:'पेट्रोलियम कोणत्या प्रकारचा?',en:'Petroleum?',opts:["Renewable", "Non-renewable", "Nuclear", "Solar"],ans:1,exp:'Non-renewable.'},
+    {mr:'Solar Energy कोणत्या प्रकारची?',en:'Solar?',opts:["Renewable", "Non-renewable", "Nuclear", "Chemical"],ans:0,exp:'Renewable.'},
+    {mr:'Nuclear Energy मध्ये कोणती प्रक्रिया?',en:'Nuclear?',opts:["Combustion", "Fission or Fusion", "Fermentation", "Evaporation"],ans:1,exp:'Fission/Fusion.'},
+    {mr:'भारतातील पहिले अणुऊर्जा केंद्र?',en:'First Nuclear?',opts:["तारापूर", "कैगा", "काकरापार", "नरोरा"],ans:0,exp:'तारापूर 1969.'},
+    {mr:'World Ozone Day?',en:'Ozone Day?',opts:["16 September", "5 June", "22 April", "21 March"],ans:0,exp:'16 September.'},
+    {mr:'Earth Day?',en:'Earth Day?',opts:["5 June", "22 April", "16 September", "21 June"],ans:1,exp:'22 April.'},
+    {mr:'महाराष्ट्राचा राज्य प्राणी?',en:'State animal MH?',opts:["वाघ", "हत्ती", "शेकरू", "अस्वल"],ans:2,exp:'शेकरू.'},
+    {mr:'महाराष्ट्राचा राज्य पक्षी?',en:'State bird MH?',opts:["मोर", "हारियाल", "चिमणी", "गरुड"],ans:1,exp:'हारियाल.'},
+    {mr:'महाराष्ट्राचा राज्य वृक्ष?',en:'State tree MH?',opts:["वड", "आम्र", "अशोक", "पिंपळ"],ans:1,exp:'आम्र.'},
+    {mr:'महाराष्ट्राचे राज्य फूल?',en:'State flower MH?',opts:["गुलाब", "कमळ", "जारुल", "सोनचाफा"],ans:2,exp:'जारुल.'},
+    {mr:'ताजमहाल कोठे?',en:'Taj Mahal?',opts:["दिल्ली", "आग्रा", "जयपूर", "लखनौ"],ans:1,exp:'आग्रा.'},
+    {mr:'भारताचे सर्वात मोठे राज्य?',en:'Largest state?',opts:["महाराष्ट्र", "उत्तर प्रदेश", "राजस्थान", "मध्य प्रदेश"],ans:2,exp:'राजस्थान.'},
+    {mr:'भारताचे सर्वात लहान राज्य?',en:'Smallest state?',opts:["गोवा", "सिक्कीम", "त्रिपुरा", "नागालँड"],ans:0,exp:'गोवा.'},
+    {mr:'भारताची राजधानी?',en:'India capital?',opts:["मुंबई", "कोलकाता", "नवी दिल्ली", "चेन्नई"],ans:2,exp:'नवी दिल्ली.'},
+    {mr:'Panchayati Raj स्तर?',en:'Levels?',opts:["2", "3", "4", "5"],ans:1,exp:'3: ग्रामपंचायत समिती जिल्हा.'},
+    {mr:'लोकसभेत जास्तीत जास्त सदस्य?',en:'Lok Sabha?',opts:["543", "545", "552", "550"],ans:2,exp:'552.'},
+    {mr:'राज्यसभेत जास्तीत जास्त?',en:'Rajya Sabha?',opts:["200", "238", "245", "250"],ans:2,exp:'245.'},
+    {mr:'भारतीय संविधान कधी लागू?',en:'Constitution?',opts:["15 Aug 1947", "26 Jan 1950", "26 Nov 1949", "2 Oct 1950"],ans:1,exp:'26 जानेवारी 1950.'},
+    {mr:'संविधानाचे जनक?',en:'Father?',opts:["नेहरू", "गांधी", "आंबेडकर", "पटेल"],ans:2,exp:'डॉ. बाबासाहेब आंबेडकर.'},
+    {mr:'स्वातंत्र्य दिन?',en:'Independence?',opts:["15 August", "26 January", "2 October", "26 November"],ans:0,exp:'15 ऑगस्ट 1947.'},
+    {mr:'गांधीजींचा जन्म?',en:'Gandhi birthday?',opts:["2 October", "15 August", "30 January", "26 January"],ans:0,exp:'2 ऑक्टोबर 1869.'},
+    {mr:'मूलभूत अधिकार किती?',en:'Fundamental Rights?',opts:["5", "6", "7", "8"],ans:1,exp:'6.'},
+    {mr:'मूलभूत कर्तव्ये किती?',en:'Fundamental Duties?',opts:["10", "11", "12", "9"],ans:1,exp:'11.'},
+    {mr:'SDG किती?',en:'SDGs?',opts:["15", "17", "18", "20"],ans:1,exp:'17.'},
+    {mr:'NITI Aayog कधी स्थापन?',en:'NITI Aayog?',opts:["2012", "2013", "2015", "2017"],ans:2,exp:'1 January 2015.'},
+    {mr:'पहिली पंचवार्षिक योजना?',en:'First FYP?',opts:["1947-52", "1951-56", "1956-61", "1961-66"],ans:1,exp:'1951-1956.'},
+    {mr:'Mendel चा प्रयोग?',en:'Mendel?',opts:["Wheat", "Corn", "Peas/वाटाणा", "Rice"],ans:2,exp:'Peas.'},
+    {mr:'Refraction कशामुळे?',en:'Refraction?',opts:["Medium change", "Reflection", "Absorption", "Scattering"],ans:0,exp:'माध्यम बदलल्याने.'},
+    {mr:'Rainbow कशामुळे?',en:'Rainbow?',opts:["फक्त refraction", "फक्त reflection", "Refraction+Reflection in water droplets", "Diffraction"],ans:2,exp:'Refraction+Reflection.'},
+    {mr:'Photosynthesis equation?',en:'Equation?',opts:["CO₂+H₂O→Sugar+O₂", "O₂+H₂O→CO₂", "Sugar+O₂→CO₂", "C₆H₁₂O₆→CO₂"],ans:0,exp:'6CO₂+6H₂O→C₆H₁₂O₆+6O₂.'},
+    {mr:'Respiration equation?',en:'Resp?',opts:["CO₂+H₂O→Sugar", "C₆H₁₂O₆+O₂→CO₂+H₂O+Energy", "Sugar→O₂", "H₂O+O₂→Sugar"],ans:1,exp:'Glucose+O₂→Energy.'},
+    {mr:'Mitosis कशासाठी?',en:'Mitosis?',opts:["Sexual", "Body cell division", "Spore", "Gamete"],ans:1,exp:'Body cells.'},
+    {mr:'Meiosis कशासाठी?',en:'Meiosis?',opts:["Body cell", "Gamete formation", "Tissue repair", "Growth"],ans:1,exp:'Gamete.'},
+    {mr:'पाण्याचे विद्युत विच्छेदन?',en:'Electrolysis?',opts:["CO₂+H₂", "H₂+O₂", "N₂+O₂", "H₂+N₂"],ans:1,exp:'H₂+O₂.'},
+    {mr:'Chlorophyll म्हणजे?',en:'Chlorophyll?',opts:["Xanthophyll", "Green pigment (हरित वर्णद्रव्य)", "Carotene", "Anthocyanin"],ans:1,exp:'हरित वर्णद्रव्य.'},
+    {mr:'E = mc² — कोणाचे?',en:'Einstein?',opts:["Newton", "Bohr", "Einstein", "Faraday"],ans:2,exp:'Albert Einstein.'},
+    {mr:'Archimedes चा नियम?',en:'Archimedes?',opts:["Buoyancy", "Inertia", "Action-Reaction", "Gravitation"],ans:0,exp:'Buoyancy.'},
+    {mr:'Law of Gravitation?',en:'Gravitation?',opts:["Galileo", "Newton", "Einstein", "Bohr"],ans:1,exp:'Newton.'},
+    {mr:'Lenz\'s Law?',en:'Lenz?',opts:["Optics", "Electromagnetic Induction", "Thermodynamics", "Nuclear"],ans:1,exp:'EM Induction.'},
+    {mr:'Faraday?',en:'Faraday?',opts:["Light", "Electromagnetic Induction", "Gravity", "Sound"],ans:1,exp:'EM Induction.'},
+    {mr:'Force unit?',en:'Force unit?',opts:["Joule", "Newton", "Pascal", "Watt"],ans:1,exp:'Newton.'},
+    {mr:'Energy unit?',en:'Energy unit?',opts:["Watt", "Newton", "Joule", "Pascal"],ans:2,exp:'Joule.'},
+    {mr:'Power unit?',en:'Power unit?',opts:["Joule", "Newton", "Watt", "Pascal"],ans:2,exp:'Watt.'},
+    {mr:'Pressure unit?',en:'Pressure unit?',opts:["Watt", "Newton", "Joule", "Pascal"],ans:3,exp:'Pascal.'},
+    {mr:'Frequency unit?',en:'Freq unit?',opts:["Meter", "Second", "Hertz", "Newton"],ans:2,exp:'Hertz.'},
+    {mr:'Electric current unit?',en:'Current unit?',opts:["Volt", "Ohm", "Ampere", "Watt"],ans:2,exp:'Ampere.'},
+    {mr:'Voltage unit?',en:'Voltage unit?',opts:["Ampere", "Ohm", "Volt", "Watt"],ans:2,exp:'Volt.'},
+    {mr:'Resistance unit?',en:'Resistance?',opts:["Volt", "Ohm", "Ampere", "Watt"],ans:1,exp:'Ohm.'},
+    {mr:'Magnetic field unit?',en:'Magnetic?',opts:["Newton", "Joule", "Tesla", "Watt"],ans:2,exp:'Tesla.'},
+    {mr:'pH < 7 means?',en:'pH<7?',opts:["Neutral", "Acidic", "Basic", "Alkaline"],ans:1,exp:'Acidic.'},
+    {mr:'pH > 7 means?',en:'pH>7?',opts:["Neutral", "Acidic", "Basic", "Salt"],ans:2,exp:'Basic.'},
+    {mr:'India longest border?',en:'Border?',opts:["China", "Pakistan", "Bangladesh", "Nepal"],ans:2,exp:'Bangladesh 4156km.'},
+    {mr:'Newton\'s Third Law?',en:'Newton 3rd?',opts:["Inertia", "F=ma", "Action = Reaction", "Gravitation"],ans:2,exp:'Action = Reaction.'},
+    {mr:'Water purification methods?',en:'Purification?',opts:["Filtration only", "Boiling+Filtration+Chlorination", "Only Boiling", "Only Chlorination"],ans:1,exp:'Boiling+Filtration+Chlorination.'},
+    {mr:'Hardest substance in body?',en:'Hardest?',opts:["हाडे", "दात Enamel", "नखे", "केस"],ans:1,exp:'Tooth Enamel.'},
+    {mr:'India population 2024?',en:'Population?',opts:["100 crore", "130 crore", "140+ crore", "160 crore"],ans:2,exp:'140+ crore.'},
+    {mr:'ISRO headquarters?',en:'ISRO HQ?',opts:["Mumbai", "Delhi", "Bengaluru", "Chennai"],ans:2,exp:'Bengaluru.'},
+    {mr:'First Indian satellite?',en:'Satellite?',opts:["Aryabhata", "Bhaskar", "Rohini", "INSAT"],ans:0,exp:'Aryabhata 1975.'},
+    {mr:'Global Warming cause?',en:'Warming?',opts:["Ozone depletion", "Greenhouse effect", "Acid rain", "CFC"],ans:1,exp:'Greenhouse effect.'},
+    {mr:'Green Revolution India?',en:'Green Rev?',opts:["Norman Borlaug", "M.S. Swaminathan", "Verghese Kurien", "C. Subramaniam"],ans:1,exp:'M.S. Swaminathan.'},
+    {mr:'White Revolution?',en:'White Rev?',opts:["Food grains", "Milk/Operation Flood", "Fish", "Egg"],ans:1,exp:'Milk.'},
+    {mr:'Concave mirror object at C image?',en:'Image?',opts:["Virtual larger", "Real same size at C", "Real smaller", "Erect"],ans:1,exp:'Real inverted same size.'},
+    {mr:'CFC effect on ozone?',en:'CFC?',opts:["Strengthens", "Depletes ozone", "No effect", "Creates"],ans:1,exp:'Ozone depletes.'},
+    {mr:'Western Ghats biodiversity?',en:'WG?',opts:["Thar Desert", "Western Ghats", "Gangetic Plain", "Deccan"],ans:1,exp:'Biodiversity hotspot.'},
+    {mr:'Largest planet in Solar System?',en:'Largest planet?',opts:["Saturn", "Jupiter", "Uranus", "Neptune"],ans:1,exp:'Jupiter.'},
+    {mr:'Smallest planet Solar System?',en:'Smallest?',opts:["Mercury", "Venus", "Mars", "Pluto"],ans:0,exp:'Mercury.'},
+    {mr:'Osmosis means?',en:'Osmosis?',opts:["Water through semi-permeable membrane", "Digestion", "Photosynthesis", "Evaporation"],ans:0,exp:'Water movement.'},
+    {mr:'DNA double helix?',en:'DNA structure?',opts:["Single helix", "Double helix", "Triple helix", "Linear"],ans:1,exp:'Double helix.'},
+    {mr:'Insulin produced by?',en:'Insulin?',opts:["Liver", "Pancreas", "Kidney", "Heart"],ans:1,exp:'Pancreas.'},
+    {mr:'Boyle\'s Law?',en:'Boyle\'s?',opts:["P×V = constant at constant T", "P = constant", "V = constant", "P+V = constant"],ans:0,exp:'P×V = constant.'},
+    {mr:'Charles\' Law?',en:'Charles?',opts:["V/T = constant at constant P", "P/T = constant", "P×T = constant", "V×T = constant"],ans:0,exp:'V/T = constant.'},
+    {mr:'SDG full form?',en:'SDG?',opts:["Sustainable Development Goals", "Social Development Goals", "Structured Development", "Standard Dev Goals"],ans:0,exp:'Sustainable Development Goals.'},
+    {mr:'Renewable energy example?',en:'Renewable?',opts:["Coal", "Petroleum", "Solar", "Natural Gas"],ans:2,exp:'Solar Energy.'},
+    {mr:'Vitamin C स्रोत?',en:'Vit C source?',opts:["Milk", "Sunlight", "Citrus fruits", "Meat"],ans:2,exp:'Citrus fruits.'},
+    {mr:'Vitamin A स्रोत?',en:'Vit A source?',opts:["Carrot", "Sunlight", "Citrus", "Milk"],ans:0,exp:'Carrot गाजर.'},
+    {mr:'मानवातील सर्वात लहान हाड?',en:'Smallest bone?',opts:["Stapes (ear)", "Femur", "Radius", "Patella"],ans:0,exp:'Stapes (कान).'},
+    {mr:'मानवातील सर्वात मोठे हाड?',en:'Largest bone?',opts:["Stapes", "Femur (thigh)", "Radius", "Patella"],ans:1,exp:'Femur (मांडीचे हाड).'},
+    {mr:'Ohm Law V=IR, R म्हणजे?',en:'R in Ohm?',opts:["Reactance", "Resistance", "Radiation", "Rotation"],ans:1,exp:'Resistance.'}
+  ]
+};
+
+function generateQuestions(type, paperNum) {
+  const subjects = SUBJECTS_P1;
+  const banks = [QS.cdp, QS.mar, QS.eng, QS.math, QS.evs];
+  const allQs = [];
+  subjects.forEach((subj, si) => {
+    const bank = banks[si];
+    const needed = subj.qs;
+    const bLen = bank.length;
+    const startIdx = ((paperNum - 1) * needed) % bLen;
+    for (let i = 0; i < needed; i++) {
+      const idx = (startIdx + i) % bLen;
+      allQs.push({ ...bank[idx], subject: subj.name, subjectEn: subj.nameEn, icon: subj.icon, si });
+    }
+  });
+  return allQs;
+}
+
+// ====================== STATE ======================
+let currentPaper = null, questions = [], userAnswers = [], timerInterval = null, timeLeft = 9000, submitted = false, currentTab = 'p1';
+const UK1 = 'tet_ul_p1', UK2 = 'tet_ul_p2';
+function getUL(t) { try { return JSON.parse(localStorage.getItem(t==='p1'?UK1:UK2)||'[]'); } catch(e){return[];} }
+function setUL(t,n) { const a=getUL(t); if(!a.includes(n))a.push(n); localStorage.setItem(t==='p1'?UK1:UK2,JSON.stringify(a)); }
+
+// ====================== BUILD HOME ======================
+function buildGrid(type, containerId) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = '';
+  const ul = getUL(type);
+  for (let i = 1; i <= 20; i++) {
+    const isUL = ul.includes(i);
+    const c = document.createElement('div');
+    c.className = `paper-card ${type}-card ${isUL?'unlocked':'locked'}`;
+    c.innerHTML = `<div class="pnum">${i}</div><div class="plabel">Test ${i}</div><div class="pqs">150 प्रश्न</div><div class="lock-icon">${isUL?'🔓':'🔒'}</div>`;
+    c.onclick = () => openModal(type, i);
+    grid.appendChild(c);
+  }
+}
+
+function buildPwdTable(type, containerId) {
+  const g = document.getElementById(containerId);
+  g.innerHTML = '';
+  PASSWORDS[type].forEach((pw, i) => {
+    const d = document.createElement('div');
+    d.className = 'pwd-item';
+    d.innerHTML = `<span class="pn">Paper ${i+1}</span><span class="pw">${pw}</span>`;
+    g.appendChild(d);
+  });
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('p1-section').style.display = tab==='p1'?'block':'none';
+  document.getElementById('p2-section').style.display = tab==='p2'?'block':'none';
+  document.getElementById('tab-p1').className = 'paper-tab'+(tab==='p1'?' active-p1':'');
+  document.getElementById('tab-p2').className = 'paper-tab'+(tab==='p2'?' active-p2':'');
+}
+
+buildGrid('p1','p1-grid'); buildGrid('p2','p2-grid');
+buildPwdTable('p1','pwd-p1-grid'); buildPwdTable('p2','pwd-p2-grid');
+
+// ====================== MODAL ======================
+let pendingPaper = null;
+function openModal(type, num) {
+  pendingPaper = {type, num};
+  document.getElementById('modal-paper-title').textContent = `${type==='p1'?'📘 Paper I':'📗 Paper II'} – Test ${num}`;
+  document.getElementById('modal-paper-info').textContent = 'Password टाका / Enter Password to unlock';
+  document.getElementById('pwd-input').value = '';
+  document.getElementById('modal-err').textContent = '';
+  document.getElementById('hint-text').textContent = `Password: TET${num}${type.toUpperCase()}@cm`;
+  document.getElementById('pwd-input').classList.remove('err-shake');
+  document.getElementById('pwd-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('pwd-input').focus(),100);
+}
+function closeModal() { document.getElementById('pwd-modal').classList.remove('open'); pendingPaper=null; }
+function checkPwd() {
+  const entered = document.getElementById('pwd-input').value.trim();
+  const {type,num} = pendingPaper;
+  if (entered === PASSWORDS[type][num-1]) {
+    setUL(type,num); buildGrid(type,type+'-grid'); closeModal(); startTest(type,num);
+  } else {
+    document.getElementById('modal-err').textContent = '❌ चुकीचा Password! Wrong password.';
+    document.getElementById('pwd-input').classList.add('err-shake');
+    setTimeout(()=>document.getElementById('pwd-input').classList.remove('err-shake'),600);
+  }
+}
+
+// ====================== TEST ======================
+function startTest(type, num) {
+  currentPaper = {type,num}; questions = generateQuestions(type,num);
+  userAnswers = new Array(questions.length).fill(-1); submitted = false; timeLeft = 9000;
+  document.getElementById('test-title').textContent = `TET ${type==='p1'?'Paper I':'Paper II'} – Test ${num}`;
+  document.getElementById('test-badge').textContent = type==='p1'?'Paper I':'Paper II';
+  document.getElementById('test-badge').className = 'test-paper-badge '+(type==='p1'?'badge-p1':'badge-p2');
+  document.getElementById('home-screen').style.display='none';
+  document.getElementById('result-screen').style.display='none';
+  document.getElementById('test-screen').style.display='block';
+  renderTest(); startTimer(); window.scrollTo(0,0);
+}
+
+function renderTest() {
+  const body = document.getElementById('test-body');
+  body.innerHTML='';
+  const subjects = currentPaper.type==='p1'?SUBJECTS_P1:SUBJECTS_P2;
+  let gi=0;
+  subjects.forEach((subj,si) => {
+    const hdr = document.createElement('div');
+    hdr.className='subject-header';
+    hdr.innerHTML=`<h4>${subj.icon} ${subj.name}</h4><p>${subj.nameEn} | ${subj.qs} Questions</p>`;
+    body.appendChild(hdr);
+    for(let qi=0;qi<subj.qs;qi++){
+      const q=questions[gi], gIdx=gi;
+      const block=document.createElement('div');
+      block.className='question-block'; block.id=`qb-${gIdx}`;
+      const opts=q.opts.map((o,oi)=>`<button class="opt-btn" id="opt-${gIdx}-${oi}" onclick="selectOpt(${gIdx},${oi})"><span class="opt-key">${['A','B','C','D'][oi]}</span><span>${o}</span></button>`).join('');
+      block.innerHTML=`<div class="q-num"><span>${gIdx+1}</span>प्रश्न ${gIdx+1} / ${questions.length}</div><div class="q-text">${q.mr}</div>${q.mr!==q.en?`<div class="q-text-en">${q.en}</div>`:''}<div class="options-grid">${opts}</div><div class="explanation-box" id="exp-${gIdx}"><div class="exp-label">📝 स्पष्टीकरण / Explanation</div><p>${q.exp||''}</p></div>`;
+      body.appendChild(block); gi++;
+    }
+  });
+  updateProgress();
+}
+
+function selectOpt(qi,oi) {
+  if(submitted)return;
+  userAnswers[qi]=oi;
+  questions[qi].opts.forEach((_,i)=>{const b=document.getElementById(`opt-${qi}-${i}`);if(b)b.className='opt-btn'+(i===oi?' selected':'');});
+  updateProgress();
+}
+
+function updateProgress() {
+  const a=userAnswers.filter(x=>x!==-1).length, t=questions.length;
+  document.getElementById('prog-fill').style.width=(a/t*100)+'%';
+  document.getElementById('prog-text').textContent=`${a} / ${t} उत्तरे दिली`;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    const h=Math.floor(timeLeft/3600), m=Math.floor((timeLeft%3600)/60), s=timeLeft%60;
+    const el=document.getElementById('timer-display');
+    el.textContent=`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.className='timer-val'+(timeLeft<=300?' urgent':'');
+    if(timeLeft<=0){clearInterval(timerInterval);finalSubmit();}
+  },1000);
+}
+
+function openConfirm() {
+  const a=userAnswers.filter(x=>x!==-1).length, sk=questions.length-a;
+  document.getElementById('confirm-msg').innerHTML=`<strong style="color:var(--gold)">${a}</strong> उत्तरे दिली, <strong style="color:var(--skip)">${sk}</strong> सोडली.<br>Submit केल्यानंतर बदल करता येणार नाही.`;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirm-modal').classList.remove('open');}
+
+function finalSubmit() {
+  closeConfirm(); clearInterval(timerInterval); submitted=true;
+  questions.forEach((q,qi)=>{
+    const ua=userAnswers[qi];
+    q.opts.forEach((_,oi)=>{const b=document.getElementById(`opt-${qi}-${oi}`);if(!b)return;b.className='opt-btn';if(oi===q.ans)b.classList.add('correct');else if(oi===ua)b.classList.add('wrong');});
+    const ex=document.getElementById(`exp-${qi}`);if(ex)ex.classList.add('show');
+  });
+  setTimeout(()=>showResult(),600);
+}
+
+function showResult() {
+  document.getElementById('test-screen').style.display='none';
+  document.getElementById('result-screen').style.display='block';
+  window.scrollTo(0,0);
+  const correct=questions.filter((q,i)=>userAnswers[i]===q.ans).length;
+  const wrong=questions.filter((q,i)=>userAnswers[i]!==-1&&userAnswers[i]!==q.ans).length;
+  const skip=questions.filter((q,i)=>userAnswers[i]===-1).length;
+  const total=questions.length, pct=Math.round(correct/total*100);
+  document.getElementById('score-ring').style.setProperty('--pct',pct+'%');
+  document.getElementById('score-pct').textContent=pct+'%';
+  let grade,gradeText,gc;
+  if(pct>=90){grade='🏆';gradeText='Outstanding! अप्रतिम!';gc='pass';}
+  else if(pct>=75){grade='🎉';gradeText='Excellent! उत्तम!';gc='pass';}
+  else if(pct>=60){grade='👍';gradeText='Good! चांगले!';gc='pass';}
+  else if(pct>=50){grade='✅';gradeText='Pass! उत्तीर्ण!';gc='pass';}
+  else{grade='📚';gradeText='अभ्यास वाढवा! More Practice!';gc='fail';}
+  document.getElementById('result-grade').textContent=grade;
+  document.getElementById('result-grade-text').textContent=gradeText;
+  document.getElementById('result-grade-text').className='result-grade-text '+gc;
+  document.getElementById('r-correct').textContent=correct;
+  document.getElementById('r-wrong').textContent=wrong;
+  document.getElementById('r-skip').textContent=skip;
+  document.getElementById('r-marks-line').textContent=`एकूण गुण: ${correct} / ${total} | कट-ऑफ: 90/150 (60%)`;
+  // Subject-wise
+  const subjects=currentPaper.type==='p1'?SUBJECTS_P1:SUBJECTS_P2;
+  const sg=document.getElementById('subj-result-grid'); sg.innerHTML='';
+  let gi=0;
+  subjects.forEach((subj,si)=>{
+    let sc=0;
+    for(let qi=0;qi<subj.qs;qi++){if(userAnswers[gi]===questions[gi]?.ans)sc++;gi++;}
+    const sp=Math.round(sc/subj.qs*100);
+    const row=document.createElement('div'); row.className='subj-row';
+    row.innerHTML=`<div class="subj-icon">${subj.icon}</div><div class="subj-info"><div class="subj-name">${subj.name}</div><div style="font-size:10px;color:#7a8fb0;">${subj.nameEn}</div><div class="subj-bar-wrap"><div class="subj-bar" style="width:${sp}%"></div></div></div><div class="subj-marks">${sc}/${subj.qs}</div>`;
+    sg.appendChild(row);
+  });
+  // Analysis table
+  const tb=document.getElementById('analysis-body'); tb.innerHTML='';
+  questions.forEach((q,qi)=>{
+    const ua=userAnswers[qi];
+    const st=ua===-1?'skip':(ua===q.ans?'correct':'wrong');
+    const sl=st==='correct'?'<span class="tag-c">✅ बरोबर</span>':st==='wrong'?'<span class="tag-w">❌ चुकीचे</span>':'<span class="tag-s">⬜ सोडले</span>';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${qi+1}</td><td>${q.icon} ${q.subject.substring(0,15)}</td><td style="max-width:180px;">${q.mr.substring(0,55)}...</td><td>${ua!==-1?q.opts[ua].substring(0,18):'—'}</td><td style="color:var(--correct);">${q.opts[q.ans].substring(0,18)}</td><td>${sl}</td><td style="color:#aab8d8;">${(q.exp||'').substring(0,45)}...</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function goHome() {
+  document.getElementById('result-screen').style.display='none';
+  document.getElementById('home-screen').style.display='block';
+  buildGrid('p1','p1-grid'); buildGrid('p2','p2-grid');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
