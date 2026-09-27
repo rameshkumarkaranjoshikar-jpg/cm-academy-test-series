@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a1628">
+<title>CM Academy - Unified System</title>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<style>
+:root{
+  --navy:#0a1628; --navy2:#132338; --orange:#ff7a1a; --orange2:#ff9548;
+  --green:#1fb35a; --red:#e4483c; --blue:#2a7de1; --gray:#7c8aa0; --bg:#f4f6f9;
+  --card:#ffffff; --text:#0a1628; --border:#e3e7ee;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--text); -webkit-tap-highlight-color:transparent;}
+button{cursor:pointer; font-family:inherit;}
+input,select,textarea{font-family:inherit; font-size:15px;}
+::-webkit-scrollbar{width:6px; height:6px;} ::-webkit-scrollbar-thumb{background:#c7cfdb; border-radius:4px;}
+
+/* ===== LOGIN ===== */
+#loginScreen{min-height:100vh; background:linear-gradient(160deg,var(--navy),var(--navy2)); display:flex; align-items:center; justify-content:center; padding:20px;}
+.login-box{background:var(--card); border-radius:18px; width:100%; max-width:400px; padding:28px 24px; box-shadow:0 20px 60px rgba(0,0,0,.35);}
+.login-logo{text-align:center; margin-bottom:6px; font-size:30px;}
+.login-title{text-align:center; font-size:22px; font-weight:800; color:var(--navy);}
+.login-sub{text-align:center; font-size:13px; color:var(--gray); margin-bottom:20px;}
+.role-tabs{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px;}
+.role-tab{padding:10px 4px; border-radius:10px; border:2px solid var(--border); text-align:center; font-size:12px; font-weight:700; color:var(--gray); background:#fafbfc;}
+.role-tab.active{border-color:var(--orange); background:#fff3ea; color:var(--orange);}
+.field{margin-bottom:12px;}
+.field label{display:block; font-size:12px; font-weight:700; color:var(--gray); margin-bottom:5px;}
+.field input, .field select, .field textarea{width:100%; padding:11px 12px; border:1.5px solid var(--border); border-radius:10px; outline:none;}
+.field input:focus, .field select:focus, .field textarea:focus{border-color:var(--orange);}
+.btn{display:block; width:100%; padding:12px; border:none; border-radius:10px; font-weight:800; font-size:15px; text-align:center;}
+.btn-primary{background:var(--orange); color:#fff;}
+.btn-primary:active{background:var(--orange2);}
+.btn-outline{background:#fff; border:1.5px solid var(--border); color:var(--navy);}
+.btn-green{background:var(--green); color:#fff;}
+.btn-blue{background:var(--blue); color:#fff;}
+.btn-red{background:var(--red); color:#fff;}
+.btn-sm{padding:7px 12px; font-size:12px; border-radius:8px; border:none; font-weight:700;}
+.link-btn{background:none; border:none; color:var(--orange); font-weight:700; font-size:13px; text-decoration:underline;}
+.hint-box{background:#fff8ee; border:1px solid #ffe3c2; border-radius:10px; padding:10px 12px; font-size:11.5px; color:#8a5a20; margin-top:14px; line-height:1.5;}
+.err-msg{background:#fdeceb; color:var(--red); padding:9px 12px; border-radius:8px; font-size:13px; margin-bottom:12px; display:none;}
+
+/* ===== APP SHELL ===== */
+#appScreen{display:none; min-height:100vh;}
+.topbar{position:fixed; top:0; left:0; right:0; height:56px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 14px; z-index:50;}
+.topbar-left{display:flex; align-items:center; gap:10px; font-weight:800;}
+.topbar-role{font-size:10px; background:var(--orange); padding:2px 8px; border-radius:20px; font-weight:800;}
+.topbar-right{display:flex; align-items:center; gap:10px;}
+.icon-btn{background:rgba(255,255,255,.12); border:none; color:#fff; width:34px; height:34px; border-radius:9px; font-size:16px;}
+.menu-btn{background:none; border:none; color:#fff; font-size:22px;}
+
+.sidebar{position:fixed; top:56px; left:-260px; bottom:0; width:250px; background:#fff; border-right:1px solid var(--border); z-index:60; transition:left .2s; overflow-y:auto; padding:10px 0;}
+.sidebar.open{left:0;}
+.sidebar-overlay{display:none; position:fixed; inset:0; top:56px; background:rgba(0,0,0,.35); z-index:55;}
+.sidebar-overlay.open{display:block;}
+.side-item{display:flex; align-items:center; gap:12px; padding:13px 18px; font-size:14.5px; font-weight:600; color:var(--navy); border-left:3px solid transparent;}
+.side-item.active{background:#fff3ea; border-left-color:var(--orange); color:var(--orange); font-weight:800;}
+.side-section{padding:14px 18px 4px; font-size:10.5px; font-weight:800; color:var(--gray); letter-spacing:.5px;}
+
+.main{margin-top:56px; padding:14px; max-width:900px; margin-left:auto; margin-right:auto;}
+.page-title{font-size:19px; font-weight:800; margin-bottom:4px;}
+.page-sub{font-size:12.5px; color:var(--gray); margin-bottom:16px;}
+
+.stats-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;}
+.stat-card{background:var(--card); border-radius:14px; padding:14px; border:1px solid var(--border);}
+.stat-num{font-size:22px; font-weight:800; color:var(--navy);}
+.stat-label{font-size:11.5px; color:var(--gray); font-weight:700; margin-top:2px;}
+
+.card{background:var(--card); border-radius:14px; padding:16px; border:1px solid var(--border); margin-bottom:14px;}
+.card-title{font-size:15px; font-weight:800; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;}
+.row{display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border);}
+.row:last-child{border-bottom:none;}
+.row-title{font-weight:700; font-size:14px;}
+.row-sub{font-size:12px; color:var(--gray); margin-top:2px;}
+.badge{font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:20px;}
+.badge-green{background:#e5f8ec; color:var(--green);}
+.badge-orange{background:#fff3ea; color:var(--orange);}
+.badge-red{background:#fdeceb; color:var(--red);}
+.badge-gray{background:#eef0f4; color:var(--gray);}
+
+.tab-strip{display:flex; gap:8px; overflow-x:auto; margin-bottom:14px; padding-bottom:2px;}
+.tab-chip{white-space:nowrap; padding:8px 14px; border-radius:20px; font-size:12.5px; font-weight:700; background:#fff; border:1.5px solid var(--border); color:var(--gray);}
+.tab-chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+.fab{position:fixed; bottom:20px; right:20px; width:54px; height:54px; border-radius:50%; background:var(--orange); color:#fff; border:none; font-size:26px; box-shadow:0 8px 20px rgba(255,122,26,.4); z-index:40;}
+
+.modal-overlay{display:none; position:fixed; inset:0; background:rgba(10,22,40,.55); z-index:100; align-items:flex-end; justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff; width:100%; max-width:480px; border-radius:20px 20px 0 0; padding:20px; max-height:88vh; overflow-y:auto;}
+.modal-title{font-size:17px; font-weight:800; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;}
+.close-x{background:#f0f2f6; border:none; width:30px; height:30px; border-radius:8px; font-size:16px;}
+
+.empty-state{text-align:center; padding:30px 10px; color:var(--gray);}
+.progress-bar{height:8px; background:#eef0f4; border-radius:6px; overflow:hidden; margin-top:6px;}
+.progress-fill{height:100%; background:var(--orange);}
+.toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--navy); color:#fff; padding:11px 20px; border-radius:30px; font-size:13.5px; font-weight:700; z-index:200; display:none; box-shadow:0 8px 20px rgba(0,0,0,.3);}
+.qtimer{position:sticky; top:56px; background:var(--red); color:#fff; text-align:center; padding:8px; font-weight:800; font-size:14px; z-index:30;}
+.opt-btn{display:block; width:100%; text-align:left; padding:12px; border:1.5px solid var(--border); border-radius:10px; margin-bottom:8px; background:#fff; font-size:14px;}
+.opt-btn.selected{border-color:var(--orange); background:#fff3ea; font-weight:700;}
+.opt-btn.correct{border-color:var(--green); background:#e5f8ec;}
+.opt-btn.wrong{border-color:var(--red); background:#fdeceb;}
+@media(min-width:700px){.stats-grid{grid-template-columns:repeat(4,1fr);}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🎓</div>
+    <div class="login-title">CM Academy</div>
+    <div class="login-sub">Online Classes &amp; शाळा व्यवस्थापन प्रणाली</div>
+
+    <div class="role-tabs" id="roleTabs">
+      <div class="role-tab active" data-role="superadmin">🔴 Admin</div>
+      <div class="role-tab" data-role="principal">🔵 मुख्याध्यापक</div>
+      <div class="role-tab" data-role="teacher">🟣 शिक्षक</div>
+      <div class="role-tab" data-role="student">🟢 विद्यार्थी</div>
+      <div class="role-tab" data-role="parent">🟠 पालक</div>
+    </div>
+
+    <div class="err-msg" id="loginErr"></div>
+
+    <div id="loginFieldsNormal">
+      <div class="field"><label>Username / ID</label><input id="loginUser" placeholder="उदा. admin / STU001"></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="Password"></div>
+    </div>
+
+    <div id="loginFieldsParent" style="display:none;">
+      <div class="field"><label>विद्यार्थी ID (Student ID)</label><input id="parentStudId" placeholder="उदा. STU001"></div>
+      <div class="field"><label>पालकांचा नोंदणीकृत मोबाईल नंबर</label><input id="parentMobile" placeholder="10 अंकी मोबाईल नंबर"></div>
+    </div>
+
+    <button class="btn btn-primary" id="loginBtn">✦ प्रवेश करा</button>
+
+    <div style="text-align:center; margin-top:14px;" id="registerLinkWrap">
+      <button class="link-btn" id="showRegisterBtn">नवीन विद्यार्थी? येथे नोंदणी करा →</button>
+    </div>
+
+    <div class="hint-box" id="loginHint"></div>
+  </div>
+</div>
+
+<!-- ============ REGISTER MODAL ============ -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal-box">
+    <div class="modal-title"><span>👤 नवीन विद्यार्थी नोंदणी</span><button class="close-x" onclick="closeModal('registerModal')">✕</button></div>
+    <div class="field"><label>शाळा / शाखा निवडा</label><select id="regSchool"></select></div>
+    <div class="field"><label>विद्यार्थ्याचे पूर्ण नाव</label><input id="regName"></div>
+    <div class="field"><label>विद्यार्थी मोबाईल नंबर</label><input id="regMobile" maxlength="10"></div>
+    <div class="field"><label>इयत्ता</label>
+      <select id="regClass">
+        <option>इयत्ता ४</option><option>इयत्ता ५</option><option>इयत्ता ६</option><option>इयत्ता ७</option>
+        <option>इयत्ता ८</option><option>इयत्ता ९</option><option>इयत्ता १०</option><option>इयत्ता ११</option><option>इयत्ता १२</option>
+      </select>
+    </div>
+    <div class="field"><label>अभ्यासक्रम</label>
+      <select id="regProgram">
+        <option>स्कॉलरशिप इ.४थी</option><option>स्कॉलरशिप इ.७वी</option><option>NMMS इ.८वी</option>
+        <option>NDA Foundation</option><option>बोर्ड परीक्षा तयारी</option><option>TET / MPSC / Police Bharti</option><option>इतर</option>
+      </select>
+    </div>
+    <div class="field"><label>पालकांचे नाव</label><input id="regParentName"></div>
+    <div class="field"><label>पालकांचा मोबाईल नंबर (हाच पालक-लॉगिनसाठी वापरला जाईल)</label><input id="regParentMobile" maxlength="10"></div>
+    <div class="field"><label>Login पासवर्ड तयार करा (विद्यार्थ्यासाठी)</label><input id="regPass" type="password"></div>
+    <button class="btn btn-primary" onclick="submitRegistration()">✓ नोंदणी करा</button>
+    <div class="hint-box">नोंदणीनंतर तुमचा प्रवेश Admin/मुख्याध्यापकांच्या मान्यतेनंतर सक्रिय होईल.</div>
+  </div>
+</div>
+
+<!-- ============ APP SCREEN ============ -->
+<div id="appScreen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+      <span>🎓 CM Academy</span>
+      <span class="topbar-role" id="topRoleBadge">Admin</span>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" onclick="openNotifCenter()">🔔</button>
+      <button class="icon-btn" onclick="doLogout()">⏻</button>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  <div class="sidebar" id="sidebar"></div>
+
+  <div class="main" id="mainContent"></div>
+  <button class="fab" id="fabBtn" style="display:none;" onclick="handleFab()">＋</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CM ACADEMY - UNIFIED SYSTEM (Super Admin / Principal / Teacher / Student / Parent)
+   Firebase Firestore = shared real-time database (one link works for everyone)
+   ========================================================= */
+
+/* ---------- FIREBASE INIT ---------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyAyO5woe6PPNBVTi25BzT4Lbnvv9G9ZxHM",
+  authDomain: "cm-academy-test-series.firebaseapp.com",
+  projectId: "cm-academy-test-series",
+  storageBucket: "cm-academy-test-series.firebasestorage.app",
+  messagingSenderId: "391136461908",
+  appId: "1:391136461908:web:87159283a4c7bcfa3ed9c1"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ---------- SUPER ADMIN (hardcoded master login) ---------- */
+const SUPER_ADMIN = { username: "admin", password: "CMADMINramesh@99", name: "Ramesh Sir" };
+
+/* ---------- SESSION ---------- */
+let CURRENT = null; // {role, id, name, schoolId, ...}
+let CACHE = { schools:[], students:[], teachers:[], courses:[], testSeries:[], testResults:[],
+              attendance:[], homework:[], notices:[], fees:[], orders:[] };
+
+/* ---------- EXTERNAL (STANDALONE HTML) TEST SERIES ----------
+   हे स्वतंत्र HTML टेस्ट सिरीज/युनिट टेस्ट फाईल्सचे लिंक्स आहेत.
+   खालील "url" व्हॅल्यू Google Drive शेअर लिंकने बदला (फाईल अपलोड करून
+   "Anyone with the link" शेअरिंग सुरू करा, नंतर ती लिंक इथे पेस्ट करा).
+   टीप: Google Drive वर होस्ट केलेली HTML फाईल इंटरॅक्टिव्ह पेज म्हणून थेट उघडत
+   नाही (बटणे/टायमर चालणार नाहीत); जर शक्य असेल तर GitHub Pages सारखी होस्टिंग वापरा. */
+const EXTERNAL_TESTS = [
+  {name:'इयत्ता 10 वी युनिट टेस्ट सिरीज (SSC + CBSE)', desc:'गणित, विज्ञान, इंग्रजी • 32 पेपर्स • मराठी/इंग्रजी माध्यम', url:'PASTE_DRIVE_LINK_HERE_1'},
+  {name:'इयत्ता 12 वी सायन्स टेस्ट सिरीज', desc:'विषयनिहाय टेस्ट पेपर्स • पेमेंट + अ‍ॅडमिन पॅनल', url:'PASTE_DRIVE_LINK_HERE_2'},
+  {name:'इयत्ता 12 वी कॉमर्स टेस्ट सिरीज', desc:'5 विषय • 1000 प्रश्न', url:'PASTE_DRIVE_LINK_HERE_3'},
+  {name:'NMMS टेस्ट सिरीज (मूळ)', desc:'900 MAT + 900 SAT प्रश्न', url:'PASTE_DRIVE_LINK_HERE_4'},
+  {name:'NMMS इयत्ता 8 वी — ABCD लेव्हल टेस्ट सिरीज', desc:'MAT, विज्ञान, गणित, सामाजिक शास्त्र • प्रत्येक लेव्हलला 10+10+10 पेपर • उत्तरांसह स्पष्टीकरण', url:'PASTE_DRIVE_LINK_HERE_5'},
+  {name:'नवोदय विद्यालय टेस्ट सिरीज', desc:'50 पेपर्स • त्रिभाषिक (मराठी/हिंदी/इंग्रजी)', url:'PASTE_DRIVE_LINK_HERE_6'},
+  {name:'TET टेस्ट सिरीज (पेपर I व II)', desc:'दोन्ही पेपर एकत्र', url:'PASTE_DRIVE_LINK_HERE_7'},
+  {name:'TET सुपर टेस्ट पोर्टल (मूळ)', desc:'अँटी-शेअरिंग टोकन सिस्टीम + डिव्हाइस बाइंडिंग', url:'PASTE_DRIVE_LINK_HERE_8'},
+  {name:'तलाठी भरती टेस्ट सिरीज', desc:'49 पेपर्स • सुमारे 6,000 प्रश्न', url:'PASTE_DRIVE_LINK_HERE_9'},
+  {name:'पोलीस भरती टेस्ट सिरीज', desc:'20 पेपर्स', url:'PASTE_DRIVE_LINK_HERE_10'},
+  {name:'ग्रामसेवक भरती टेस्ट सिरीज', desc:'भरती परीक्षा सराव पेपर्स', url:'PASTE_DRIVE_LINK_HERE_11'},
+  {name:'MPSC टेस्ट सिरीज', desc:'MPSC परीक्षा सराव पेपर्स', url:'PASTE_DRIVE_LINK_HERE_12'},
+  {name:'NDA फाउंडेशन एंट्रन्स टेस्ट सिरीज', desc:'गणित व GAT • नोंदणी + पेमेंट', url:'PASTE_DRIVE_LINK_HERE_13'},
+  {name:'BSc फिजिक्स टेस्ट सिरीज (शिवाजी विद्यापीठ)', desc:'शिवाजी विद्यापीठ अभ्यासक्रमानुसार', url:'PASTE_DRIVE_LINK_HERE_14'},
+  {name:'होमी भाभा इयत्ता 6 वी टेस्ट सिरीज', desc:'विज्ञान, गणित, रिझनिंग/IQ • 40 पेपर्स • द्विभाषिक', url:'PASTE_DRIVE_LINK_HERE_15'},
+  {name:'होमी भाभा इयत्ता 9 वी टेस्ट सिरीज', desc:'विज्ञान, गणित, रिझनिंग/IQ • 40 पेपर्स • द्विभाषिक', url:'PASTE_DRIVE_LINK_HERE_16'},
+  {name:'इयत्ता 7 वी शिष्यवृत्ती टेस्ट सिरीज', desc:'A/B/C/D कठिणता स्तर • 800 प्रश्न', url:'PASTE_DRIVE_LINK_HERE_17'},
+  {name:'इयत्ता 4 थी शिष्यवृत्ती टेस्ट सिरीज', desc:'20 पेपर्स • उत्तरपत्रिका + स्पष्टीकरणासह', url:'PASTE_DRIVE_LINK_HERE_18'}
+];
+
+/* ---------- प्रश्नपत्रिका / नोट्स (PPT, PDF, Question Papers) ----------
+   खालील नावे आतापर्यंत तयार केलेल्या द्विभाषिक (मराठी-इंग्रजी) प्रश्नपत्रिका,
+   उत्तर की व अभ्यास नोट्स आहेत. प्रत्येकासमोर संबंधित Drive/PDF लिंक पेस्ट करा. */
+const EXTERNAL_PAPERS = [
+  {name:'इयत्ता 9 वी गणित — सत्र 2 प्रश्नपत्रिका (5 पेपर्स)', desc:'द्विभाषिक प्रश्नपत्रिका व उत्तर की', url:'PASTE_DRIVE_LINK_HERE_P1'},
+  {name:'इयत्ता 10 वी गणित नोट्स (संपूर्ण SSC अभ्यासक्रम)', desc:'द्विभाषिक अभ्यास नोट्स', url:'PASTE_DRIVE_LINK_HERE_P2'},
+  {name:'इयत्ता 9 वी विज्ञान — 50 गुण प्रश्नपत्रिका', desc:'द्विभाषिक', url:'PASTE_DRIVE_LINK_HERE_P3'},
+  {name:'NDA फाउंडेशन एंट्रन्स प्रश्नपत्रिका (100 गुण)', desc:'द्विभाषिक', url:'PASTE_DRIVE_LINK_HERE_P4'},
+  {name:'इयत्ता 4 थी शिष्यवृत्ती प्रश्नपत्रिका (20 पेपर्स, 4 विषय)', desc:'द्विभाषिक', url:'PASTE_DRIVE_LINK_HERE_P5'},
+  {name:'इयत्ता 10 वी गणित — समरूपता उत्तर की (आकृत्यांसह)', desc:'युनिट टेस्ट उत्तर की', url:'PASTE_DRIVE_LINK_HERE_P6'},
+  {name:'इयत्ता 10 वी गणित भाग 1 — वर्गसमीकरणे सराव संच 2.1 (PPT)', desc:'सर्व 6 प्रश्न सोडवलेले', url:'PASTE_DRIVE_LINK_HERE_P7'},
+  {name:'इयत्ता 10 वी गणित — वर्गसमीकरणे सराव संच 2.2 (PPT)', desc:'गुणाकार पद्धत • सर्व 12 उपप्रश्न', url:'PASTE_DRIVE_LINK_HERE_P8'}
+];
+function renderExternalPapers(){
+  return `<div class="card"><div class="card-title">📄 प्रश्नपत्रिका व नोट्स (External)</div>
+    ${EXTERNAL_PAPERS.map(t=>`<div class="row"><div><div class="row-title">${t.name}</div>
+      <div class="row-sub">${t.desc}</div></div>
+      <a href="${t.url}" target="_blank" rel="noopener" class="btn-sm btn-primary" style="text-decoration:none; display:inline-block;">उघडा →</a>
+    </div>`).join('')}</div>`;
+}
+function renderExternalTestLinks(){
+  return `<div class="card"><div class="card-title">🔗 उपलब्ध टेस्ट सिरीज (External)</div>
+    ${EXTERNAL_TESTS.map(t=>`<div class="row"><div><div class="row-title">${t.name}</div>
+      <div class="row-sub">${t.desc}</div></div>
+      <a href="${t.url}" target="_blank" rel="noopener" class="btn-sm btn-primary" style="text-decoration:none; display:inline-block;">उघडा →</a>
+    </div>`).join('')}</div>`;
+}
+
+function saveSession(u){ localStorage.setItem('cma_session', JSON.stringify(u)); }
+function loadSession(){ try{ return JSON.parse(localStorage.getItem('cma_session')); }catch(e){ return null; } }
+function clearSession(){ localStorage.removeItem('cma_session'); }
+
+/* ---------- GENERIC FIRESTORE HELPERS ---------- */
+function col(name){ return db.collection(name); }
+async function addDocTo(name, data){
+  data.createdAt = Date.now();
+  const ref = await col(name).add(data);
+  return ref.id;
+}
+async function updateDocIn(name, id, data){ await col(name).doc(id).update(data); }
+async function deleteDocIn(name, id){ await col(name).doc(id).delete(); }
+function newReceiptNo(schoolId){ return 'R' + Date.now().toString().slice(-8); }
+function genStudentId(){ return 'STU' + Math.floor(1000 + Math.random()*9000); }
+
+/* ---------- REAL-TIME LISTENERS (keep CACHE in sync + re-render current page) ---------- */
+let unsubs = [];
+function startListeners(){
+  unsubs.forEach(u=>u());
+  unsubs = [];
+  const names = ['schools','students','teachers','courses','testSeries','testResults','attendance','homework','notices','fees','orders'];
+  names.forEach(n=>{
+    const u = col(n).onSnapshot(snap=>{
+      CACHE[n] = snap.docs.map(d=>({id:d.id, ...d.data()}));
+      if(APP_READY) renderCurrentPage();
+    }, err=>console.error(n, err));
+    unsubs.push(u);
+  });
+}
+let APP_READY = false;
+
+/* ---------- SEED DEFAULT SCHOOLS (only if none exist) ---------- */
+async function seedIfEmpty(){
+  const snap = await col('schools').get();
+  if(snap.empty){
+    const defaults = [
+      {name:'CM Academy - Nashik', place:'Nashik', principalName:'Ramesh Sir', principalMobile:'9876543210', username:'nashik', password:'1234'},
+      {name:'CM Academy - Jaisingpur', place:'Jaisingpur', principalName:'Ramesh Sir', principalMobile:'9876543210', username:'jaisingpur', password:'1234'},
+      {name:'CM Academy - Kolhapur', place:'Kolhapur', principalName:'Ramesh Sir', principalMobile:'9876543210', username:'kolhapur', password:'1234'}
+    ];
+    for(const s of defaults){ await addDocTo('schools', s); }
+  }
+}
+
+/* ---------- TOAST ---------- */
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display='block';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>{ t.style.display='none'; }, 2400);
+}
+
+/* ---------- MODAL HELPERS ---------- */
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+/* ---------- SIDEBAR TOGGLE ---------- */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+/* ============================================================
+   LOGIN SCREEN LOGIC
+   ============================================================ */
+let selectedRole = 'superadmin';
+document.getElementById('roleTabs').addEventListener('click', (e)=>{
+  const tab = e.target.closest('.role-tab');
+  if(!tab) return;
+  document.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  selectedRole = tab.dataset.role;
+  document.getElementById('loginErr').style.display='none';
+  if(selectedRole === 'parent'){
+    document.getElementById('loginFieldsNormal').style.display='none';
+    document.getElementById('loginFieldsParent').style.display='block';
+  } else {
+    document.getElementById('loginFieldsNormal').style.display='block';
+    document.getElementById('loginFieldsParent').style.display='none';
+  }
+  document.getElementById('registerLinkWrap').style.display = (selectedRole==='student') ? 'block' : 'none';
+  updateLoginHint();
+});
+function updateLoginHint(){
+  const hints = {
+    superadmin: 'Admin: admin / CMADMINramesh@99',
+    principal: 'मुख्याध्यापक: तुमचं Username व Password (Admin कडून मिळालेलं) टाका',
+    teacher: 'शिक्षक: Admin/मुख्याध्यापकांनी दिलेलं Username व Password टाका',
+    student: 'विद्यार्थी: तुमचा Student ID व नोंदणीच्या वेळी ठरवलेला Password टाका',
+    parent: 'पालक: विद्यार्थ्याचा Student ID + नोंदणीकृत पालक मोबाईल नंबर टाका'
+  };
+  document.getElementById('loginHint').textContent = hints[selectedRole] || '';
+}
+updateLoginHint();
+
+document.getElementById('showRegisterBtn').addEventListener('click', async ()=>{
+  await seedIfEmpty();
+  const sel = document.getElementById('regSchool');
+  sel.innerHTML = CACHE.schools.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  openModal('registerModal');
+});
+
+async function submitRegistration(){
+  const name = document.getElementById('regName').value.trim();
+  const mobile = document.getElementById('regMobile').value.trim();
+  const parentName = document.getElementById('regParentName').value.trim();
+  const parentMobile = document.getElementById('regParentMobile').value.trim();
+  const pass = document.getElementById('regPass').value.trim();
+  const schoolId = document.getElementById('regSchool').value;
+  const studClass = document.getElementById('regClass').value;
+  const program = document.getElementById('regProgram').value;
+  if(!name || !mobile || !parentMobile || !pass || mobile.length<10 || parentMobile.length<10){
+    toast('कृपया सर्व माहिती व्यवस्थित भरा (मोबाईल १० अंकी)'); return;
+  }
+  const studentId = genStudentId();
+  await col('students').doc(studentId).set({
+    name, mobile, studClass, program, schoolId, parentName, parentMobile, password: pass,
+    status:'pending', feeTotal:0, feePaid:0, purchased:[], createdAt: Date.now()
+  });
+  closeModal('registerModal');
+  toast('नोंदणी यशस्वी! तुमचा Student ID: ' + studentId + ' — मान्यतेनंतर लॉगिन करू शकाल.');
+  document.getElementById('loginUser').value = studentId;
+}
+
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+
+async function doLogin(){
+  const errBox = document.getElementById('loginErr');
+  errBox.style.display='none';
+  await seedIfEmpty();
+
+  if(selectedRole === 'superadmin'){
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value.trim();
+    if(u===SUPER_ADMIN.username && p===SUPER_ADMIN.password){
+      CURRENT = {role:'superadmin', id:'superadmin', name:SUPER_ADMIN.name};
+      afterLogin(); return;
+    }
+    return showErr('चुकीचा Username किंवा Password');
+  }
+
+  if(selectedRole === 'principal'){
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value.trim();
+    const school = CACHE.schools.find(s=>s.username===u && s.password===p);
+    if(school){ CURRENT = {role:'principal', id:school.id, name:school.principalName, schoolId:school.id, schoolName:school.name}; afterLogin(); return; }
+    return showErr('चुकीचं Username/Password, किंवा असं कोणतंही खातं नाही');
+  }
+
+  if(selectedRole === 'teacher'){
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value.trim();
+    const t = CACHE.teachers.find(x=>x.username===u && x.password===p);
+    if(t){ CURRENT = {role:'teacher', id:t.id, name:t.name, schoolId:t.schoolId, subject:t.subject}; afterLogin(); return; }
+    return showErr('चुकीचं Username/Password');
+  }
+
+  if(selectedRole === 'student'){
+    const u = document.getElementById('loginUser').value.trim().toUpperCase();
+    const p = document.getElementById('loginPass').value.trim();
+    const s = CACHE.students.find(x=>x.id===u && x.password===p);
+    if(!s) return showErr('चुकीचा Student ID किंवा Password');
+    if(s.status==='pending') return showErr('तुमचं खातं अजून मान्यतेच्या प्रतीक्षेत आहे. कृपया Admin/मुख्याध्यापकांशी संपर्क साधा.');
+    CURRENT = {role:'student', id:s.id, name:s.name, schoolId:s.schoolId};
+    afterLogin(); return;
+  }
+
+  if(selectedRole === 'parent'){
+    const sid = document.getElementById('parentStudId').value.trim().toUpperCase();
+    const mob = document.getElementById('parentMobile').value.trim();
+    const s = CACHE.students.find(x=>x.id===sid && x.parentMobile===mob);
+    if(!s) return showErr('विद्यार्थी ID किंवा मोबाईल नंबर जुळत नाही');
+    CURRENT = {role:'parent', id:s.id, name:s.parentName || (s.name+'चे पालक'), schoolId:s.schoolId, studentId:s.id};
+    afterLogin(); return;
+  }
+
+  function showErr(m){ errBox.textContent = m; errBox.style.display='block'; }
+}
+
+function afterLogin(){
+  saveSession(CURRENT);
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
+  APP_READY = true;
+  document.getElementById('topRoleBadge').textContent =
+    {superadmin:'Admin', principal:'मुख्याध्यापक', teacher:'शिक्षक', student:'विद्यार्थी', parent:'पालक'}[CURRENT.role];
+  buildSidebar();
+  navigate(defaultPageFor(CURRENT.role));
+}
+function doLogout(){
+  clearSession(); CURRENT=null; APP_READY=false;
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginUser').value=''; document.getElementById('loginPass').value='';
+}
+function defaultPageFor(role){
+  return {superadmin:'dashboard', principal:'dashboard', teacher:'dashboard', student:'dashboard', parent:'dashboard'}[role];
+}
+
+/* Try auto-login from saved session on load */
+window.addEventListener('load', async ()=>{
+  await seedIfEmpty();
+  startListeners();
+  setTimeout(async ()=>{
+    const s = loadSession();
+    if(s){ CURRENT = s; afterLogin(); }
+  }, 600);
+});
+
+/* ============================================================
+   NAVIGATION / SIDEBAR
+   ============================================================ */
+let CURRENT_PAGE = 'dashboard';
+const SIDEBAR_MAP = {
+  superadmin: [
+    {sec:'मुख्य'},
+    {id:'dashboard', label:'📊 डॅशबोर्ड'},
+    {id:'schools', label:'🏫 शाळा व्यवस्थापन'},
+    {id:'students', label:'🧑‍🎓 सर्व विद्यार्थी'},
+    {id:'teachers', label:'👩‍🏫 शिक्षक'},
+    {sec:'शैक्षणिक'},
+    {id:'courses', label:'🎬 कोर्स / LMS'},
+    {id:'testseries', label:'📝 टेस्ट सिरीज'},
+    {id:'homework', label:'📚 गृहपाठ/सूचना'},
+    {sec:'व्यवहार'},
+    {id:'orders', label:'💳 पेमेंट मान्यता'},
+    {id:'fees', label:'💰 फी व्यवस्थापन'},
+    {sec:'अहवाल'},
+    {id:'reports', label:'📈 अहवाल'},
+  ],
+  principal: [
+    {sec:'मुख्य'},
+    {id:'dashboard', label:'📊 डॅशबोर्ड'},
+    {id:'students', label:'🧑‍🎓 विद्यार्थी'},
+    {id:'teachers', label:'👩‍🏫 शिक्षक'},
+    {sec:'शैक्षणिक'},
+    {id:'attendance', label:'🗓️ हजेरी'},
+    {id:'homework', label:'📚 गृहपाठ/सूचना'},
+    {id:'testseries', label:'📝 टेस्ट सिरीज'},
+    {sec:'व्यवहार'},
+    {id:'orders', label:'💳 पेमेंट मान्यता'},
+    {id:'fees', label:'💰 फी'},
+    {id:'reports', label:'📈 अहवाल'},
+  ],
+  teacher: [
+    {sec:'मुख्य'},
+    {id:'dashboard', label:'📊 डॅशबोर्ड'},
+    {id:'attendance', label:'🗓️ हजेरी घ्या'},
+    {id:'homework', label:'📚 गृहपाठ/सूचना पाठवा'},
+    {id:'courses', label:'🎬 माझे कोर्स/कंटेंट'},
+    {id:'students', label:'🧑‍🎓 विद्यार्थी यादी'},
+  ],
+  student: [
+    {sec:'मुख्य'},
+    {id:'dashboard', label:'📊 माझं होम'},
+    {id:'courses', label:'🎬 माझे कोर्स'},
+    {id:'testseries', label:'📝 टेस्ट सिरीज'},
+    {id:'results', label:'🏆 माझे निकाल'},
+    {id:'attendance', label:'🗓️ माझी हजेरी'},
+    {id:'homework', label:'📚 गृहपाठ/सूचना'},
+    {id:'fees', label:'💰 माझी फी'},
+  ],
+  parent: [
+    {sec:'मुख्य'},
+    {id:'dashboard', label:'📊 पाल्याची माहिती'},
+    {id:'attendance', label:'🗓️ हजेरी'},
+    {id:'results', label:'🏆 निकाल'},
+    {id:'fees', label:'💰 फी'},
+    {id:'homework', label:'📚 गृहपाठ/सूचना'},
+  ],
+};
+
+function buildSidebar(){
+  const items = SIDEBAR_MAP[CURRENT.role] || [];
+  const sb = document.getElementById('sidebar');
+  sb.innerHTML = items.map(it=>{
+    if(it.sec) return `<div class="side-section">${it.sec}</div>`;
+    return `<div class="side-item" data-page="${it.id}" onclick="navigate('${it.id}')">${it.label}</div>`;
+  }).join('');
+}
+function navigate(page){
+  CURRENT_PAGE = page;
+  closeSidebar();
+  document.querySelectorAll('.side-item').forEach(el=>{
+    el.classList.toggle('active', el.dataset.page===page);
+  });
+  renderCurrentPage();
+  window.scrollTo(0,0);
+}
+function renderCurrentPage(){
+  if(!CURRENT) return;
+  const renderers = {
+    dashboard: renderDashboard, schools: renderSchools, students: renderStudents,
+    teachers: renderTeachers, courses: renderCourses, testseries: renderTestSeries,
+    homework: renderHomework, orders: renderOrders, fees: renderFees,
+    reports: renderReports, attendance: renderAttendance, results: renderResults,
+  };
+  const fn = renderers[CURRENT_PAGE] || renderDashboard;
+  document.getElementById('mainContent').innerHTML = fn();
+  const fab = document.getElementById('fabBtn');
+  const fabPages = {schools:1, students:1, teachers:1, courses:1, testseries:1, homework:1, fees:1};
+  fab.style.display = (fabPages[CURRENT_PAGE] && CURRENT.role!=='student' && CURRENT.role!=='parent') ? 'block' : 'none';
+}
+
+/* ============================================================
+   HELPERS: scoping data by role
+   ============================================================ */
+function mySchoolStudents(){
+  if(CURRENT.role==='superadmin') return CACHE.students;
+  return CACHE.students.filter(s=>s.schoolId===CURRENT.schoolId);
+}
+function schoolName(id){ const s=CACHE.schools.find(x=>x.id===id); return s?s.name:'—'; }
+function studentName(id){ const s=CACHE.students.find(x=>x.id===id); return s?s.name:id; }
+function fmtDate(ts){ const d=new Date(ts); return d.toLocaleDateString('mr-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+
+/* ============================================================
+   NOTIFICATION CENTER (bell icon) - shows recent notices/homework relevant to user
+   ============================================================ */
+function openNotifCenter(){
+  let items = [];
+  if(CURRENT.role==='student' || CURRENT.role==='parent'){
+    const s = CACHE.students.find(x=>x.id===(CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id));
+    items = [...CACHE.notices.filter(n=>n.schoolId===s.schoolId),
+             ...CACHE.homework.filter(h=>h.schoolId===s.schoolId && (h.group==='सर्व विद्यार्थी'||h.group===s.studClass))]
+             .sort((a,b)=>b.createdAt-a.createdAt).slice(0,15);
+  } else {
+    items = [...CACHE.notices, ...CACHE.homework].filter(n=>CURRENT.role==='superadmin'||n.schoolId===CURRENT.schoolId)
+             .sort((a,b)=>b.createdAt-a.createdAt).slice(0,15);
+  }
+  const html = items.length ? items.map(n=>`
+    <div class="row"><div><div class="row-title">${n.subject?('📚 '+n.subject):'📢 सूचना'} ${n.important?'<span class="badge badge-red">महत्त्वाचे</span>':''}</div>
+    <div class="row-sub">${n.text||n.message||''}</div>
+    <div class="row-sub">${fmtDate(n.createdAt)}</div></div></div>`).join('')
+    : '<div class="empty-state">कोणतीही सूचना नाही</div>';
+  showQuickModal('🔔 सूचना', html);
+}
+function showQuickModal(title, bodyHtml){
+  let m = document.getElementById('quickModal');
+  if(!m){
+    m = document.createElement('div'); m.id='quickModal'; m.className='modal-overlay';
+    document.body.appendChild(m);
+  }
+  m.innerHTML = `<div class="modal-box"><div class="modal-title"><span>${title}</span><button class="close-x" onclick="closeModal('quickModal')">✕</button></div>${bodyHtml}</div>`;
+  m.classList.add('open');
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function renderDashboard(){
+  if(CURRENT.role==='superadmin'){
+    const totalFee = CACHE.students.reduce((a,s)=>a+(s.feeTotal||0),0);
+    const paidFee = CACHE.students.reduce((a,s)=>a+(s.feePaid||0),0);
+    return `
+      <div class="page-title">नमस्कार, ${CURRENT.name} 👋</div>
+      <div class="page-sub">संपूर्ण CM Academy नेटवर्कचा आढावा</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">${CACHE.schools.length}</div><div class="stat-label">शाळा/शाखा</div></div>
+        <div class="stat-card"><div class="stat-num">${CACHE.students.length}</div><div class="stat-label">एकूण विद्यार्थी</div></div>
+        <div class="stat-card"><div class="stat-num">${CACHE.students.filter(s=>s.status==='pending').length}</div><div class="stat-label">मान्यता प्रलंबित</div></div>
+        <div class="stat-card"><div class="stat-num">${CACHE.orders.filter(o=>o.status==='pending').length}</div><div class="stat-label">पेमेंट प्रलंबित</div></div>
+        <div class="stat-card"><div class="stat-num">₹${paidFee}</div><div class="stat-label">जमा फी</div></div>
+        <div class="stat-card"><div class="stat-num">₹${totalFee-paidFee}</div><div class="stat-label">बाकी फी</div></div>
+      </div>
+      ${pendingApprovalsCard()}
+      ${quickLinksCard(['schools','students','orders','reports'])}
+    `;
+  }
+  if(CURRENT.role==='principal'){
+    const st = mySchoolStudents();
+    const paid = st.reduce((a,s)=>a+(s.feePaid||0),0), total = st.reduce((a,s)=>a+(s.feeTotal||0),0);
+    return `
+      <div class="page-title">नमस्कार, ${CURRENT.name} 👋</div>
+      <div class="page-sub">${schoolName(CURRENT.schoolId)}</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">${st.length}</div><div class="stat-label">विद्यार्थी</div></div>
+        <div class="stat-card"><div class="stat-num">${CACHE.teachers.filter(t=>t.schoolId===CURRENT.schoolId).length}</div><div class="stat-label">शिक्षक</div></div>
+        <div class="stat-card"><div class="stat-num">₹${paid}</div><div class="stat-label">जमा फी</div></div>
+        <div class="stat-card"><div class="stat-num">₹${total-paid}</div><div class="stat-label">बाकी फी</div></div>
+      </div>
+      ${pendingApprovalsCard()}
+      ${quickLinksCard(['students','attendance','homework','fees'])}
+    `;
+  }
+  if(CURRENT.role==='teacher'){
+    const st = mySchoolStudents();
+    return `
+      <div class="page-title">नमस्कार, ${CURRENT.name} सर/मॅडम 👋</div>
+      <div class="page-sub">${CURRENT.subject} शिक्षक — ${schoolName(CURRENT.schoolId)}</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">${st.length}</div><div class="stat-label">विद्यार्थी</div></div>
+        <div class="stat-card"><div class="stat-num">${CACHE.homework.filter(h=>h.teacherId===CURRENT.id).length}</div><div class="stat-label">पाठवलेला गृहपाठ</div></div>
+      </div>
+      ${quickLinksCard(['attendance','homework','courses'])}
+    `;
+  }
+  if(CURRENT.role==='student'){
+    const s = CACHE.students.find(x=>x.id===CURRENT.id);
+    const myResults = CACHE.testResults.filter(r=>r.studentId===CURRENT.id);
+    const att = CACHE.attendance.filter(a=>a.studentId===CURRENT.id);
+    const presentPct = att.length ? Math.round(100*att.filter(a=>a.status==='P').length/att.length) : 0;
+    return `
+      <div class="page-title">नमस्कार, ${s?s.name:''} 👋</div>
+      <div class="page-sub">${s?s.studClass+' • '+s.program:''} — Student ID: ${CURRENT.id}</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">${s?(s.purchased||[]).length:0}</div><div class="stat-label">माझे कोर्स</div></div>
+        <div class="stat-card"><div class="stat-num">${myResults.length}</div><div class="stat-label">दिलेल्या टेस्ट</div></div>
+        <div class="stat-card"><div class="stat-num">${presentPct}%</div><div class="stat-label">हजेरी</div></div>
+        <div class="stat-card"><div class="stat-num">₹${s?(s.feeTotal-s.feePaid):0}</div><div class="stat-label">बाकी फी</div></div>
+      </div>
+      ${quickLinksCard(['courses','testseries','homework'])}
+    `;
+  }
+  if(CURRENT.role==='parent'){
+    const s = CACHE.students.find(x=>x.id===CURRENT.studentId);
+    const myResults = CACHE.testResults.filter(r=>r.studentId===CURRENT.studentId);
+    const att = CACHE.attendance.filter(a=>a.studentId===CURRENT.studentId);
+    const presentPct = att.length ? Math.round(100*att.filter(a=>a.status==='P').length/att.length) : 0;
+    return `
+      <div class="page-title">${s?s.name:''} — पालक माहिती 👋</div>
+      <div class="page-sub">${s?s.studClass+' • '+schoolName(s.schoolId):''}</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">${presentPct}%</div><div class="stat-label">हजेरी</div></div>
+        <div class="stat-card"><div class="stat-num">${myResults.length}</div><div class="stat-label">दिलेल्या टेस्ट</div></div>
+        <div class="stat-card"><div class="stat-num">₹${s?s.feePaid:0}</div><div class="stat-label">जमा फी</div></div>
+        <div class="stat-card"><div class="stat-num">₹${s?(s.feeTotal-s.feePaid):0}</div><div class="stat-label">बाकी फी</div></div>
+      </div>
+      ${quickLinksCard(['attendance','results','fees','homework'])}
+    `;
+  }
+  return '';
+}
+function pendingApprovalsCard(){
+  const pendingStudents = CURRENT.role==='superadmin' ? CACHE.students.filter(s=>s.status==='pending') : mySchoolStudents().filter(s=>s.status==='pending');
+  const pendingOrders = CURRENT.role==='superadmin' ? CACHE.orders.filter(o=>o.status==='pending') : CACHE.orders.filter(o=>o.status==='pending' && CACHE.students.find(s=>s.id===o.studentId)?.schoolId===CURRENT.schoolId);
+  if(!pendingStudents.length && !pendingOrders.length) return '';
+  return `<div class="card"><div class="card-title">⏳ प्रलंबित मान्यता</div>
+    ${pendingStudents.map(s=>`<div class="row"><div><div class="row-title">${s.name} (${s.id})</div><div class="row-sub">${s.studClass} • ${schoolName(s.schoolId)}</div></div>
+      <div><button class="btn-sm btn-green" onclick="approveStudent('${s.id}')">मान्य करा</button></div></div>`).join('')}
+    ${pendingOrders.map(o=>`<div class="row"><div><div class="row-title">💳 ${studentName(o.studentId)} — ₹${o.amount}</div><div class="row-sub">${o.itemType==='course'?'कोर्स':'टेस्ट सिरीज'} खरेदी • ${o.method}</div></div>
+      <div><button class="btn-sm btn-green" onclick="approveOrder('${o.id}')">Approve</button></div></div>`).join('')}
+    </div>`;
+}
+function quickLinksCard(pages){
+  const labels = {schools:'🏫 शाळा',students:'🧑‍🎓 विद्यार्थी',teachers:'👩‍🏫 शिक्षक',attendance:'🗓️ हजेरी',homework:'📚 गृहपाठ',
+    courses:'🎬 कोर्स',testseries:'📝 टेस्ट सिरीज',fees:'💰 फी',orders:'💳 पेमेंट',reports:'📈 अहवाल',results:'🏆 निकाल'};
+  return `<div class="card"><div class="card-title">क्विक अॅक्सेस</div><div style="display:flex; flex-wrap:wrap; gap:8px;">
+    ${pages.map(p=>`<button class="btn-sm btn-outline" onclick="navigate('${p}')">${labels[p]}</button>`).join('')}
+  </div></div>`;
+}
+async function approveStudent(id){ await updateDocIn('students', id, {status:'active'}); toast('विद्यार्थी सक्रिय झाला'); }
+async function approveOrder(id){
+  const o = CACHE.orders.find(x=>x.id===id);
+  await updateDocIn('orders', id, {status:'approved'});
+  const s = CACHE.students.find(x=>x.id===o.studentId);
+  const purchased = [...(s.purchased||[]), o.itemId];
+  await updateDocIn('students', o.studentId, {purchased});
+  toast('पेमेंट मान्य झालं, access दिला');
+}
+
+/* ============================================================
+   SCHOOLS (Super Admin only) - onboard branches / external schools
+   ============================================================ */
+function renderSchools(){
+  return `
+  <div class="page-title">🏫 शाळा व्यवस्थापन</div>
+  <div class="page-sub">तुमच्या स्वतःच्या शाखा + या software ला दिलेल्या इतर शाळा</div>
+  ${CACHE.schools.map(s=>`
+    <div class="card">
+      <div class="row"><div>
+        <div class="row-title">${s.name}</div>
+        <div class="row-sub">📍 ${s.place} • मुख्याध्यापक: ${s.principalName} (${s.principalMobile})</div>
+        <div class="row-sub">Login → Username: <b>${s.username}</b> / Password: <b>${s.password}</b></div>
+        <div class="row-sub">विद्यार्थी: ${CACHE.students.filter(x=>x.schoolId===s.id).length}</div>
+      </div>
+      <div><button class="btn-sm btn-outline" onclick="shareSchoolCreds('${s.id}')">📤 Share</button></div></div>
+    </div>`).join('')}
+  `;
+}
+function shareSchoolCreds(id){
+  const s = CACHE.schools.find(x=>x.id===id);
+  const msg = `🎓 CM Academy Software\n\nशाळा: ${s.name}\nमुख्याध्यापक Login:\nUsername: ${s.username}\nPassword: ${s.password}\n\nलिंक: ${location.href}`;
+  window.open('https://wa.me/91'+s.principalMobile+'?text='+encodeURIComponent(msg), '_blank');
+}
+function handleFab(){
+  if(CURRENT_PAGE==='schools') openAddSchool();
+  else if(CURRENT_PAGE==='students') openAddStudent();
+  else if(CURRENT_PAGE==='teachers') openAddTeacher();
+  else if(CURRENT_PAGE==='courses') openAddCourse();
+  else if(CURRENT_PAGE==='testseries') openAddTestSeries();
+  else if(CURRENT_PAGE==='homework') openAddHomework();
+  else if(CURRENT_PAGE==='fees') openAddFee();
+}
+function openAddSchool(){
+  showQuickModal('🏫 नवीन शाळा जोडा', `
+    <div class="field"><label>शाळेचे नाव</label><input id="nsName"></div>
+    <div class="field"><label>शहर/गाव</label><input id="nsPlace"></div>
+    <div class="field"><label>मुख्याध्यापक नाव</label><input id="nsPrincipal"></div>
+    <div class="field"><label>मोबाईल</label><input id="nsMobile"></div>
+    <div class="field"><label>Login Username</label><input id="nsUser"></div>
+    <div class="field"><label>Password</label><input id="nsPass"></div>
+    <button class="btn btn-primary" onclick="saveNewSchool()">✓ जोडा</button>`);
+}
+async function saveNewSchool(){
+  const d = {
+    name: val('nsName'), place: val('nsPlace'), principalName: val('nsPrincipal'),
+    principalMobile: val('nsMobile'), username: val('nsUser'), password: val('nsPass')
+  };
+  if(!d.name||!d.username||!d.password) return toast('सर्व माहिती भरा');
+  await addDocTo('schools', d);
+  closeModal('quickModal'); toast('शाळा जोडली');
+}
+function val(id){ return document.getElementById(id).value.trim(); }
+
+/* ============================================================
+   STUDENTS
+   ============================================================ */
+function renderStudents(){
+  const st = mySchoolStudents();
+  const active = st.filter(s=>s.status==='active'), pending = st.filter(s=>s.status==='pending');
+  return `
+  <div class="page-title">🧑‍🎓 विद्यार्थी</div>
+  <div class="page-sub">एकूण ${st.length} • सक्रिय ${active.length} • प्रलंबित ${pending.length}</div>
+  ${pending.length? `<div class="card"><div class="card-title">⏳ मान्यतेच्या प्रतीक्षेत</div>
+    ${pending.map(s=>studentRow(s,true)).join('')}</div>`:''}
+  <div class="card"><div class="card-title">सक्रिय विद्यार्थी</div>
+    ${active.length? active.map(s=>studentRow(s,false)).join('') : '<div class="empty-state">विद्यार्थी नाहीत</div>'}
+  </div>`;
+}
+function studentRow(s, pending){
+  return `<div class="row"><div>
+    <div class="row-title">${s.name} <span class="badge badge-gray">${s.id}</span></div>
+    <div class="row-sub">${s.studClass} • ${s.program} • ${schoolName(s.schoolId)}</div>
+    <div class="row-sub">पालक: ${s.parentName||'-'} (${s.parentMobile})</div>
+    <div class="row-sub">फी: ₹${s.feePaid||0} / ₹${s.feeTotal||0}</div>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:6px;">
+    ${pending?`<button class="btn-sm btn-green" onclick="approveStudent('${s.id}')">मान्य करा</button>`:''}
+    <button class="btn-sm btn-outline" onclick="shareStudentInfo('${s.id}')">📤</button>
+  </div></div>`;
+}
+function shareStudentInfo(id){
+  const s = CACHE.students.find(x=>x.id===id);
+  const msg = `🎓 CM Academy\n${s.name} (${s.id})\nवर्ग: ${s.studClass}\nPassword: ${s.password}\nLogin लिंक: ${location.href}`;
+  window.open('https://wa.me/91'+s.parentMobile+'?text='+encodeURIComponent(msg),'_blank');
+}
+function openAddStudent(){
+  const schoolOpts = (CURRENT.role==='superadmin'?CACHE.schools:CACHE.schools.filter(s=>s.id===CURRENT.schoolId))
+    .map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  showQuickModal('👤 विद्यार्थी नोंदणी', `
+    <div class="field"><label>नाव</label><input id="asName"></div>
+    <div class="field"><label>इयत्ता</label><select id="asClass">
+      <option>इयत्ता ४</option><option>इयत्ता ५</option><option>इयत्ता ६</option><option>इयत्ता ७</option>
+      <option>इयत्ता ८</option><option>इयत्ता ९</option><option>इयत्ता १०</option><option>इयत्ता ११</option><option>इयत्ता १२</option>
+    </select></div>
+    <div class="field"><label>अभ्यासक्रम</label><input id="asProgram" placeholder="उदा. NDA Foundation"></div>
+    <div class="field"><label>मोबाईल</label><input id="asMobile"></div>
+    <div class="field"><label>पालक नाव</label><input id="asParentName"></div>
+    <div class="field"><label>पालक मोबाईल</label><input id="asParentMobile"></div>
+    <div class="field"><label>Password</label><input id="asPass"></div>
+    <div class="field"><label>एकूण फी ₹</label><input id="asFee" type="number" value="0"></div>
+    <div class="field"><label>शाळा</label><select id="asSchool">${schoolOpts}</select></div>
+    <button class="btn btn-primary" onclick="saveNewStudent()">✓ नोंदणी (थेट सक्रिय)</button>`);
+}
+async function saveNewStudent(){
+  const id = genStudentId();
+  const d = {name:val('asName'), studClass:val('asClass'), program:val('asProgram'), mobile:val('asMobile'),
+    parentName:val('asParentName'), parentMobile:val('asParentMobile'), password:val('asPass'),
+    feeTotal:Number(val('asFee'))||0, feePaid:0, schoolId:val('asSchool'), status:'active', purchased:[]};
+  if(!d.name||!d.password) return toast('नाव व Password भरा');
+  await col('students').doc(id).set({...d, createdAt:Date.now()});
+  closeModal('quickModal'); toast('विद्यार्थी जोडला: '+id);
+}
+
+/* ============================================================
+   TEACHERS
+   ============================================================ */
+function renderTeachers(){
+  const list = CURRENT.role==='superadmin'?CACHE.teachers:CACHE.teachers.filter(t=>t.schoolId===CURRENT.schoolId);
+  return `<div class="page-title">👩‍🏫 शिक्षक</div><div class="page-sub">एकूण ${list.length}</div>
+  <div class="card">${list.length?list.map(t=>`
+    <div class="row"><div><div class="row-title">${t.name}</div>
+      <div class="row-sub">${t.subject} • ${schoolName(t.schoolId)}</div>
+      <div class="row-sub">Login → ${t.username} / ${t.password}</div></div>
+      <button class="btn-sm btn-outline" onclick="shareTeacherCreds('${t.id}')">📤</button>
+    </div>`).join(''):'<div class="empty-state">शिक्षक नाहीत</div>'}</div>`;
+}
+function shareTeacherCreds(id){
+  const t = CACHE.teachers.find(x=>x.id===id);
+  const msg = `🎓 CM Academy Software\nशिक्षक Login:\nUsername: ${t.username}\nPassword: ${t.password}\nलिंक: ${location.href}`;
+  window.open('https://wa.me/91'+t.mobile+'?text='+encodeURIComponent(msg),'_blank');
+}
+function openAddTeacher(){
+  const schoolOpts = (CURRENT.role==='superadmin'?CACHE.schools:CACHE.schools.filter(s=>s.id===CURRENT.schoolId))
+    .map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+  showQuickModal('👩‍🏫 नवीन शिक्षक', `
+    <div class="field"><label>नाव</label><input id="atName"></div>
+    <div class="field"><label>विषय</label><input id="atSubject"></div>
+    <div class="field"><label>मोबाईल</label><input id="atMobile"></div>
+    <div class="field"><label>Username</label><input id="atUser"></div>
+    <div class="field"><label>Password</label><input id="atPass"></div>
+    <div class="field"><label>शाळा</label><select id="atSchool">${schoolOpts}</select></div>
+    <button class="btn btn-primary" onclick="saveNewTeacher()">✓ जोडा</button>`);
+}
+async function saveNewTeacher(){
+  const d = {name:val('atName'), subject:val('atSubject'), mobile:val('atMobile'), username:val('atUser'),
+    password:val('atPass'), schoolId:val('atSchool')};
+  if(!d.name||!d.username||!d.password) return toast('सर्व माहिती भरा');
+  await addDocTo('teachers', d);
+  closeModal('quickModal'); toast('शिक्षक जोडले');
+}
+
+/* ============================================================
+   COURSES / LMS
+   ============================================================ */
+function renderCourses(){
+  if(CURRENT.role==='student' || CURRENT.role==='parent'){
+    const s = CACHE.students.find(x=>x.id===(CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id));
+    const purchased = s.purchased||[];
+    const myCourses = CACHE.courses.filter(c=>purchased.includes(c.id) && (c.schoolId==='global'||c.schoolId===s.schoolId));
+    const otherCourses = CACHE.courses.filter(c=>!purchased.includes(c.id) && (c.schoolId==='global'||c.schoolId===s.schoolId));
+    return `<div class="page-title">🎬 ${CURRENT.role==='parent'?'पाल्याचे':'माझे'} कोर्स</div>
+    <div class="card"><div class="card-title">माझे खरेदी केलेले कोर्स</div>
+      ${myCourses.length?myCourses.map(c=>courseCardOwned(c)).join(''):'<div class="empty-state">अजून कोर्स खरेदी केलेला नाही</div>'}</div>
+    ${CURRENT.role==='student'&&otherCourses.length?`<div class="card"><div class="card-title">इतर उपलब्ध कोर्स</div>
+      ${otherCourses.map(c=>courseCardBuy(c)).join('')}</div>`:''}`;
+  }
+  const list = CURRENT.role==='superadmin'?CACHE.courses:CACHE.courses.filter(c=>c.schoolId===CURRENT.schoolId||c.schoolId==='global');
+  return `<div class="page-title">🎬 कोर्स / LMS व्यवस्थापन</div>
+  <div class="card">${list.length?list.map(c=>`
+    <div class="row"><div><div class="row-title">${c.title}</div>
+      <div class="row-sub">${c.program} • ₹${c.price} • ${(c.chapters||[]).length} chapters</div></div>
+      <button class="btn-sm btn-outline" onclick="openAddChapter('${c.id}')">+ Chapter</button>
+    </div>`).join(''):'<div class="empty-state">कोर्स नाहीत</div>'}</div>`;
+}
+function courseCardOwned(c){
+  return `<div class="row"><div><div class="row-title">${c.title}</div><div class="row-sub">${(c.chapters||[]).length} chapters</div></div>
+    <button class="btn-sm btn-blue" onclick="viewCourseChapters('${c.id}')">पहा</button></div>`;
+}
+function courseCardBuy(c){
+  return `<div class="row"><div><div class="row-title">${c.title}</div><div class="row-sub">₹${c.price} • ${c.program}</div></div>
+    <button class="btn-sm btn-primary" onclick="buyItem('${c.id}','course',${c.price})">खरेदी करा</button></div>`;
+}
+function viewCourseChapters(id){
+  const c = CACHE.courses.find(x=>x.id===id);
+  const html = (c.chapters||[]).map((ch,i)=>`
+    <div class="row"><div><div class="row-title">Chapter ${i+1}: ${ch.notes?ch.notes.slice(0,30):''}</div>
+    <div class="row-sub">⏱️ ${ch.duration||''}</div></div>
+    <div>${ch.videoId?`<a href="https://youtube.com/watch?v=${ch.videoId}" target="_blank" class="btn-sm btn-red">▶ Video</a>`:''}
+    ${ch.pdfLink?`<a href="${ch.pdfLink}" target="_blank" class="btn-sm btn-outline">📄 PDF</a>`:''}</div></div>`).join('');
+  showQuickModal('🎬 '+c.title, html || '<div class="empty-state">अजून कंटेंट नाही</div>');
+}
+function openAddCourse(){
+  showQuickModal('🎬 नवीन कोर्स', `
+    <div class="field"><label>Title</label><input id="acTitle"></div>
+    <div class="field"><label>अभ्यासक्रम</label><input id="acProgram"></div>
+    <div class="field"><label>किंमत ₹</label><input id="acPrice" type="number" value="0"></div>
+    <button class="btn btn-primary" onclick="saveNewCourse()">✓ जोडा</button>`);
+}
+async function saveNewCourse(){
+  const d = {title:val('acTitle'), program:val('acProgram'), price:Number(val('acPrice'))||0,
+    schoolId: CURRENT.role==='superadmin'?'global':CURRENT.schoolId, chapters:[]};
+  if(!d.title) return toast('Title भरा');
+  await addDocTo('courses', d); closeModal('quickModal'); toast('कोर्स जोडला');
+}
+function openAddChapter(courseId){
+  showQuickModal('📹 Chapter जोडा', `
+    <div class="field"><label>YouTube Video ID</label><input id="chVideo" placeholder="उदा: dQw4w9WgXcQ"></div>
+    <div class="field"><label>PDF Link</label><input id="chPdf"></div>
+    <div class="field"><label>Notes</label><textarea id="chNotes" rows="3"></textarea></div>
+    <div class="field"><label>कालावधी</label><input id="chDur" placeholder="उदा: ४५ मिनिटे"></div>
+    <button class="btn btn-primary" onclick="saveChapter('${courseId}')">✓ जतन</button>`);
+}
+async function saveChapter(courseId){
+  const c = CACHE.courses.find(x=>x.id===courseId);
+  const chapters = [...(c.chapters||[]), {videoId:val('chVideo'), pdfLink:val('chPdf'), notes:val('chNotes'), duration:val('chDur')}];
+  await updateDocIn('courses', courseId, {chapters});
+  closeModal('quickModal'); toast('Chapter जोडलं');
+}
+
+/* ============================================================
+   TEST SERIES + TEST TAKING
+   ============================================================ */
+function renderTestSeries(){
+  if(CURRENT.role==='student'){
+    const s = CACHE.students.find(x=>x.id===CURRENT.id);
+    const purchased = s.purchased||[];
+    const avail = CACHE.testSeries.filter(t=>t.schoolId==='global'||t.schoolId===s.schoolId);
+    return `<div class="page-title">📝 टेस्ट सिरीज</div>
+    ${renderExternalTestLinks()}
+    ${renderExternalPapers()}
+    ${avail.map(t=>{
+      const owned = purchased.includes(t.id);
+      const result = CACHE.testResults.find(r=>r.studentId===s.id && r.testSeriesId===t.id);
+      return `<div class="card"><div class="row"><div><div class="row-title">${t.name}</div>
+        <div class="row-sub">${t.exam} • ${(t.questions||[]).length} प्रश्न • ${t.durationMin} मिनिटे • ₹${t.price}</div>
+        ${result?`<div class="row-sub">✅ गुण: ${result.score}/${result.total}</div>`:''}</div>
+        <div>${owned?(result?`<button class="btn-sm btn-outline" onclick="startTest('${t.id}')">पुन्हा द्या</button>`
+          :`<button class="btn-sm btn-primary" onclick="startTest('${t.id}')">सुरू करा</button>`)
+          :`<button class="btn-sm btn-primary" onclick="buyItem('${t.id}','testseries',${t.price})">खरेदी करा</button>`}</div>
+      </div></div>`;
+    }).join('') || '<div class="empty-state">टेस्ट सिरीज उपलब्ध नाही</div>'}`;
+  }
+  // admin/principal manage
+  const list = CURRENT.role==='superadmin'?CACHE.testSeries:CACHE.testSeries.filter(t=>t.schoolId===CURRENT.schoolId||t.schoolId==='global');
+  return `<div class="page-title">📝 टेस्ट सिरीज व्यवस्थापन</div>
+  ${renderExternalTestLinks()}
+  ${renderExternalPapers()}
+  <div class="card">${list.length?list.map(t=>`
+    <div class="row"><div><div class="row-title">${t.name}</div>
+    <div class="row-sub">${t.exam} • ${(t.questions||[]).length} प्रश्न • ₹${t.price}</div></div>
+    <button class="btn-sm btn-outline" onclick="openAddQuestion('${t.id}')">+ प्रश्न</button></div>`).join(''):'<div class="empty-state">टेस्ट सिरीज नाहीत</div>'}</div>`;
+}
+function openAddTestSeries(){
+  showQuickModal('📝 नवीन टेस्ट सिरीज', `
+    <div class="field"><label>नाव</label><input id="atsName"></div>
+    <div class="field"><label>परीक्षा</label><input id="atsExam"></div>
+    <div class="field"><label>किंमत ₹</label><input id="atsPrice" type="number" value="0"></div>
+    <div class="field"><label>कालावधी (मिनिटे)</label><input id="atsDur" type="number" value="30"></div>
+    <button class="btn btn-primary" onclick="saveNewTestSeries()">✓ जोडा</button>`);
+}
+async function saveNewTestSeries(){
+  const d = {name:val('atsName'), exam:val('atsExam'), price:Number(val('atsPrice'))||0,
+    durationMin:Number(val('atsDur'))||30, schoolId: CURRENT.role==='superadmin'?'global':CURRENT.schoolId, questions:[]};
+  if(!d.name) return toast('नाव भरा');
+  await addDocTo('testSeries', d); closeModal('quickModal'); toast('टेस्ट सिरीज जोडली');
+}
+function openAddQuestion(tsId){
+  showQuickModal('❓ प्रश्न जोडा', `
+    <div class="field"><label>प्रश्न</label><textarea id="qText" rows="2"></textarea></div>
+    <div class="field"><label>पर्याय अ</label><input id="qA"></div>
+    <div class="field"><label>पर्याय ब</label><input id="qB"></div>
+    <div class="field"><label>पर्याय क</label><input id="qC"></div>
+    <div class="field"><label>पर्याय ड</label><input id="qD"></div>
+    <div class="field"><label>बरोबर उत्तर</label><select id="qCorrect"><option value="0">अ</option><option value="1">ब</option><option value="2">क</option><option value="3">ड</option></select></div>
+    <button class="btn btn-primary" onclick="saveQuestion('${tsId}')">✓ जतन</button>`);
+}
+async function saveQuestion(tsId){
+  const t = CACHE.testSeries.find(x=>x.id===tsId);
+  const questions = [...(t.questions||[]), {q:val('qText'), options:[val('qA'),val('qB'),val('qC'),val('qD')], correct:Number(val('qCorrect'))}];
+  await updateDocIn('testSeries', tsId, {questions});
+  closeModal('quickModal'); toast('प्रश्न जोडला');
+}
+
+let TEST_STATE = null;
+function startTest(tsId){
+  const t = CACHE.testSeries.find(x=>x.id===tsId);
+  if(!t.questions || !t.questions.length){ toast('अजून प्रश्न जोडलेले नाहीत'); return; }
+  TEST_STATE = {tsId, idx:0, answers:new Array(t.questions.length).fill(null), endTime: Date.now()+t.durationMin*60000};
+  renderTestQuestion();
+  document.getElementById('mainContent').scrollIntoView();
+  TEST_STATE.timerInt = setInterval(updateTestTimer, 1000);
+}
+function updateTestTimer(){
+  const el = document.getElementById('testTimerBox');
+  if(!el){ clearInterval(TEST_STATE.timerInt); return; }
+  const remain = Math.max(0, TEST_STATE.endTime - Date.now());
+  const m = Math.floor(remain/60000), sec = Math.floor((remain%60000)/1000);
+  el.textContent = `⏱️ वेळ शिल्लक: ${m}:${sec.toString().padStart(2,'0')}`;
+  if(remain<=0){ clearInterval(TEST_STATE.timerInt); submitTest(); }
+}
+function renderTestQuestion(){
+  const t = CACHE.testSeries.find(x=>x.id===TEST_STATE.tsId);
+  const q = t.questions[TEST_STATE.idx];
+  const chosen = TEST_STATE.answers[TEST_STATE.idx];
+  document.getElementById('mainContent').innerHTML = `
+    <div class="qtimer" id="testTimerBox">⏱️ ...</div>
+    <div class="page-sub">प्रश्न ${TEST_STATE.idx+1} / ${t.questions.length}</div>
+    <div class="card"><div class="card-title">${q.q}</div>
+      ${q.options.map((o,i)=>`<button class="opt-btn ${chosen===i?'selected':''}" onclick="selectAnswer(${i})">${['अ','ब','क','ड'][i]}) ${o}</button>`).join('')}
+    </div>
+    <div style="display:flex; gap:10px;">
+      ${TEST_STATE.idx>0?`<button class="btn btn-outline" style="flex:1" onclick="prevQ()">← मागे</button>`:''}
+      ${TEST_STATE.idx<t.questions.length-1?`<button class="btn btn-primary" style="flex:1" onclick="nextQ()">पुढे →</button>`
+        :`<button class="btn btn-green" style="flex:1" onclick="submitTest()">✓ सबमिट करा</button>`}
+    </div>`;
+  updateTestTimer();
+}
+function selectAnswer(i){ TEST_STATE.answers[TEST_STATE.idx]=i; renderTestQuestion(); }
+function nextQ(){ TEST_STATE.idx++; renderTestQuestion(); }
+function prevQ(){ TEST_STATE.idx--; renderTestQuestion(); }
+async function submitTest(){
+  clearInterval(TEST_STATE.timerInt);
+  const t = CACHE.testSeries.find(x=>x.id===TEST_STATE.tsId);
+  let score=0;
+  t.questions.forEach((q,i)=>{ if(TEST_STATE.answers[i]===q.correct) score++; });
+  const existing = CACHE.testResults.find(r=>r.studentId===CURRENT.id && r.testSeriesId===TEST_STATE.tsId);
+  if(existing) await updateDocIn('testResults', existing.id, {score, total:t.questions.length, date:Date.now()});
+  else await addDocTo('testResults', {studentId:CURRENT.id, testSeriesId:TEST_STATE.tsId, score, total:t.questions.length, date:Date.now()});
+  const html = `<div class="page-title">🎉 निकाल</div><div class="card" style="text-align:center;">
+    <div style="font-size:40px; font-weight:800; color:var(--orange);">${score}/${t.questions.length}</div>
+    <div class="row-sub">${t.name}</div></div>
+    <button class="btn btn-primary" onclick="navigate('testseries')">ठीक आहे</button>`;
+  document.getElementById('mainContent').innerHTML = html;
+  TEST_STATE = null;
+}
+
+/* ============================================================
+   BUY / ORDERS (payment)
+   ============================================================ */
+function buyItem(itemId, itemType, amount){
+  showQuickModal('💳 खरेदी करा', `
+    <div class="row-sub" style="margin-bottom:10px;">एकदा खरेदी – कायमचा access • ₹${amount}</div>
+    <button class="btn btn-blue" style="margin-bottom:10px;" onclick="placeOrder('${itemId}','${itemType}',${amount},'razorpay')">🔵 Razorpay ने Online Pay करा</button>
+    <button class="btn btn-outline" onclick="placeOrder('${itemId}','${itemType}',${amount},'cash')">💵 Cash Payment (संपर्क करा)</button>
+    <div class="hint-box">GPay/PhonePe वर पैसे पाठवा आणि स्क्रीनशॉट WhatsApp करा. Admin/मुख्याध्यापक Approve केल्यावर access मिळेल.</div>`);
+}
+async function placeOrder(itemId, itemType, amount, method){
+  await addDocTo('orders', {studentId:CURRENT.id, itemId, itemType, amount, method, status: method==='razorpay'?'approved':'pending'});
+  if(method==='razorpay'){
+    const s = CACHE.students.find(x=>x.id===CURRENT.id);
+    await updateDocIn('students', CURRENT.id, {purchased:[...(s.purchased||[]), itemId]});
+    toast('Payment यशस्वी! Access मिळाला 🎉');
+  } else {
+    toast('ऑर्डर नोंदवली, मान्यतेच्या प्रतीक्षेत');
+  }
+  closeModal('quickModal');
+}
+function renderOrders(){
+  const list = CURRENT.role==='superadmin'?CACHE.orders:CACHE.orders.filter(o=>CACHE.students.find(s=>s.id===o.studentId)?.schoolId===CURRENT.schoolId);
+  return `<div class="page-title">💳 पेमेंट मान्यता</div>
+  <div class="card">${list.length?list.sort((a,b)=>b.createdAt-a.createdAt).map(o=>`
+    <div class="row"><div><div class="row-title">${studentName(o.studentId)} — ₹${o.amount}</div>
+    <div class="row-sub">${o.itemType==='course'?'कोर्स':'टेस्ट सिरीज'} • ${o.method} • ${fmtDate(o.createdAt)}</div></div>
+    <span class="badge ${o.status==='approved'?'badge-green':o.status==='pending'?'badge-orange':'badge-red'}">${o.status}</span></div>`).join(''):'<div class="empty-state">काहीही नाही</div>'}</div>`;
+}
+
+/* ============================================================
+   ATTENDANCE
+   ============================================================ */
+function renderAttendance(){
+  if(CURRENT.role==='student' || CURRENT.role==='parent'){
+    const sid = CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id;
+    const att = CACHE.attendance.filter(a=>a.studentId===sid).sort((a,b)=>b.date.localeCompare(a.date));
+    const pct = att.length?Math.round(100*att.filter(a=>a.status==='P').length/att.length):0;
+    return `<div class="page-title">🗓️ हजेरी</div>
+    <div class="stats-grid"><div class="stat-card"><div class="stat-num">${pct}%</div><div class="stat-label">उपस्थिती</div></div>
+    <div class="stat-card"><div class="stat-num">${att.length}</div><div class="stat-label">एकूण नोंदी</div></div></div>
+    <div class="card">${att.length?att.map(a=>`<div class="row"><div class="row-title">${a.date}</div>
+      <span class="badge ${a.status==='P'?'badge-green':'badge-red'}">${a.status==='P'?'उपस्थित':'अनुपस्थित'}</span></div>`).join(''):'<div class="empty-state">नोंदी नाहीत</div>'}</div>`;
+  }
+  // teacher/principal: mark attendance for a class today
+  const st = mySchoolStudents().filter(s=>s.status==='active');
+  const classes = [...new Set(st.map(s=>s.studClass))];
+  if(!window._attCls || !classes.includes(window._attCls)) window._attCls = classes[0];
+  return `<div class="page-title">🗓️ हजेरी घ्या</div>
+  <div class="page-sub">आजची तारीख: ${todayStr()}</div>
+  <div class="tab-strip">${classes.map(c=>`<div class="tab-chip ${window._attCls===c?'active':''}" onclick="setAttCls('${c}')">${c}</div>`).join('')}</div>
+  <div class="card">${attendanceListForClass(st)}</div>
+  <button class="btn btn-green" style="margin-top:6px;" onclick="saveAttendance()">✓ हजेरी जतन करा</button>`;
+}
+function setAttCls(c){ window._attCls=c; window._attMarks={}; renderCurrentPage(); }
+function attendanceListForClass(st){
+  const cls = window._attCls || (st[0]?st[0].studClass:null);
+  if(!cls) return '<div class="empty-state">विद्यार्थी नाहीत</div>';
+  window._attCls = cls;
+  window._attMarks = window._attMarks || {};
+  const filtered = st.filter(s=>s.studClass===cls);
+  return filtered.map(s=>{
+    const existing = CACHE.attendance.find(a=>a.studentId===s.id && a.date===todayStr());
+    const mark = window._attMarks[s.id] || (existing?existing.status:'P');
+    window._attMarks[s.id] = mark;
+    return `<div class="row"><div class="row-title">${s.name}</div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-sm ${mark==='P'?'btn-green':'btn-outline'}" onclick="markAtt('${s.id}','P')">उपस्थित</button>
+        <button class="btn-sm ${mark==='A'?'btn-red':'btn-outline'}" onclick="markAtt('${s.id}','A')">अनुपस्थित</button>
+      </div></div>`;
+  }).join('');
+}
+function markAtt(sid, status){ window._attMarks[sid]=status; renderCurrentPage(); }
+async function saveAttendance(){
+  const date = todayStr();
+  for(const sid in window._attMarks){
+    const existing = CACHE.attendance.find(a=>a.studentId===sid && a.date===date);
+    if(existing) await updateDocIn('attendance', existing.id, {status:window._attMarks[sid]});
+    else await addDocTo('attendance', {studentId:sid, date, status:window._attMarks[sid], markedBy:CURRENT.id});
+  }
+  toast('हजेरी जतन झाली ✓');
+}
+
+/* ============================================================
+   HOMEWORK / NOTICES
+   ============================================================ */
+function renderHomework(){
+  if(CURRENT.role==='student' || CURRENT.role==='parent'){
+    const s = CACHE.students.find(x=>x.id===(CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id));
+    const hw = CACHE.homework.filter(h=>h.schoolId===s.schoolId && (h.group==='सर्व विद्यार्थी'||h.group===s.studClass)).sort((a,b)=>b.createdAt-a.createdAt);
+    const nt = CACHE.notices.filter(n=>n.schoolId===s.schoolId).sort((a,b)=>b.createdAt-a.createdAt);
+    return `<div class="page-title">📚 गृहपाठ / सूचना</div>
+    <div class="card"><div class="card-title">गृहपाठ</div>
+      ${hw.length?hw.map(h=>`<div class="row"><div><div class="row-title">${h.subject}</div><div class="row-sub">${h.text}</div>
+      <div class="row-sub">शेवटची तारीख: ${h.dueDate||'-'}</div></div></div>`).join(''):'<div class="empty-state">गृहपाठ नाही</div>'}</div>
+    <div class="card"><div class="card-title">सूचना</div>
+      ${nt.length?nt.map(n=>`<div class="row"><div><div class="row-title">${n.important?'🔴 ':''}${n.message}</div><div class="row-sub">${fmtDate(n.createdAt)}</div></div></div>`).join(''):'<div class="empty-state">सूचना नाहीत</div>'}</div>`;
+  }
+  const hw = CURRENT.role==='superadmin'?CACHE.homework:CACHE.homework.filter(h=>h.schoolId===CURRENT.schoolId);
+  const nt = CURRENT.role==='superadmin'?CACHE.notices:CACHE.notices.filter(n=>n.schoolId===CURRENT.schoolId);
+  return `<div class="page-title">📚 गृहपाठ/सूचना पाठवा</div>
+  <div style="display:flex; gap:8px; margin-bottom:14px;">
+    <button class="btn btn-primary" style="flex:1" onclick="openAddHomework()">+ गृहपाठ</button>
+    <button class="btn btn-outline" style="flex:1" onclick="openAddNotice()">+ सूचना</button>
+  </div>
+  <div class="card"><div class="card-title">अलीकडील गृहपाठ</div>${hw.length?hw.sort((a,b)=>b.createdAt-a.createdAt).slice(0,10).map(h=>`
+    <div class="row"><div class="row-title">${h.subject} — ${h.group}</div><div class="row-sub">${h.text}</div></div>`).join(''):'<div class="empty-state">नाही</div>'}</div>
+  <div class="card"><div class="card-title">अलीकडील सूचना</div>${nt.length?nt.sort((a,b)=>b.createdAt-a.createdAt).slice(0,10).map(n=>`
+    <div class="row"><div class="row-title">${n.important?'🔴 ':''}${n.message}</div></div>`).join(''):'<div class="empty-state">नाही</div>'}</div>`;
+}
+function openAddHomework(){
+  showQuickModal('📝 गृहपाठ / सूचना पाठवा', `
+    <div class="field"><label>ग्रुप</label><select id="hwGroup">
+      <option>सर्व विद्यार्थी</option>
+      ${[...new Set(mySchoolStudents().map(s=>s.studClass))].map(c=>`<option>${c}</option>`).join('')}
+    </select></div>
+    <div class="field"><label>विषय</label><input id="hwSubject" placeholder="गणित / विज्ञान / सूचना"></div>
+    <div class="field"><label>गृहपाठ / सूचना</label><textarea id="hwText" rows="3"></textarea></div>
+    <div class="field"><label>शेवटची तारीख</label><input id="hwDue" type="date"></div>
+    <button class="btn btn-primary" onclick="saveHomework()">✓ पाठवा</button>`);
+}
+async function saveHomework(){
+  await addDocTo('homework', {schoolId:CURRENT.schoolId||CACHE.schools[0]?.id, group:val('hwGroup'), subject:val('hwSubject'),
+    text:val('hwText'), dueDate:val('hwDue'), teacherId:CURRENT.id});
+  closeModal('quickModal'); toast('पाठवलं ✓');
+}
+function openAddNotice(){
+  showQuickModal('📢 नवीन सूचना', `
+    <div class="field"><label>सूचना</label><textarea id="ntText" rows="3"></textarea></div>
+    <div class="field"><label>महत्त्वाची?</label><select id="ntImp"><option value="0">नाही</option><option value="1">हो</option></select></div>
+    <button class="btn btn-primary" onclick="saveNotice()">✓ पाठवा</button>`);
+}
+async function saveNotice(){
+  await addDocTo('notices', {schoolId: CURRENT.role==='superadmin'?'global':CURRENT.schoolId, message:val('ntText'), important:val('ntImp')==='1'});
+  closeModal('quickModal'); toast('सूचना पाठवली');
+}
+
+/* ============================================================
+   FEES
+   ============================================================ */
+function renderFees(){
+  if(CURRENT.role==='student' || CURRENT.role==='parent'){
+    const s = CACHE.students.find(x=>x.id===(CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id));
+    const myFees = CACHE.fees.filter(f=>f.studentId===s.id).sort((a,b)=>b.createdAt-a.createdAt);
+    return `<div class="page-title">💰 फी तपशील</div>
+    <div class="stats-grid"><div class="stat-card"><div class="stat-num">₹${s.feePaid||0}</div><div class="stat-label">जमा</div></div>
+    <div class="stat-card"><div class="stat-num">₹${(s.feeTotal||0)-(s.feePaid||0)}</div><div class="stat-label">बाकी</div></div></div>
+    <div class="card"><div class="card-title">पावती इतिहास</div>
+    ${myFees.length?myFees.map(f=>`<div class="row"><div><div class="row-title">पावती #${f.receiptNo}</div><div class="row-sub">${fmtDate(f.createdAt)} • ${f.method}</div></div>
+      <div class="row-title">₹${f.amount}</div></div>`).join(''):'<div class="empty-state">पावती नाही</div>'}</div>`;
+  }
+  const st = mySchoolStudents().filter(s=>s.status==='active');
+  return `<div class="page-title">💰 फी व्यवस्थापन</div>
+  <div class="card">${st.map(s=>`<div class="row"><div><div class="row-title">${s.name} (${s.id})</div>
+    <div class="row-sub">जमा ₹${s.feePaid||0} / एकूण ₹${s.feeTotal||0}</div></div>
+    <button class="btn-sm btn-primary" onclick="openCollectFee('${s.id}')">फी भरा</button></div>`).join('')}</div>`;
+}
+function openCollectFee(sid){
+  showQuickModal('💰 फी जमा करा', `
+    <div class="field"><label>रक्कम ₹</label><input id="feeAmt" type="number"></div>
+    <div class="field"><label>पद्धत</label><select id="feeMethod"><option>Cash</option><option>Online</option></select></div>
+    <button class="btn btn-primary" onclick="saveFee('${sid}')">✓ जमा करा व पावती बनवा</button>`);
+}
+async function saveFee(sid){
+  const amt = Number(val('feeAmt'))||0;
+  if(!amt) return toast('रक्कम टाका');
+  const receiptNo = newReceiptNo(CURRENT.schoolId);
+  await addDocTo('fees', {studentId:sid, amount:amt, method:val('feeMethod'), receiptNo});
+  const s = CACHE.students.find(x=>x.id===sid);
+  await updateDocIn('students', sid, {feePaid:(s.feePaid||0)+amt});
+  closeModal('quickModal'); toast('फी जमा झाली, पावती #'+receiptNo);
+  const msg = `🎓 CM Academy - फी पावती\nपावती क्र: ${receiptNo}\nविद्यार्थी: ${s.name}\nरक्कम: ₹${amt}\nदिनांक: ${fmtDate(Date.now())}`;
+  window.open('https://wa.me/91'+s.parentMobile+'?text='+encodeURIComponent(msg),'_blank');
+}
+function openAddFee(){ toast('कृपया यादीतील विद्यार्थ्यावर "फी भरा" दाबा'); }
+
+/* ============================================================
+   RESULTS (student/parent) + REPORTS (admin/principal)
+   ============================================================ */
+function renderResults(){
+  const sid = CURRENT.role==='parent'?CURRENT.studentId:CURRENT.id;
+  const results = CACHE.testResults.filter(r=>r.studentId===sid).sort((a,b)=>b.date-a.date);
+  return `<div class="page-title">🏆 निकाल</div>
+  <div class="card">${results.length?results.map(r=>{
+    const ts = CACHE.testSeries.find(t=>t.id===r.testSeriesId);
+    const pct = Math.round(100*r.score/r.total);
+    return `<div class="row"><div><div class="row-title">${ts?ts.name:'टेस्ट'}</div><div class="row-sub">${fmtDate(r.date)}</div></div>
+    <span class="badge ${pct>=60?'badge-green':pct>=40?'badge-orange':'badge-red'}">${r.score}/${r.total}</span></div>`;
+  }).join(''):'<div class="empty-state">अजून कोणतीही टेस्ट दिलेली नाही</div>'}</div>`;
+}
+function renderReports(){
+  const st = mySchoolStudents();
+  const byClass = {};
+  st.forEach(s=>{ byClass[s.studClass]=(byClass[s.studClass]||0)+1; });
+  const totalFee = st.reduce((a,s)=>a+(s.feeTotal||0),0), paidFee = st.reduce((a,s)=>a+(s.feePaid||0),0);
+  const avgAttendance = (()=>{ const att=CACHE.attendance.filter(a=>st.find(s=>s.id===a.studentId));
+    return att.length?Math.round(100*att.filter(a=>a.status==='P').length/att.length):0; })();
+  return `<div class="page-title">📈 अहवाल</div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">${st.length}</div><div class="stat-label">विद्यार्थी</div></div>
+    <div class="stat-card"><div class="stat-num">${avgAttendance}%</div><div class="stat-label">सरासरी हजेरी</div></div>
+    <div class="stat-card"><div class="stat-num">₹${paidFee}</div><div class="stat-label">जमा फी</div></div>
+    <div class="stat-card"><div class="stat-num">₹${totalFee-paidFee}</div><div class="stat-label">बाकी फी</div></div>
+  </div>
+  <div class="card"><div class="card-title">इयत्तानिहाय विद्यार्थी संख्या</div>
+  ${Object.keys(byClass).map(c=>`<div class="row"><div class="row-title">${c}</div><div>${byClass[c]}</div></div>`).join('')}</div>`;
+}
+
+</script>
+</body>
+</html>
